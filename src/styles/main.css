@@ -1,0 +1,25 @@
+:where(:root) {
+	--base-hue: 240;
+	--white: oklch(100% 0.006 var(--base-hue));
+	--gray-50: oklch(94% 0.006 var(--base-hue));
+	--gray-100: oklch(86% 0.01 var(--base-hue));
+	--gray-900: oklch(25% 0.01 var(--base-hue));
+	--gray-950: oklch(12% 0.005 var(--base-hue));
+
+	--color-foreground-0: var(--gray-950);
+	--color-background-0: var(--white);
+	--color-background-1: var(--gray-50);
+	--color-primary: oklch(75% 0.185 225);
+
+	@media (prefers-color-scheme: dark) {
+		--color-foreground-0: var(--gray-50);
+		--color-background-0: var(--gray-950);
+		--color-background-1: var(--gray-900);
+		--color-primary: oklch(68% 0.17 225);
+	}
+}
+
+body {
+	background-color: var(--color-background-0);
+	color: var(--color-foreground-0);
+}

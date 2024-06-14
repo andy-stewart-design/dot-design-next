@@ -1,0 +1,32 @@
+.container {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 16px;
+	max-width: 640px;
+}
+
+.canvas {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	aspect-ratio: 1/1;
+}
+
+.controls {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	justify-content: center;
+}
+
+.background {
+	fill: var(--color-background-1);
+
+	svg[data-filled] & {
+		fill: var(--color-primary);
+	}
+}
+
+.foreground {
+	fill: var(--color-primary);
+}
