@@ -2,6 +2,7 @@
 
 import { useId, useState } from "react";
 import s from "./progress-indicator.module.css";
+import RangeInput from "@/components/RangeInput";
 
 export default function ProgressIndicatorSandbox() {
 	const [percent, setPercent] = useState(60);
@@ -11,25 +12,31 @@ export default function ProgressIndicatorSandbox() {
 	return (
 		<div className={s.container}>
 			<div className={s.controls}>
-				<input
-					name="progress"
-					type="range"
+				<RangeInput
+					label="Progress"
+					value={percent}
+					onChange={setPercent}
 					min={0}
 					max={100}
 					step={0.01}
-					value={percent}
-					onChange={(e) => setPercent(e.target.valueAsNumber)}
 				/>
-				<input
-					name="size"
-					type="range"
+				<RangeInput
+					label="Size"
+					value={size}
+					onChange={setSize}
 					min={40}
 					max={160}
 					step={1}
-					value={size}
-					onChange={(e) => setSize(e.target.valueAsNumber)}
 				/>
-				<input
+				<RangeInput
+					label="Density"
+					value={density}
+					onChange={setDensity}
+					min={0.1}
+					max={0.4}
+					step={0.001}
+				/>
+				{/* <input
 					name="density"
 					type="range"
 					min={0.1}
@@ -37,7 +44,7 @@ export default function ProgressIndicatorSandbox() {
 					step={0.001}
 					value={density}
 					onChange={(e) => setDensity(e.target.valueAsNumber)}
-				/>
+				/> */}
 			</div>
 			<div className={s.canvas}>
 				<ProgressIndicator
