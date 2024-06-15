@@ -6,6 +6,7 @@
 	background-color: var(--color-background-1);
 	border-radius: 0.375rem;
 	overflow: clip;
+	aspect-ratio: 16 / 9;
 }
 
 .controls {
@@ -20,7 +21,6 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	aspect-ratio: 1/1;
 	background-color: var(--color-background-0);
 }
 
