@@ -6,8 +6,20 @@ import RangeInput from "@/components/RangeInput";
 
 export default function ProgressIndicatorSandbox() {
 	const [percent, setPercent] = useState(60);
-	const [size, setSize] = useState(80);
+	const [size, setSize] = useState(100);
 	const [density, setDensity] = useState(0.25);
+
+	function formatProgress(state: number) {
+		return `${Math.round(state)}%`;
+	}
+
+	function formatSize(state: number) {
+		return `${Math.round(state)}px`;
+	}
+
+	function formatDensity(state: number) {
+		return `${Math.round(size * density)}px`;
+	}
 
 	return (
 		<div className={s.container}>
@@ -19,32 +31,26 @@ export default function ProgressIndicatorSandbox() {
 					min={0}
 					max={100}
 					step={0.01}
+					outputRenderProp={formatProgress}
 				/>
 				<RangeInput
-					label="Size"
+					label="Chart Diameter"
 					value={size}
 					onChange={setSize}
 					min={40}
 					max={160}
 					step={1}
+					outputRenderProp={formatSize}
 				/>
 				<RangeInput
-					label="Density"
+					label="Width"
 					value={density}
 					onChange={setDensity}
 					min={0.1}
 					max={0.4}
 					step={0.001}
+					outputRenderProp={formatDensity}
 				/>
-				{/* <input
-					name="density"
-					type="range"
-					min={0.1}
-					max={0.4}
-					step={0.001}
-					value={density}
-					onChange={(e) => setDensity(e.target.valueAsNumber)}
-				/> */}
 			</div>
 			<div className={s.canvas}>
 				<ProgressIndicator

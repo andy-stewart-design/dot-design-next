@@ -1,25 +1,62 @@
-* {
-	box-sizing: border-box;
-}
+@layer reset, base, component, override;
+
+@import "./base/reset.css" layer(reset);
 
 :where(:root) {
-	--base-hue: 240;
-	--white: oklch(100% 0.006 var(--base-hue));
-	--gray-50: oklch(94% 0.006 var(--base-hue));
-	--gray-100: oklch(86% 0.01 var(--base-hue));
-	--gray-900: oklch(25% 0.01 var(--base-hue));
-	--gray-950: oklch(12% 0.005 var(--base-hue));
+	--base-hue: 264;
+	--white-lch: 100% 0.006 var(--base-hue);
+	--white: oklch(var(--white-lch));
+	--gray-50-lch: 94% 0.008 var(--base-hue);
+	--gray-50: oklch(var(--gray-50-lch));
+	--gray-100-lch: 88% 0.019 var(--base-hue);
+	--gray-100: oklch(var(--gray-100-lch));
+	--gray-200-lch: 79.5% 0.03 var(--base-hue);
+	--gray-200: oklch(var(--gray-200-lch));
+	--gray-300-lch: 71.5% 0.035 var(--base-hue);
+	--gray-300: oklch(var(--gray-300-lch));
+	--gray-400-lch: 64% 0.04 var(--base-hue);
+	--gray-400: oklch(var(--gray-400-lch));
+	--gray-500-lch: 56% 0.04 var(--base-hue);
+	--gray-500: oklch(var(--gray-500-lch));
+	--gray-600-lch: 48.25% 0.035 var(--base-hue);
+	--gray-600: oklch(var(--gray-600-lch));
+	--gray-700-lch: 40% 0.032 var(--base-hue);
+	--gray-700: oklch(var(--gray-700-lch));
+	--gray-800-lch: 32% 0.025 var(--base-hue);
+	--gray-800: oklch(var(--gray-800-lch));
+	--gray-900-lch: 21% 0.019 var(--base-hue);
+	--gray-900: oklch(var(--gray-900-lch));
+	--gray-950-lch: 12% 0.01 var(--base-hue);
+	--gray-950: oklch(var(--gray-950-lch));
+	--black-lch: 0% 0.01 var(--base-hue);
+	--black: oklch(var(--black-lch));
 
-	--color-foreground-0: var(--gray-950);
-	--color-background-0: var(--white);
-	--color-background-1: var(--gray-50);
-	--color-primary: oklch(75% 0.185 245);
+	--color-foreground-0-lch: var(--gray-950-lch);
+	--color-foreground-0: oklch(var(--color-foreground-0-lch));
+	--color-background-0-lch: var(--white-lch);
+	--color-background-0: oklch(var(--color-background-0-lch));
+	--color-background-1-lch: var(--gray-50-lch);
+	--color-background-1: oklch(var(--color-background-1-lch));
+	--color-background-2-lch: var(--gray-100-lch);
+	--color-background-2: oklch(var(--color-background-2-lch));
+	--color-background-3-lch: var(--gray-200-lch);
+	--color-background-3: oklch(var(--color-background-3-lch));
+	--color-primary: oklch(55% 0.265 var(--base-hue));
+
+	--border-light: solid oklch(var(--color-foreground-0-lch) / 0.1);
 
 	@media (prefers-color-scheme: dark) {
-		--color-foreground-0: var(--gray-50);
-		--color-background-0: var(--gray-950);
-		--color-background-1: var(--gray-900);
-		--color-primary: oklch(68% 0.35 245);
+		--color-foreground-0-lch: var(--gray-50-lch);
+		--color-foreground-0: oklch(var(--color-foreground-0-lch));
+		--color-background-0-lch: var(--gray-950-lch);
+		--color-background-0: oklch(var(--color-background-0-lch));
+		--color-background-1-lch: var(--gray-900-lch);
+		--color-background-1: oklch(var(--color-background-1-lch));
+		--color-background-2-lch: var(--gray-800-lch);
+		--color-background-2: oklch(var(--color-background-2-lch));
+		--color-background-3-lch: var(--gray-700-lch);
+		--color-background-3: oklch(var(--color-background-3-lch));
+		--color-primary: oklch(61% 0.225 var(--base-hue));
 	}
 }
 

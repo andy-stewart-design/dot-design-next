@@ -41,7 +41,7 @@
 			background: linear-gradient(
 				to right in oklch,
 				var(--color-primary) var(--progress),
-				var(--color-background-1) var(--progress)
+				oklch(var(--color-foreground-0-lch) / 0.1) var(--progress)
 			);
 			border-radius: 100vmax;
 		}

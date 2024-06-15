@@ -19,6 +19,7 @@ interface Props {
 	min?: number;
 	max?: number;
 	step?: number;
+	outputRenderProp?: (value: number) => ReactNode;
 }
 
 export default function RangeInput({
@@ -29,8 +30,17 @@ export default function RangeInput({
 	name: _name,
 	label,
 	step = 1,
+	outputRenderProp,
 }: Props) {
 	const name = _name ?? label?.split(" ").join("_").toLocaleLowerCase();
+
+	function formatOutput(value: number) {
+		if (outputRenderProp) {
+			return outputRenderProp(value);
+		}
+
+		return value;
+	}
 
 	return (
 		<Slider
@@ -43,7 +53,7 @@ export default function RangeInput({
 			step={step}
 		>
 			{label && <Label className={s.label}>{label}</Label>}
-			<Output className={s.output} />
+			<Output className={s.output}>{(state) => formatOutput(state.state.values[0])}</Output>
 			<Track min={min} max={max}>
 				<Thumb name={name} className={s.thumb} />
 			</Track>
