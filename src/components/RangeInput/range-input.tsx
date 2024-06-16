@@ -1,6 +1,6 @@
 "use client";
 
-import { CSSProperties, ReactNode, useContext, useState } from "react";
+import { CSSProperties, ReactNode, useContext, memo } from "react";
 import {
 	Label,
 	Slider,
@@ -22,7 +22,7 @@ interface Props {
 	outputRenderProp?: (value: number) => ReactNode;
 }
 
-export default function RangeInput({
+export function RangeInput({
 	value = 30,
 	min = 0,
 	max = 100,
@@ -33,6 +33,7 @@ export default function RangeInput({
 	outputRenderProp,
 }: Props) {
 	const name = _name ?? label?.split(" ").join("_").toLocaleLowerCase();
+	console.log("rendering", name);
 
 	function formatOutput(value: number) {
 		if (outputRenderProp) {
@@ -80,3 +81,5 @@ function Track({ children, min, max }: TrackProps) {
 		</SliderTrack>
 	);
 }
+
+export default memo(RangeInput);

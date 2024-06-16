@@ -1,25 +1,25 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useCallback, useId, useState } from "react";
 import s from "./progress-indicator.module.css";
 import RangeInput from "@/components/RangeInput";
 
 export default function ProgressIndicatorSandbox() {
 	const [percent, setPercent] = useState(60);
-	const [size, setSize] = useState(100);
-	const [density, setDensity] = useState(0.25);
+	const [outerDiameter, setOuterDiameter] = useState(100);
+	const [innerOffset, setInnerOffset] = useState(0.75);
 
-	function formatProgress(state: number) {
+	const formatProgress = useCallback((state: number) => {
 		return `${Math.round(state)}%`;
-	}
+	}, []);
 
-	function formatSize(state: number) {
+	const formatOuterDiameter = useCallback((state: number) => {
 		return `${Math.round(state)}px`;
-	}
+	}, []);
 
-	function formatDensity(state: number) {
-		return `${Math.round(size * density)}px`;
-	}
+	const formatInnerDiameter = useCallback(() => {
+		return `${Math.round(outerDiameter * innerOffset)}px`;
+	}, [outerDiameter, innerOffset]);
 
 	return (
 		<div className={s.container}>
@@ -34,30 +34,30 @@ export default function ProgressIndicatorSandbox() {
 					outputRenderProp={formatProgress}
 				/>
 				<RangeInput
-					label="Chart Diameter"
-					value={size}
-					onChange={setSize}
+					label="Outer Diameter"
+					value={outerDiameter}
+					onChange={setOuterDiameter}
 					min={40}
 					max={160}
 					step={1}
-					outputRenderProp={formatSize}
+					outputRenderProp={formatOuterDiameter}
 				/>
 				<RangeInput
-					label="Width"
-					value={density}
-					onChange={setDensity}
+					label="Inner Diameter"
+					value={innerOffset}
+					onChange={setInnerOffset}
 					min={0.1}
-					max={0.4}
+					max={0.9}
 					step={0.001}
-					outputRenderProp={formatDensity}
+					outputRenderProp={formatInnerDiameter}
 				/>
 			</div>
 			<div className={s.canvas}>
 				<ProgressIndicator
 					key={`${percent}`}
 					percent={percent}
-					size={size}
-					density={size * density}
+					outerDiameter={outerDiameter}
+					innerDiameter={outerDiameter * innerOffset}
 				/>
 			</div>
 		</div>
@@ -66,17 +66,21 @@ export default function ProgressIndicatorSandbox() {
 
 interface ProgressIndicatorProps {
 	percent: number;
-	size?: number;
-	density?: number;
+	outerDiameter?: number;
+	innerDiameter?: number;
 }
 
-function ProgressIndicator({ percent, density = 4, size = 32 }: ProgressIndicatorProps) {
-	const center = size / 2;
+function ProgressIndicator({
+	percent,
+	outerDiameter: outDia = 32,
+	innerDiameter: inDia = 24,
+}: ProgressIndicatorProps) {
+	const center = outDia / 2;
 	const frameRadius = center;
-	const lgOffset = 1;
-	const lgRadius = size / 2 - lgOffset * 2;
-	const smOffset = density;
-	const smRadius = size / 2 - smOffset;
+	const outOff = 1;
+	const outRad = outDia / 2 - outOff * 2;
+	const inRad = inDia / 2;
+	const inOff = (outDia - inDia) / 2;
 	const fill = 100 - percent;
 	const largeArc = fill < 50 ? 1 : 0;
 
@@ -86,25 +90,28 @@ function ProgressIndicator({ percent, density = 4, size = 32 }: ProgressIndicato
 	const y = frameRadius - frameRadius * Math.cos(radians);
 
 	const bgPath = `M ${center} 0
-                    A ${center} ${center} 0 ${largeArc} 1 ${center} ${size}
+                    A ${center} ${center} 0 ${largeArc} 1 ${center} ${outDia}
                     A ${center} ${center} 0 ${largeArc} 1 ${center} 0`;
 
-	const fgPath = `M ${center} 0
-                    A ${center} ${center} 0 ${largeArc} 1 ${x} ${y} 
-                    L ${center} ${center} z`;
+	const fgPath =
+		percent === 100
+			? bgPath
+			: `M ${center} 0
+               A ${center} ${center} 0 ${largeArc} 1 ${x} ${y} 
+               L ${center} ${center} z`;
 
-	const maskPath = `M ${center} ${lgOffset}
-                    A ${lgRadius} ${lgRadius} 0 ${largeArc} 1 ${center} ${size - lgOffset}
-                    A ${lgRadius} ${lgRadius} 0 ${largeArc} 1 ${center} ${lgOffset}
-                    M ${center} ${smOffset}
-                    A ${smRadius} ${smRadius} 0 ${largeArc} 1 ${center} ${size - smOffset}
-                    A ${smRadius} ${smRadius} 0 ${largeArc} 1 ${center} ${smOffset}`;
+	const maskPath = `M ${center} ${outOff}
+                    A ${outRad} ${outRad} 0 ${largeArc} 1 ${center} ${outDia - outOff}
+                    A ${outRad} ${outRad} 0 ${largeArc} 1 ${center} ${outOff}
+                    M ${center} ${inOff}
+                    A ${inRad} ${inRad} 0 ${largeArc} 1 ${center} ${outDia - inOff}
+                    A ${inRad} ${inRad} 0 ${largeArc} 1 ${center} ${inOff}`;
 
 	return (
 		<svg
-			width={size}
-			height={size}
-			viewBox={`0 0 ${size} ${size}`}
+			width={outDia}
+			height={outDia}
+			viewBox={`0 0 ${outDia} ${outDia}`}
 			fillRule="evenodd"
 			data-filled={percent === 100 ? "" : undefined}
 		>

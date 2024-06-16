@@ -25,11 +25,7 @@
 }
 
 .background {
-	fill: oklch(var(--color-foreground-0-lch) / 0.1);
-
-	svg[data-filled] & {
-		fill: var(--color-primary);
-	}
+	fill: oklch(var(--color-foreground-0-lch) / 0.15);
 }
 
 .foreground {
