@@ -8,8 +8,7 @@
 		"label output"
 		"track track";
 	grid-template-columns: 1fr auto;
-	row-gap: 0.375rem;
-	padding-block-end: var(--track-padding-block);
+	row-gap: 0.25rem;
 
 	.label {
 		font-size: 0.875rem;
@@ -52,7 +51,7 @@
 		height: var(--thumb-size);
 		border-radius: 50%;
 		background: var(--color-primary);
-		border: 2px solid var(--color-background-0);
+		border: 2px solid var(--background);
 		forced-color-adjust: none;
 		translate: 0% 50%;
 

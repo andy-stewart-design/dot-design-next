@@ -1,9 +1,10 @@
 .container {
+	--background: var(--color-background-1);
+
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	max-width: 640px;
 	border: 1px var(--border-light);
-	background-color: var(--color-background-1);
+	background-color: var(--background);
 	border-radius: 0.375rem;
 	overflow: clip;
 	aspect-ratio: 16 / 9;
@@ -12,9 +13,14 @@
 .controls {
 	display: flex;
 	flex-direction: column;
-	gap: 8px;
+	gap: 20px;
 	justify-content: center;
 	padding: 2rem;
+}
+
+.inputs {
+	display: grid;
+	gap: 12px;
 }
 
 .canvas {

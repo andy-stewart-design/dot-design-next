@@ -6,7 +6,7 @@
 	--base-hue: 264;
 	--white-lch: 100% 0.006 var(--base-hue);
 	--white: oklch(var(--white-lch));
-	--gray-50-lch: 94% 0.008 var(--base-hue);
+	--gray-50-lch: 96% 0.008 var(--base-hue);
 	--gray-50: oklch(var(--gray-50-lch));
 	--gray-100-lch: 88% 0.019 var(--base-hue);
 	--gray-100: oklch(var(--gray-100-lch));
@@ -33,6 +33,12 @@
 
 	--color-foreground-0-lch: var(--gray-950-lch);
 	--color-foreground-0: oklch(var(--color-foreground-0-lch));
+	--color-foreground-1-lch: var(--gray-800-lch);
+	--color-foreground-1: oklch(var(--color-foreground-1-lch));
+	--color-foreground-2-lch: var(--gray-700-lch);
+	--color-foreground-2: oklch(var(--color-foreground-2-lch));
+	--color-foreground-inverted-lch: var(--gray-50-lch);
+	--color-foreground-inverted: oklch(var(--color-foreground-inverted-lch));
 	--color-background-0-lch: var(--white-lch);
 	--color-background-0: oklch(var(--color-background-0-lch));
 	--color-background-1-lch: var(--gray-50-lch);
@@ -43,26 +49,26 @@
 	--color-background-3: oklch(var(--color-background-3-lch));
 	--color-primary: oklch(55% 0.265 var(--base-hue));
 
-	--border-light: solid oklch(var(--color-foreground-0-lch) / 0.1);
+	--background: var(--color-background-0);
+	--foreground: var(--color-foreground-0);
+	--border-light: solid oklch(var(--color-foreground-0-lch) / 0.0675);
 
 	@media (prefers-color-scheme: dark) {
 		--color-foreground-0-lch: var(--gray-50-lch);
-		--color-foreground-0: oklch(var(--color-foreground-0-lch));
+		--color-foreground-1-lch: var(--gray-200-lch);
+		--color-foreground-2-lch: var(--gray-300-lch);
+		--color-foreground-inverted-lch: var(--gray-950-lch);
 		--color-background-0-lch: var(--gray-950-lch);
-		--color-background-0: oklch(var(--color-background-0-lch));
 		--color-background-1-lch: var(--gray-900-lch);
-		--color-background-1: oklch(var(--color-background-1-lch));
 		--color-background-2-lch: var(--gray-800-lch);
-		--color-background-2: oklch(var(--color-background-2-lch));
 		--color-background-3-lch: var(--gray-700-lch);
-		--color-background-3: oklch(var(--color-background-3-lch));
 		--color-primary: oklch(61% 0.225 var(--base-hue));
 	}
 }
 
 body {
-	background-color: var(--color-background-0);
-	color: var(--color-foreground-0);
+	background-color: var(--background);
+	color: var(--foreground);
 	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
 		Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
