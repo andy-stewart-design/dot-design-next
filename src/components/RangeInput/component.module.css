@@ -12,13 +12,13 @@
 
 	.label {
 		font-size: 0.875rem;
-		font-weight: 500;
+		font-weight: 400;
 		grid-area: label;
 	}
 
 	.output {
 		font-size: 0.875rem;
-		font-weight: 500;
+		font-weight: 400;
 		grid-area: output;
 		font-variant-numeric: tabular-nums;
 	}

@@ -1,0 +1,21 @@
+.article {
+	display: grid;
+	gap: 1rem;
+	max-width: 800px;
+	margin: 0 auto;
+	padding: 4rem 0;
+
+	h1 {
+		font-size: 2rem;
+		font-weight: 500;
+	}
+
+	p {
+		font-weight: 350;
+		color: var(--color-foreground-1);
+	}
+
+	& > div {
+		margin-block: 0.75rem;
+	}
+}
