@@ -6,7 +6,6 @@
 	flex: 1 0 0;
 	border: none;
 	padding: 0.5rem;
-	background-color: oklch(var(--color-foreground-0-lch) / 0.05);
 	border: 1px var(--border-light);
 	border-right: none;
 	color: var(--color-foreground-2);

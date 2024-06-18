@@ -24,7 +24,7 @@ export default function ProgressIndicatorSandbox() {
 	}, [outerDiameter, innerOffset]);
 
 	return (
-		<div className={s.container}>
+		<div className={s.container} data-elevation="1">
 			<div className={s.controls}>
 				<ToggleGroup
 					name="chart-style"
@@ -34,6 +34,7 @@ export default function ProgressIndicatorSandbox() {
 					]}
 					value={chartStyle}
 					onValueChange={(e: "donut" | "pie") => setChartStyle(e)}
+					elevation={1}
 				/>
 				<div className={s.inputs}>
 					<RangeInput
@@ -65,7 +66,7 @@ export default function ProgressIndicatorSandbox() {
 					/>
 				</div>
 			</div>
-			<div className={s.canvas}>
+			<div className={s.canvas} data-elevation="0">
 				<ProgressIndicator
 					key={`${percent}`}
 					percent={percent}
@@ -132,6 +133,7 @@ function ProgressIndicator({
 			fillRule="evenodd"
 			data-filled={percent === 100 ? "" : undefined}
 		>
+			<path className={s.surface} d={bgPath} mask={`url(#${maskURL})`} />
 			<path className={s.background} d={bgPath} mask={`url(#${maskURL})`} />
 			<path className={s.foreground} d={fgPath} mask={`url(#${maskURL})`} />
 			<defs>

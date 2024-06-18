@@ -1,10 +1,7 @@
 .container {
-	--background: var(--color-background-1);
-
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	border: 1px var(--border-light);
-	background-color: var(--background);
 	border-radius: 0.375rem;
 	overflow: clip;
 	aspect-ratio: 16 / 9;
@@ -24,10 +21,34 @@
 }
 
 .canvas {
+	position: relative;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: var(--color-background-0);
+	overflow: clip;
+
+	svg {
+		position: relative;
+	}
+
+	&::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background-size: 24px 24px;
+		background-position: center;
+		opacity: 0.5;
+		background-image: linear-gradient(
+				to right,
+				var(--border-color-light) 1px,
+				transparent 1px
+			),
+			linear-gradient(to bottom, var(--border-color-light) 1px, transparent 1px);
+	}
+}
+
+.background {
+	fill: var(--color-foreground-0);
 }
 
 .background {

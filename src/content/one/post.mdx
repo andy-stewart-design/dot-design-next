@@ -1,15 +1,37 @@
 ---
-title: This is my first post
+title: Dynamic SVG Pie Charts
 abstract: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 published: "2023-07-11T12:00:00-0400"
 ---
 
-# Hello World
+# Dynamic SVG Pie Charts
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Not all SVGs are created equal.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Or, to be more specific, not all SVG rendering engines are created equal. [SVG](https://www.w3.org/TR/SVG2/), like most of the features and technologies that we use in our work, is a specification—a standard, which was written out and agreed upon, and then then interpretted and implemented by a variety of parties. This process is ultimately a good faith agreement, meaning that any individual implementation may or may not be complete and standard-compliant.
+
+In a time with such a large emphasis on parity, it’s a truth that is easy to forget. That is, until it isn’t.
+
+## The Problem
+
+I built my first [Figma widget](https://www.figma.com/widget-docs/) recently. Widgets are basically Figma components with super powers. They live on your design or Figjam canvas like any other component, but are hydrated with Javascript and are therefore interactive. For our purposes, we built a simple checklist to help our design team ensure that their files are ready for development.
+
+[Include image of checklist]
+
+Given that widgets have to live amongst all your other, common components, Figma provides an understandably limited set of tools to buld them. We wanted to include some sort of visual indicator of a user’s progress through the checklist, and the only path forward seemed to be SVG. My options were even more limited than I realized, however, which became apparent when I attempted to draw a donut chart using the `stroke-dasharray` and `stroke-dashoffset` properties, as [outlined in a great article](https://heyoka.medium.com/scratch-made-svg-donut-pie-charts-in-html5-2c587e935d72) by Mark Caron.
+
+To my surpise, Figma's implementation of SVG is non-standard. The `stroke-dasharray` property does not render the same in Figma as it does in browsers, and so the most simple solution turned out to be a nonstarter.
+
+But necessity is the mother of invention. My final solution ended up being more flexible than rendering the charts with strokes alone, and also demonstrates a few key concepts of designing with SVG (and math!):
+
+1. Programatically drawing paths based on a set of inputs
+2. Using clipping masks to define our graphic's silhouette
+3. Using `sin` and `cos` to visualize our current progress
+
+Here's a preview of what we'll be building, which I'll break down step-by-step below.
 
 <ProgressIndicator />
 
-This is from Server Components!
+Footnotes
+
+1. Before you get too excited—widgets are only interactive on your canvas and are not interactive in the context of a prototype. If you mind, like mine, immediately began racing with all of the cool interactions you could build with this API—sorry.

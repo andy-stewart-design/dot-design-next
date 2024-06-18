@@ -4,49 +4,69 @@
 
 :where(:root) {
 	--base-hue: 264;
-	--white-lch: 100% 0.006 var(--base-hue);
-	--white: oklch(var(--white-lch));
-	--gray-50-lch: 96% 0.008 var(--base-hue);
-	--gray-50: oklch(var(--gray-50-lch));
-	--gray-100-lch: 88% 0.019 var(--base-hue);
-	--gray-100: oklch(var(--gray-100-lch));
-	--gray-200-lch: 79.5% 0.03 var(--base-hue);
-	--gray-200: oklch(var(--gray-200-lch));
-	--gray-300-lch: 71.5% 0.035 var(--base-hue);
-	--gray-300: oklch(var(--gray-300-lch));
-	--gray-400-lch: 64% 0.04 var(--base-hue);
-	--gray-400: oklch(var(--gray-400-lch));
-	--gray-500-lch: 56% 0.04 var(--base-hue);
-	--gray-500: oklch(var(--gray-500-lch));
-	--gray-600-lch: 48.25% 0.035 var(--base-hue);
-	--gray-600: oklch(var(--gray-600-lch));
-	--gray-700-lch: 40% 0.032 var(--base-hue);
-	--gray-700: oklch(var(--gray-700-lch));
-	--gray-800-lch: 32% 0.025 var(--base-hue);
-	--gray-800: oklch(var(--gray-800-lch));
-	--gray-900-lch: 21% 0.019 var(--base-hue);
-	--gray-900: oklch(var(--gray-900-lch));
-	--gray-950-lch: 12% 0.01 var(--base-hue);
-	--gray-950: oklch(var(--gray-950-lch));
-	--black-lch: 0% 0.01 var(--base-hue);
-	--black: oklch(var(--black-lch));
+	--color-white-lch: 100% 0.006 var(--base-hue);
+	--color-white: oklch(var(--color-white-lch));
 
-	--color-foreground-0-lch: var(--gray-950-lch);
+	--color-gray-50-lch: 96% 0.008 var(--base-hue);
+	--color-gray-50: oklch(var(--color-gray-50-lch));
+
+	--color-gray-100-lch: 88% 0.019 var(--base-hue);
+	--color-gray-100: oklch(var(--color-gray-100-lch));
+
+	--color-gray-200-lch: 79.5% 0.03 var(--base-hue);
+	--color-gray-200: oklch(var(--color-gray-200-lch));
+
+	--color-gray-300-lch: 71.5% 0.035 var(--base-hue);
+	--color-gray-300: oklch(var(--color-gray-300-lch));
+
+	--color-gray-400-lch: 64% 0.04 var(--base-hue);
+	--color-gray-400: oklch(var(--color-gray-400-lch));
+
+	--color-gray-500-lch: 56% 0.04 var(--base-hue);
+	--color-gray-500: oklch(var(--color-gray-500-lch));
+
+	--color-gray-600-lch: 48.25% 0.035 var(--base-hue);
+	--color-gray-600: oklch(var(--color-gray-600-lch));
+
+	--color-gray-700-lch: 40% 0.032 var(--base-hue);
+	--color-gray-700: oklch(var(--color-gray-700-lch));
+
+	--color-gray-800-lch: 32% 0.025 var(--base-hue);
+	--color-gray-800: oklch(var(--color-gray-800-lch));
+
+	--color-gray-900-lch: 21% 0.019 var(--base-hue);
+	--color-gray-900: oklch(var(--color-gray-900-lch));
+
+	--color-gray-950-lch: 12% 0.01 var(--base-hue);
+	--color-gray-950: oklch(var(--color-gray-950-lch));
+
+	--color-black-lch: 0% 0.01 var(--base-hue);
+	--color-black: oklch(var(--color-black-lch));
+
+	--color-foreground-0-lch: var(--color-gray-950-lch);
 	--color-foreground-0: oklch(var(--color-foreground-0-lch));
-	--color-foreground-1-lch: var(--gray-800-lch);
+
+	--color-foreground-1-lch: var(--color-gray-800-lch);
 	--color-foreground-1: oklch(var(--color-foreground-1-lch));
-	--color-foreground-2-lch: var(--gray-700-lch);
+
+	--color-foreground-2-lch: var(--color-gray-700-lch);
 	--color-foreground-2: oklch(var(--color-foreground-2-lch));
-	--color-foreground-inverted-lch: var(--gray-50-lch);
+
+	--color-foreground-inverted-lch: var(--color-gray-50-lch);
 	--color-foreground-inverted: oklch(var(--color-foreground-inverted-lch));
-	--color-background-0-lch: var(--white-lch);
+
+	--color-background-0-lch: var(--color-white-lch);
 	--color-background-0: oklch(var(--color-background-0-lch));
-	--color-background-1-lch: var(--gray-50-lch);
+
+	--color-background-1-lch: var(--color-gray-50-lch);
 	--color-background-1: oklch(var(--color-background-1-lch));
-	--color-background-2-lch: var(--gray-100-lch);
+
+	--color-background-2-lch: var(--color-gray-100-lch);
 	--color-background-2: oklch(var(--color-background-2-lch));
-	--color-background-3-lch: var(--gray-200-lch);
+
+	--color-background-3-lch: var(--color-gray-200-lch);
 	--color-background-3: oklch(var(--color-background-3-lch));
+
 	--color-primary: oklch(55% 0.265 var(--base-hue));
 
 	--background: var(--color-background-0);
@@ -54,15 +74,90 @@
 	--border-light: solid oklch(var(--color-foreground-0-lch) / 0.0675);
 
 	@media (prefers-color-scheme: dark) {
-		--color-foreground-0-lch: var(--gray-50-lch);
-		--color-foreground-1-lch: var(--gray-200-lch);
-		--color-foreground-2-lch: var(--gray-300-lch);
-		--color-foreground-inverted-lch: var(--gray-950-lch);
-		--color-background-0-lch: var(--gray-950-lch);
-		--color-background-1-lch: var(--gray-900-lch);
-		--color-background-2-lch: var(--gray-800-lch);
-		--color-background-3-lch: var(--gray-700-lch);
+		--color-foreground-0-lch: var(--color-gray-50-lch);
+		--color-foreground-1-lch: var(--color-gray-200-lch);
+		--color-foreground-2-lch: var(--color-gray-300-lch);
+		--color-foreground-inverted-lch: var(--color-gray-950-lch);
+		--color-background-0-lch: var(--color-gray-950-lch);
+		--color-background-1-lch: var(--color-gray-900-lch);
+		--color-background-2-lch: var(--color-gray-800-lch);
+		--color-background-3-lch: var(--color-gray-700-lch);
 		--color-primary: oklch(61% 0.225 var(--base-hue));
+	}
+}
+
+html {
+	--background-global: var(--color-white);
+	--elevation-1-global: var(--color-gray-50);
+	--foreground-global: var(--color-gray-950);
+	--border-light-global: 1px solid var(--color-gray-100);
+
+	background: var(--background-global, white);
+	color: var(--foreground-global, black);
+
+	@media (prefers-color-scheme: dark) {
+		--background-global: var(--color-gray-950);
+		--surface-1-global: var(--color-gray-900);
+		--foreground-global: var(--color-gray-50);
+		--border-light-global: 1px solid var(--color-gray-900);
+	}
+}
+
+[data-elevation="0"] {
+	--background: var(--color-white);
+	--elevation-1: var(--color-gray-50);
+	--foreground: var(--color-gray-950);
+	--border-color-light: var(--color-gray-100);
+	--border-light: solid var(--border-color-light);
+
+	background: var(--background, var(--background-global));
+	color: var(--foreground, var(--foreground-global));
+
+	@media (prefers-color-scheme: dark) {
+		--background: var(--color-gray-950);
+		--elevation-1: var(--color-gray-900);
+		--foreground: var(--color-gray-50);
+		--border-color-light: var(--color-gray-800);
+		--border-light: solid var(--border-color-light);
+	}
+}
+
+[data-elevation="1"] {
+	--background: var(--color-gray-50);
+	--elevation-1: var(--color-gray-100);
+	--foreground: var(--color-gray-950);
+	--border-color-light: var(--color-gray-200);
+	--border-light: solid var(--border-color-light);
+
+	background: var(--background, var(--background-global));
+	color: var(--foreground, var(--foreground-global));
+
+	@media (prefers-color-scheme: dark) {
+		--background: var(--color-gray-900);
+		--elevation-1: var(--color-gray-800);
+		--foreground: var(--color-gray-50);
+		--border-color-light: var(--color-gray-800);
+		--border-light: solid var(--border-color-light);
+	}
+}
+
+[data-elevation="2"] {
+	--background: var(--color-gray-100);
+	--elevation-1: var(--color-gray-200);
+	--foreground: var(--color-gray-950);
+	/* Should border-color-light always be the same as the eleveation var? */
+	--border-color-light: var(--color-gray-200);
+	--border-light: solid var(--border-color-light);
+
+	background: var(--background, var(--background-global));
+	color: var(--foreground, var(--foreground-global));
+
+	@media (prefers-color-scheme: dark) {
+		--background: var(--color-gray-800);
+		--elevation-1: var(--color-gray-700);
+		--foreground: var(--color-gray-50);
+		--border-color-light: var(--color-gray-700);
+		--border-light: solid var(--border-color-light);
 	}
 }
 
