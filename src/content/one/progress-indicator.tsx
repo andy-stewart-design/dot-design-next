@@ -12,15 +12,15 @@ export default function ProgressIndicatorSandbox() {
 	const [innerOffset, setInnerOffset] = useState(0.75);
 
 	const formatProgress = useCallback((state: number) => {
-		return `${Math.round(state)}%`;
+		return `${Math.floor(state)}%`;
 	}, []);
 
 	const formatOuterDiameter = useCallback((state: number) => {
-		return `${Math.round(state)}px`;
+		return `${Math.floor(state)}px`;
 	}, []);
 
 	const formatInnerDiameter = useCallback(() => {
-		return `${Math.round(outerDiameter * innerOffset)}px`;
+		return `${Math.floor(outerDiameter * innerOffset)}px`;
 	}, [outerDiameter, innerOffset]);
 
 	return (
@@ -133,7 +133,6 @@ function ProgressIndicator({
 			fillRule="evenodd"
 			data-filled={percent === 100 ? "" : undefined}
 		>
-			<path className={s.surface} d={bgPath} mask={`url(#${maskURL})`} />
 			<path className={s.background} d={bgPath} mask={`url(#${maskURL})`} />
 			<path className={s.foreground} d={fgPath} mask={`url(#${maskURL})`} />
 			<defs>

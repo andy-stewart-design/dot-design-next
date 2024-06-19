@@ -6,32 +6,44 @@ published: "2023-07-11T12:00:00-0400"
 
 # Dynamic SVG Pie Charts
 
-Not all SVGs are created equal.
+Not all SVGs are rendered equal.
 
-Or, to be more specific, not all SVG rendering engines are created equal. [SVG](https://www.w3.org/TR/SVG2/), like most of the features and technologies that we use in our work, is a specification—a standard, which was written out and agreed upon, and then then interpretted and implemented by a variety of parties. This process is ultimately a good faith agreement, meaning that any individual implementation may or may not be complete and standard-compliant.
+[SVG](https://www.w3.org/TR/SVG2/), like most of the features and technologies we use in our work, is a specification—a standardized set of principles, which were written out and agreed upon, and then then interpretted and implemented by a variety of parties over time. This process is ultimately a good faith agreement, meaning that any individual renderign engine may or may not be complete and standard-compliant.
 
-In a time with such a large emphasis on parity, it’s a truth that is easy to forget. That is, until it isn’t.
+In a time with such a large emphasis on parity, it’s a truth that can be easy to forget. That is, until it isn’t.
 
 ## The Problem
 
-I built my first [Figma widget](https://www.figma.com/widget-docs/) recently. Widgets are basically Figma components with super powers. They live on your design or Figjam canvas like any other component, but are hydrated with Javascript and are therefore interactive. For our purposes, we built a simple checklist to help our design team ensure that their files are ready for development.
-
-[Include image of checklist]
+I built my first [Figma widget](https://www.figma.com/widget-docs/) recently. Simply put, widgets are Figma components with super powers. They live on your design or FigJam canvas like any other component, but are hydrated with Javascript and are therefore interactive. For our purposes, we built a simple checklist to help our design team ensure that their files are ready for development.
 
 Given that widgets have to live amongst all your other, common components, Figma provides an understandably limited set of tools to buld them. We wanted to include some sort of visual indicator of a user’s progress through the checklist, and the only path forward seemed to be SVG. My options were even more limited than I realized, however, which became apparent when I attempted to draw a donut chart using the `stroke-dasharray` and `stroke-dashoffset` properties, as [outlined in a great article](https://heyoka.medium.com/scratch-made-svg-donut-pie-charts-in-html5-2c587e935d72) by Mark Caron.
 
+[Image of expectation v reality in Figma]
+
 To my surpise, Figma's implementation of SVG is non-standard. The `stroke-dasharray` property does not render the same in Figma as it does in browsers, and so the most simple solution turned out to be a nonstarter.
 
-But necessity is the mother of invention. My final solution ended up being more flexible than rendering the charts with strokes alone, and also demonstrates a few key concepts of designing with SVG (and math!):
+But necessity is the mother of invention. My final solution ended up being more flexible than rendering the charts with strokes alone, and also demonstrates a few key concepts of designing and building with SVG (and math!):
 
-1. Programatically drawing paths based on a set of inputs
-2. Using clipping masks to define our graphic's silhouette
+1. Programatically drawing paths based on a dynamic set of inputs
+2. Using clipping masks to define and shape our graphic's silhouette
 3. Using `sin` and `cos` to visualize our current progress
 
 Here's a preview of what we'll be building, which I'll break down step-by-step below.
 
 <ProgressIndicator />
 
-Footnotes
+## Drawing Dynamic Paths
+
+In this section, I need to explain the following concepts:
+
+- Paths v shapes (keep this short)
+- The M, L, A, and Z commands
+  - I should briefly mention the difference between capital and lowercase commands (maybe as a callout)
+  - To demonstrate the M, L, and Z commands, what if I had a component where you could click anywhere to add a point and see the path code update in sync?
+  - Then, with a second component, I should explore the different aspects of the arc command
+
+<PathDrawing />
+
+## Footnotes
 
 1. Before you get too excited—widgets are only interactive on your canvas and are not interactive in the context of a prototype. If you mind, like mine, immediately began racing with all of the cool interactions you could build with this API—sorry.

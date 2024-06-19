@@ -1,0 +1,43 @@
+.container {
+	--brad-this: calc(var(--brad-lg) + 0.5rem);
+
+	display: grid;
+	grid-template-columns: 1fr max-content;
+	aspect-ratio: 16 / 9;
+	border-radius: var(--brad-this);
+	padding: 0.5rem;
+}
+
+.code {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25em;
+	justify-content: center;
+	padding: 1rem;
+	font-size: 0.875em;
+
+	.indent-1 {
+		padding-inline-start: 0.75rem;
+	}
+
+	.indent-2 {
+		padding-inline-start: 1.5rem;
+	}
+
+	.point {
+		background: oklch(62% 0.15 var(--hue));
+		color: var(--foreground-inverted);
+		font-weight: 600;
+		padding: 0.0625rem 0.1875rem;
+		border-radius: 0.125rem;
+		white-space: nowrap;
+	}
+}
+
+.canvas {
+	display: flex;
+	justify-content: center;
+	aspect-ratio: 1 / 1;
+	align-items: center;
+	overflow: clip;
+}

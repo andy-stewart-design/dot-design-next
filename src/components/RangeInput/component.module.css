@@ -14,6 +14,7 @@
 		font-size: 0.875rem;
 		font-weight: 400;
 		grid-area: label;
+		user-select: none;
 	}
 
 	.output {
@@ -21,6 +22,7 @@
 		font-weight: 400;
 		grid-area: output;
 		font-variant-numeric: tabular-nums;
+		user-select: none;
 	}
 
 	.track {
@@ -40,7 +42,7 @@
 			background: linear-gradient(
 				to right in oklch,
 				var(--color-primary) var(--progress),
-				oklch(var(--color-foreground-0-lch) / 0.1) var(--progress)
+				var(--elevation-1) var(--progress)
 			);
 			border-radius: 100vmax;
 		}
