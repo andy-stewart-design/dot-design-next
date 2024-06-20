@@ -33,7 +33,6 @@ export function RangeInput({
 	outputRenderProp,
 }: Props) {
 	const name = _name ?? label?.split(" ").join("_").toLocaleLowerCase();
-	console.log("rendering", name);
 
 	function formatOutput(value: number) {
 		if (outputRenderProp) {

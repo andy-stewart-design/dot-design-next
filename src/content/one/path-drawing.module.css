@@ -8,20 +8,31 @@
 	padding: 0.5rem;
 }
 
+.content {
+	display: grid;
+	grid-template-rows: max-content 1fr;
+	padding: 1rem;
+}
+
+.controls {
+	padding-block-end: 1rem;
+	border-bottom: var(--border-lt);
+}
+
 .code {
 	display: flex;
 	flex-direction: column;
 	gap: 0.25em;
 	justify-content: center;
-	padding: 1rem;
+	font-family: monospace;
 	font-size: 0.875em;
 
 	.indent-1 {
-		padding-inline-start: 0.75rem;
+		padding-inline-start: 2ch;
 	}
 
 	.indent-2 {
-		padding-inline-start: 1.5rem;
+		padding-inline-start: 4ch;
 	}
 
 	.point {
@@ -35,9 +46,21 @@
 }
 
 .canvas {
+	position: relative;
 	display: flex;
 	justify-content: center;
 	aspect-ratio: 1 / 1;
 	align-items: center;
 	overflow: clip;
+}
+
+.wrapper {
+	width: 100%;
+	height: 100%;
+}
+
+.reset {
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
 }
