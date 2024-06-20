@@ -60,7 +60,13 @@
 }
 
 .reset {
+	display: block;
 	position: absolute;
 	top: 1rem;
 	right: 1rem;
+	padding: 0.75rem;
+	color: var(--foreground);
+	background: var(--background);
+	border: var(--border-lt);
+	border-radius: 100vmax;
 }

@@ -1,8 +1,10 @@
 "use client";
 
-import { MouseEvent, useState } from "react";
-import s from "./path-drawing.module.css";
+import { type MouseEvent, useState } from "react";
 import { map } from "@/utils/math";
+import s from "./path-drawing.module.css";
+import Switch from "@/components/Switch";
+import { Refresh } from "@/components/Icons/20";
 
 export default function PathDrawing() {
 	const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -59,14 +61,9 @@ export default function PathDrawing() {
 		<div className={s.container} data-elevation="1">
 			<div className={s.content}>
 				<div className={s.controls}>
-					<label>
-						<input
-							type="checkbox"
-							checked={isClosed}
-							onChange={(e) => setIsClosed(e.target.checked)}
-						/>
-						<span>Close path</span>
-					</label>
+					<Switch checked={isClosed} onChange={(e) => setIsClosed(e.target.checked)}>
+						Close path (Z)
+					</Switch>
 				</div>
 				<div className={s.code}>
 					<p>{`<svg viewBox="0 0 100 100">`}</p>
@@ -96,7 +93,7 @@ export default function PathDrawing() {
 					</svg>
 				</div>
 				<button className={s.reset} onClick={reset}>
-					Reset
+					<Refresh />
 				</button>
 			</div>
 		</div>
