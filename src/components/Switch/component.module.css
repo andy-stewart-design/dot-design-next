@@ -1,17 +1,17 @@
 .switch {
-	--layout-direction: row; /* row or row-reverse */
-	--thumb-size: 28px;
+	--thumb-size: 24px;
 	--thumb-color: white;
-	--track-size: calc(var(--thumb-size) * 1.75);
+	--track-size: calc(var(--thumb-size) * 1.75 + var(--track-padding) * 2);
 	--track-padding: 4px;
 	--transition-timing: 150ms;
 	--transition-ease: ease-out;
 	--background-color: var(--elevation-1);
 
 	display: flex;
+	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	gap: 0.5rem;
+	gap: 1rem;
 
 	label {
 		user-select: none;
@@ -20,41 +20,38 @@
 			Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 	}
 
+	&[data-switch-position="left"] {
+		flex-direction: row-reverse;
+		justify-content: flex-end;
+	}
+
 	[role="switch"] {
 		--thumb-position: 0%;
 
 		appearance: none;
-
+		padding: var(--track-padding);
 		inline-size: var(--track-size);
 		background-color: var(--background-color);
-		border: var(--border);
 		border-radius: var(--thumb-size);
-		cursor: pointer;
 
 		flex-shrink: 0;
 		display: grid;
-		align-items: center;
 		grid: [track] 1fr / [track] 1fr;
-		overflow: hidden;
 		margin: 0;
 
 		transition: background-color var(--transition-timing) var(--transition-ease);
 
 		&::before {
-			box-sizing: border-box;
 			content: "";
 			grid-area: track;
 
 			inline-size: var(--thumb-size);
 			block-size: var(--thumb-size);
-			aspect-ratio: 1/1;
 			background: var(--thumb-color);
-			border: var(--track-padding) solid transparent;
-			background-clip: padding-box;
 			border-radius: var(--thumb-size);
 
-			transform: translateX(var(--thumb-position));
-			transition: transform var(--transition-timing) var(--transition-ease),
+			translate: var(--thumb-position);
+			transition: translate var(--transition-timing) var(--transition-ease),
 				border var(--transition-timing) var(--transition-ease),
 				background var(--transition-timing) var(--transition-ease);
 		}
@@ -66,7 +63,9 @@
 		} */
 
 		&:checked {
-			--thumb-position: calc(var(--track-size) - 100%);
+			--thumb-position: calc(
+				var(--track-size) - var(--thumb-size) - var(--track-padding) * 2
+			);
 			--background-color: var(--color-primary);
 		}
 

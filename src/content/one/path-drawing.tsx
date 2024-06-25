@@ -92,7 +92,7 @@ export default function PathDrawing() {
 						))}
 					</svg>
 				</div>
-				<button className={s.reset} onClick={reset}>
+				<button className={s.reset} onClick={reset} disabled={points.length <= 2}>
 					<Refresh />
 				</button>
 			</div>

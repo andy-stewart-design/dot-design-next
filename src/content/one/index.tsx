@@ -23,3 +23,15 @@ export const PathDrawing = dynamic(() => import("@/content/one/path-drawing"), {
 		/>
 	),
 });
+
+export const SVGGrid = dynamic(() => import("@/content/one/svg-grid"), {
+	loading: () => (
+		<div
+			style={{
+				aspectRatio: "16 / 9 ",
+				maxWidth: "640px",
+				backgroundColor: "var(--color-background-1)",
+			}}
+		/>
+	),
+});

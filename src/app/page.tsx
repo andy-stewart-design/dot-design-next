@@ -9,7 +9,9 @@ export default async function Home() {
 		<div>
 			{posts.map((post) => (
 				<div key={post.id}>
-					<Link href={`/posts/${post.slug}`}>{post.title}</Link>
+					<Link href={`/posts/${post.slug}`} prefetch={true}>
+						{post.title}
+					</Link>
 				</div>
 			))}
 		</div>
