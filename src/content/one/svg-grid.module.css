@@ -6,12 +6,17 @@
 	aspect-ratio: 16 / 9;
 	border-radius: var(--brad-this);
 	padding: 0.5rem;
+	padding-inline-start: 0;
+
+	&:has([data-active-edge]) {
+		cursor: col-resize;
+	}
 }
 
 .content {
 	display: grid;
 	grid-template-rows: 1fr;
-	padding: 1rem;
+	/* padding-inline-start: 0.75rem; */
 }
 
 /* .controls {
@@ -23,17 +28,44 @@
 .code {
 	display: flex;
 	flex-direction: column;
-	gap: 0.25em;
+	gap: 0.375em;
 	justify-content: center;
 	font-family: monospace;
 	font-size: 0.875em;
+	padding: 0.5rem;
+	counter-reset: code-counter;
 
-	.indent-1 {
-		padding-inline-start: 2ch;
+	.highlight {
+		background: var(--elevation-1);
+		font-weight: 700;
+
+		&[data-active] {
+			background: var(--color-primary);
+			color: var(--foreground-inverted);
+		}
 	}
 
-	.indent-2 {
-		padding-inline-start: 4ch;
+	p {
+		--offset: 6ch;
+		position: relative;
+		padding-inline-start: var(--offset);
+		counter-increment: code-counter;
+
+		&.tab1 {
+			padding-inline-start: calc(var(--offset) + 2ch);
+		}
+
+		&.tab2 {
+			padding-inline-start: calc(var(--offset) + 4ch);
+		}
+
+		&::before {
+			content: counter(code-counter, decimal-leading-zero);
+			position: absolute;
+			left: 1ch;
+			top: 0;
+			opacity: 0.5;
+		}
 	}
 
 	.point {
@@ -86,8 +118,12 @@
 		transition: opacity 50ms ease-out;
 	}
 
-	&:hover::before {
-		opacity: 1;
+	&:hover {
+		cursor: col-resize;
+
+		&::before {
+			opacity: 1;
+		}
 	}
 }
 

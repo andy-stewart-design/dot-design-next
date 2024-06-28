@@ -27,14 +27,14 @@ export default function SVGGrid() {
 		);
 
 		if (distance < radius) {
+			// If you have clicked on the circle
 			const nextPos = { ...position };
 			const offX = clickPos.x - nextPos.x;
 			const offY = clickPos.y - nextPos.y;
 			posOffset.current = { x: offX, y: offY };
 			setActiveElement("circle");
-		}
-
-		if (detectHoverY(e)) {
+		} else if (detectHoverY(e)) {
+			// If you have clicked on one of the edges
 			const div = e.currentTarget.getBoundingClientRect();
 			const edgeRight = div.width / 2 + width / 2;
 			const edgeLeft = div.width / 2 - width / 2;
@@ -76,14 +76,25 @@ export default function SVGGrid() {
 				 */}
 				<div className={s.code}>
 					<p>{`<svg`}</p>
-					<p className={s["indent-1"]}>{`viewBox="0 0 32 24"`}</p>
-					<p className={s["indent-1"]}>{`width="${width}"`}</p>
+					<p className={s.tab1}>{`viewBox="0 0 32 24"`}</p>
+					<p
+						className={cn(s.tab1, s.highlight)}
+						data-active={
+							activeElement === "left" || activeElement === "right" ? "" : undefined
+						}
+					>{`width="${width}"`}</p>
 					<p>{`>`}</p>
-					<p className={s["indent-1"]}>{`<circle`}</p>
-					<p className={s["indent-2"]}>{`cx="${position.x.toFixed(2)}"`}</p>
-					<p className={s["indent-2"]}>{`cy="${position.y.toFixed(2)}"`}</p>
-					<p className={s["indent-2"]}>{`r="${radius}"`}</p>
-					<p className={s["indent-1"]}>{`/>`}</p>
+					<p className={s.tab1}>{`<circle`}</p>
+					<p
+						className={cn(s.tab2, s.highlight)}
+						data-active={activeElement === "circle" ? "" : undefined}
+					>{`cx="${position.x.toFixed(2)}"`}</p>
+					<p
+						className={cn(s.tab2, s.highlight)}
+						data-active={activeElement === "circle" ? "" : undefined}
+					>{`cy="${position.y.toFixed(2)}"`}</p>
+					<p className={s.tab2}>{`r="${radius}"`}</p>
+					<p className={s.tab1}>{`/>`}</p>
 					<p>{`</svg>`}</p>
 				</div>
 			</div>
