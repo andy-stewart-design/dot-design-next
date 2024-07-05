@@ -61,7 +61,7 @@ export default function PathDrawing() {
 		<div className={s.container} data-elevation="1">
 			<div className={s.content}>
 				<div className={s.controls}>
-					<Switch checked={isClosed} onChange={(e) => setIsClosed(e.target.checked)}>
+					<Switch checked={isClosed} onChange={setIsClosed}>
 						Close path (Z)
 					</Switch>
 				</div>

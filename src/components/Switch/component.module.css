@@ -1,5 +1,5 @@
 .switch {
-	--thumb-size: 24px;
+	--thumb-size: 18px;
 	--thumb-color: white;
 	--track-size: calc(var(--thumb-size) * 1.75 + var(--track-padding) * 2);
 	--track-padding: 4px;
@@ -12,13 +12,6 @@
 	justify-content: space-between;
 	align-items: center;
 	gap: 1rem;
-
-	label {
-		user-select: none;
-		font-size: 0.9375rem;
-		font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-			Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-	}
 
 	&[data-switch-position="left"] {
 		flex-direction: row-reverse;

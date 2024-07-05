@@ -2,13 +2,14 @@
 
 import { CSSProperties, ReactNode, useContext, memo } from "react";
 import {
-	Label,
+	// Label,
 	Slider,
 	SliderOutput as Output,
 	SliderThumb as Thumb,
 	SliderTrack,
 	SliderStateContext,
 } from "react-aria-components";
+import Label from "@/components/Label";
 import s from "./component.module.css";
 
 interface Props {
@@ -52,7 +53,11 @@ export function RangeInput({
 			maxValue={max}
 			step={step}
 		>
-			{label && <Label className={s.label}>{label}</Label>}
+			{label && (
+				<Label as="aria" className={s.label}>
+					{label}
+				</Label>
+			)}
 			<Output className={s.output}>{(state) => formatOutput(state.state.values[0])}</Output>
 			<Track min={min} max={max}>
 				<Thumb name={name} className={s.thumb} />

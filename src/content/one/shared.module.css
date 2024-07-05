@@ -1,0 +1,138 @@
+.container {
+	--brad-this: calc(var(--brad-lg) + 0.5rem);
+
+	display: grid;
+	aspect-ratio: 16 / 9;
+	border-radius: var(--brad-this);
+	padding: 0.5rem;
+
+	@media screen and (min-width: 640px) {
+		grid-template-columns: 1fr max-content;
+	}
+}
+
+.content {
+	padding: 1rem;
+
+	&,
+	&[data-rows="1"] {
+		display: flex;
+		flex-direction: column;
+		gap: 0.375em;
+		justify-content: center;
+	}
+
+	&[data-rows="2"] {
+		display: grid;
+		grid-template-rows: max-content 1fr;
+		justify-content: unset;
+
+		& > *:first-child {
+			display: grid;
+			gap: 1rem;
+			padding-block-end: 1rem;
+			border-bottom: var(--border-lt);
+		}
+
+		& > *:nth-child(2) {
+			display: flex;
+			flex-direction: column;
+			gap: 0.25em;
+			justify-content: center;
+			padding-block-start: 0.5rem;
+		}
+	}
+}
+
+.canvas {
+	position: relative;
+	aspect-ratio: 1 / 1;
+	overflow: clip;
+
+	.wrapper {
+		width: 100%;
+		height: 100%;
+	}
+}
+
+.code {
+	--tab-size: 2ch;
+
+	font-family: monospace;
+	font-size: 0.825em;
+	overflow-y: scroll;
+	user-select: none;
+
+	& > p {
+		white-space: nowrap;
+	}
+
+	.indent_1 {
+		padding-inline-start: var(--tab-size);
+		padding-inline-end: 1ch;
+	}
+
+	.indent_2 {
+		padding-inline-start: calc(var(--tab-size) * 2);
+		padding-inline-end: 1ch;
+	}
+
+	.indent_3_5 {
+		padding-inline-start: calc(var(--tab-size) * 3.5);
+		padding-inline-end: 1ch;
+	}
+
+	.highlight_line {
+		background: var(--elevation-1);
+		font-weight: 700;
+		min-width: max-content;
+		color: var(--foreground);
+
+		&[data-interactive] {
+			animation-name: post-demo-code-highlight;
+			animation-duration: 600ms;
+			animation-timing-function: ease-out;
+			animation-fill-mode: forwards;
+		}
+
+		&[data-active] {
+			background: var(--color-primary);
+			color: var(--foreground-inverted);
+		}
+	}
+}
+
+.btn {
+	display: block;
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
+	padding: 0.75rem;
+	color: var(--foreground);
+	background: var(--background);
+	border: var(--border-lt);
+	border-radius: 100vmax;
+	transition: opacity 150ms ease-out, background 150ms ease-out;
+
+	&:disabled {
+		opacity: 0.5;
+	}
+
+	@media (hover: hover) {
+		&:not(:disabled):hover {
+			background: var(--elevation-1);
+		}
+	}
+}
+
+@keyframes post-demo-code-highlight {
+	0%,
+	50% {
+		background: var(--color-primary);
+		color: var(--foreground-inverted);
+	}
+	100% {
+		background: var(--elevation-1);
+		color: var(--foreground);
+	}
+}
