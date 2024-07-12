@@ -77,6 +77,11 @@
 		padding-inline-end: 1ch;
 	}
 
+	.indent_3 {
+		padding-inline-start: calc(var(--tab-size) * 3);
+		padding-inline-end: 1ch;
+	}
+
 	.indent_3_5 {
 		padding-inline-start: calc(var(--tab-size) * 3.5);
 		padding-inline-end: 1ch;

@@ -1,11 +1,11 @@
 "use client";
 
 import { type MouseEvent, useState } from "react";
-import { map } from "@/utils/math";
 import Switch from "@/components/Switch";
 import RangeInput from "@/components/RangeInput";
+import { map } from "@/utils/math";
 import { Refresh } from "@/components/Icons/20";
-import cn from "clsx";
+import cn from "clsx/lite";
 import s from "./shared.module.css";
 
 const size = 100;
@@ -19,22 +19,20 @@ const defaultPoints = [
 
 export default function ArcDrawing() {
 	const [activeIndex, setActiveIndex] = useState<number | null>(null);
-	const [rad, setRad] = useState<number>(initDiameter);
+	const [radius, setRadius] = useState<number>(initDiameter);
 	const [points, setPoints] = useState(defaultPoints);
 	const [isLarge, setIsLarge] = useState(true);
 	const [isClockwise, setIsClockwise] = useState(true);
 	const [interactiveIndices, setInteractiveIndices] = useState<number[]>([]);
 
-	console.log("interactiveIndices", interactiveIndices);
-
 	const dist = distance(points[0], points[1]);
-	if (rad * 2 < dist) setRad(dist / 2);
+	if (radius * 2 < dist) setRadius(dist / 2);
 
 	const largeArc = isLarge ? 1 : 0;
 	const sweep = isClockwise ? 1 : 0;
 	const { x, y } = points[1];
 	const wedgePath = `M ${points[0].x} ${points[0].y}
-                       A ${rad} ${rad} 0 ${largeArc} ${sweep} ${x} ${y}`;
+                       A ${radius} ${radius} 0 ${largeArc} ${sweep} ${x} ${y}`;
 
 	function handleClick() {
 		if (activeIndex === null) return;
@@ -68,13 +66,13 @@ export default function ArcDrawing() {
 	}
 
 	function handleRangeChange(v: number) {
-		setRad(v);
+		setRadius(v);
 		if (!interactiveIndices.includes(1)) setInteractiveIndices((c) => [...c, 1]);
 	}
 
 	function reset() {
 		setPoints(defaultPoints);
-		setRad(initDiameter);
+		setRadius(initDiameter);
 		setIsLarge(true);
 		setIsClockwise(true);
 		setInteractiveIndices([]);
@@ -85,8 +83,8 @@ export default function ArcDrawing() {
 			<div className={s.content} data-rows="2">
 				<div>
 					<RangeInput
-						label="Diameter"
-						value={rad}
+						label="Arc Radius"
+						value={radius}
 						onChange={handleRangeChange}
 						min={dist / 2}
 						max={dist / 2 + 40}
@@ -121,10 +119,12 @@ export default function ArcDrawing() {
 						data-interactive={interactiveIndices.includes(0) ? "" : undefined}
 					>{`d="M ${points[0].x} ${points[0].y}`}</p>
 					<p
-						key={JSON.stringify([rad, points[1], isLarge, isClockwise])}
+						key={JSON.stringify([radius, points[1], isLarge, isClockwise])}
 						className={cn(s.indent_3_5, s.highlight_line)}
 						data-interactive={interactiveIndices.includes(1) ? "" : undefined}
-					>{`A ${Math.round(rad)} ${Math.round(rad)} 0 ${largeArc} ${sweep} ${x} ${y}"`}</p>
+					>{`A ${Math.round(radius)} ${Math.round(
+						radius
+					)} 0 ${largeArc} ${sweep} ${x} ${y}"`}</p>
 					<p className={s.indent_1}>{`></path>`}</p>
 					<p>{`</svg>`}</p>
 				</div>
