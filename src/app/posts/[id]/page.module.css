@@ -1,79 +1,81 @@
-.article {
-	display: grid;
-	grid-template-columns: 1fr min(62ch, 100%) 1fr;
-	row-gap: 1rem;
-	max-width: 80ch;
-	margin: 0 auto;
-	padding: 4rem 0;
-	font-size: 17px;
-
-	& > * {
-		grid-column: 2;
-	}
-
-	h1 {
-		font-size: 1.75em;
-		font-weight: 500;
-	}
-
-	h2 {
-		font-size: 1.25em;
-		font-weight: 500;
-		margin-top: 1em;
-		margin-bottom: 0.25em;
-	}
-
-	hr {
-		width: 100%;
-		border: 0.75px solid var(--border-color-lt);
-	}
-
-	:is(ol, ul) {
+@layer base {
+	.article {
 		display: grid;
-		gap: 0.25em;
-		margin: 0;
-		padding-inline-start: 1.25em;
-		list-style-position: inside;
-		list-style: none;
-		counter-reset: num;
+		grid-template-columns: 1fr min(62ch, 100%) 1fr;
+		row-gap: 1rem;
+		max-width: 80ch;
+		margin: 0 auto;
+		padding: 4rem 0;
+		font-size: 17px;
 
-		li {
-			position: relative;
-			counter-increment: num;
+		& > * {
+			grid-column: 2;
+		}
 
-			&::before {
-				position: absolute;
-				left: -1.375em;
-				color: var(--color-primary);
-				font-weight: 500;
-				font-variant-numeric: tabular-nums;
+		h1 {
+			font-size: 1.75em;
+			font-weight: 500;
+		}
+
+		h2 {
+			font-size: 1.25em;
+			font-weight: 500;
+			margin-top: 1em;
+			margin-bottom: 0.25em;
+		}
+
+		hr {
+			width: 100%;
+			border: 0.75px solid var(--border-color-lt);
+		}
+
+		:is(ol, ul) {
+			display: grid;
+			gap: 0.25em;
+			margin: 0;
+			padding-inline-start: 1.25em;
+			list-style-position: inside;
+			list-style: none;
+			counter-reset: num;
+
+			li {
+				position: relative;
+				counter-increment: num;
+
+				&::before {
+					position: absolute;
+					left: -1.375em;
+					color: var(--color-primary);
+					font-weight: 500;
+					font-variant-numeric: tabular-nums;
+				}
+			}
+
+			&:is(ul) li::before {
+				content: "→";
+			}
+
+			&:is(ol) li::before {
+				content: counter(num) ". ";
 			}
 		}
 
-		&:is(ul) li::before {
-			content: "→";
+		:is(p, li) {
+			line-height: 1.6;
+			font-weight: 325;
+			color: var(--foreground-md);
+
+			code {
+				font-size: 0.875em;
+				padding: 0.125em;
+				background: var(--elevation-1);
+				border-radius: 0.125rem;
+			}
 		}
 
-		&:is(ol) li::before {
-			content: counter(num) ". ";
+		& > div {
+			margin-block: 1.5em;
+			grid-column: 1 / 4;
 		}
-	}
-
-	:is(p, li) {
-		line-height: 1.6;
-		font-weight: 325;
-		color: var(--foreground-md);
-
-		code {
-			font-size: 0.875em;
-			padding: 0.125em;
-			background: var(--elevation-1);
-			border-radius: 0.125rem;
-		}
-	}
-
-	& > div {
-		margin-block: 1.5em;
-		grid-column: 1 / 4;
 	}
 }

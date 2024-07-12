@@ -99,32 +99,6 @@ export default function ArcDrawing() {
 							setShapes(updateShapes(shapes, "circle", { fill: value }))
 						}
 					/>
-					{/* <div>
-						Square Fill
-						<div>
-							<button
-								onClick={() => {
-									setShapes(updateShapes(shapes, "rect", { fill: "#FFF" }));
-								}}
-							>
-								#FFF
-							</button>
-							<button
-								onClick={() => {
-									setShapes(updateShapes(shapes, "rect", { fill: "#666" }));
-								}}
-							>
-								#666
-							</button>
-							<button
-								onClick={() => {
-									setShapes(updateShapes(shapes, "rect", { fill: "#000" }));
-								}}
-							>
-								#000
-							</button>
-						</div>
-					</div> */}
 				</div>
 				<div className={s.code}>
 					<CodeBlock shapes={shapes} isMasked={isMasked} />
@@ -208,7 +182,7 @@ function CodeBlock({ shapes, isMasked }: CodeBlockProps) {
 					<p className={s.indent_1}>{`<defs>`}</p>
 					<p className={s.indent_2}>{`<mask id="mask">`}</p>
 					{shapes.map((shape, i) => {
-						return <SVGShapeCode key={i} {...shape} indent={3} />;
+						return <SVGShapeCode key={shape.type} {...shape} indent={3} />;
 					})}
 					<p className={s.indent_2}>{`</mask>`}</p>
 					<p className={s.indent_1}>{`</defs>`}</p>
@@ -226,14 +200,22 @@ interface SVGShapeCodeProps extends SVGShapeData {
 function SVGShapeCode({ type, x, y, r, fill, indent = 1 }: SVGShapeCodeProps) {
 	if (type === "circle") {
 		return (
-			<p className={cn(s[`indent_${indent}`], s.highlight_line)}>
+			<p
+				key={JSON.stringify([x, y, r, fill])}
+				className={cn(s[`indent_${indent}`], s.highlight_line)}
+				data-interactive
+			>
 				{`<circle fill="${fill}" cx="${(x + r / 2).toFixed(1)}" 
                   cy="${(y + r / 2).toFixed(1)}" r="${r / 2}" />`}
 			</p>
 		);
 	} else {
 		return (
-			<p className={cn(s[`indent_${indent}`], s.highlight_line)}>
+			<p
+				key={JSON.stringify([x, y, r, fill])}
+				className={cn(s[`indent_${indent}`], s.highlight_line)}
+				data-interactive
+			>
 				{`<rect fill="${fill}" x="${x.toFixed(1)}" y="${y.toFixed(1)}" 
                   width="${r}" height="${r}" rx="6"  />`}
 			</p>

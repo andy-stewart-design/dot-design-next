@@ -1,7 +1,6 @@
-@layer reset, base, component, override;
-
-@import "./base/reset.css" layer(reset);
-@import "./base/colors.css" layer(base);
+@import "./base/layers.css";
+@import "./base/reset.css";
+@import "./base/colors.css";
 
 :where(html) {
 	--brad: 0.1875rem;
