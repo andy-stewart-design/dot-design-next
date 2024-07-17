@@ -105,6 +105,10 @@
 			color: var(--foreground-inverted);
 		}
 	}
+
+	.comment {
+		opacity: 0.6;
+	}
 }
 
 .btn {

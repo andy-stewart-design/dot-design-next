@@ -6,7 +6,7 @@ import { map } from "@/utils/math";
 import { Refresh } from "@/components/Icons/20";
 import cn from "clsx/lite";
 import s from "./shared.module.css";
-import ToggleGroup from "@/components/ToggleGroup/color";
+import ToggleGroup from "@/components/ToggleGroup";
 
 type SVGShape = "circle" | "rect";
 type SVGShapeData = {
@@ -76,7 +76,10 @@ export default function ArcDrawing() {
 						Apply Mask
 					</Switch>
 					<ToggleGroup
-						name="Rect Fill Color"
+						variant="color"
+						groupLabel="Rect Fill Color"
+						groupOrientation="horizontal"
+						name="rect-fill-color"
 						defaultValue="#FFF"
 						items={[
 							{ label: "#FFF", value: "#FFF" },
@@ -88,7 +91,10 @@ export default function ArcDrawing() {
 						}
 					/>
 					<ToggleGroup
-						name="Circle Fill Color"
+						variant="color"
+						groupLabel="Circle Fill Color"
+						groupOrientation="horizontal"
+						name="circle-fill-color"
 						defaultValue="#666"
 						items={[
 							{ label: "#FFF", value: "#FFF" },
@@ -117,7 +123,7 @@ export default function ArcDrawing() {
 							y="10"
 							width="80"
 							height="80"
-							href="https://picsum.photos/1080/1080"
+							href="/svg-mask.jpg"
 							mask="url(#mask)"
 						/>
 						{shapes.map((shape, i) => (
