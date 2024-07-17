@@ -35,18 +35,18 @@ export default function ArcDrawing() {
 				</div>
 				<div className={s.code}>
 					<p>const percent = progress / 100</p>
-					<p className={s.comment}>// Percent: {(percent / 100).toFixed(2)}</p>
+					<p className={s.comment}>{`// Percent: ${(percent / 100).toFixed(2)}`}</p>
 					<p>const rad = percent * Math.PI * 2</p>
 					<p className={s.comment}>
-						// Radians: {((percent / 100) * Math.PI * 2).toFixed(2)}
+						{`// Radians: ${((percent / 100) * Math.PI * 2).toFixed(2)}`}
 					</p>
 					<p>const sin = Math.sin(rad)</p>
 					<p className={s.comment}>
-						// Sin: {formatNumber(Math.sin((percent / 100) * Math.PI * 2))}
+						{`// Sin: ${formatNumber(Math.sin((percent / 100) * Math.PI * 2))}`}
 					</p>
 					<p>const cos = Math.cos(rad)</p>
 					<p className={s.comment}>
-						// Cos: {formatNumber(Math.cos((percent / 100) * Math.PI * 2))}
+						{`// Cos: ${formatNumber(Math.cos((percent / 100) * Math.PI * 2))}`}
 					</p>
 				</div>
 			</div>
