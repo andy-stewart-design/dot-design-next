@@ -45,28 +45,32 @@ export default function SineCircle() {
 			</div>
 			<div className={s.canvas} data-elevation="0">
 				<div className={s.wrapper}>
-					<CircleChart type="sin" progress={percent} />
+					<CircleChart progress={percent} />
 				</div>
 			</div>
 		</div>
 	);
 }
 
-function CircleChart({
-	type = "sin",
-	progress,
-}: {
-	type?: "sin" | "cos";
-	progress: number;
-}) {
+function CircleChart({ progress }: { progress: number }) {
 	const center = 50;
 	const radius = 30;
 	const radians = (progress / 100) * Math.PI * 2;
 	const x = 50 + Math.sin(radians) * radius;
 	const y = 50 - Math.cos(radians) * radius;
+	const largeArc = radians > Math.PI ? 1 : 0;
+	const wedge =
+		progress < 100
+			? `M ${center} ${center - radius} 
+			   A ${radius} ${radius} 0 ${largeArc} 1 ${x} ${y} 
+			   L ${center} ${center} Z`
+			: `M ${center} ${center - radius} 
+			   A ${radius} ${radius} 0 0 1 ${center} ${center + radius} 
+			   A ${radius} ${radius} 0 0 1 ${center} ${center - radius}`;
 
 	return (
 		<svg viewBox="0 0 100 100" fill="none">
+			<path d={wedge} fill="var(--elevation-1)" opacity="0.375" />
 			<circle
 				cx={center}
 				cy={center}
@@ -75,11 +79,11 @@ function CircleChart({
 				strokeWidth="0.5"
 				fill="none"
 			/>
-			<circle cx={x} cy={y} r="5" fill="var(--foreground)" />
+			<circle cx={x} cy={y} r="3" fill="var(--foreground)" />
 			<circle
 				cx={x}
 				cy={center}
-				r="5"
+				r="3"
 				stroke="var(--color-primary)"
 				strokeWidth="0.5"
 				fill="none"
@@ -87,7 +91,7 @@ function CircleChart({
 			<circle
 				cx={center}
 				cy={y}
-				r="5"
+				r="3"
 				stroke="var(--color-primary)"
 				strokeWidth="0.5"
 				fill="none"
