@@ -43,7 +43,7 @@ export default function ArcDrawing() {
 					<p>const x1Offset = Math.sin(rad) * w / 2</p>
 					<p>const x1 = x1Start + x1Offset</p>
 					<p className={s.comment}>
-						{`// x1: ${(50 + Math.cos((percent / 100) * Math.PI * 2) * 30).toFixed(2)}`}
+						{`// x1: ${(50 + Math.sin((percent / 100) * Math.PI * 2) * 30).toFixed(2)}`}
 					</p>
 					<p>const x2Offset = Math.cos(rad) * w / 2</p>
 					<p>const x2 = x2Start + x2Offset</p>

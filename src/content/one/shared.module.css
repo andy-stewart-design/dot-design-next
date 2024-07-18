@@ -87,6 +87,16 @@
 		padding-inline-end: 1ch;
 	}
 
+	.indent_5 {
+		padding-inline-start: calc(var(--tab-size) * 5);
+		padding-inline-end: 1ch;
+	}
+
+	&[data-tabs] {
+		padding-inline-start: calc(var(--tab-size) * attr(data-tabs));
+		padding-inline-end: 1ch;
+	}
+
 	.highlight_line {
 		background: var(--elevation-1);
 		font-weight: 700;
