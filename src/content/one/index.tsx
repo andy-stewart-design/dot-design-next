@@ -20,7 +20,11 @@ export const SVGMask = dynamic(() => import("@/content/one/svg-mask"), {
 	loading: Skeleton,
 });
 
-export const SinCos = dynamic(() => import("@/content/one/sin-cos"), {
+export const SineCos = dynamic(() => import("@/content/one/sine-cos"), {
+	loading: Skeleton,
+});
+
+export const SineCircle = dynamic(() => import("@/content/one/sine-circle"), {
 	loading: Skeleton,
 });
 

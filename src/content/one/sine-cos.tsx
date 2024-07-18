@@ -1,6 +1,6 @@
 "use client";
 
-import { type MouseEvent, useState } from "react";
+import { useState } from "react";
 import Switch from "@/components/Switch";
 import RangeInput from "@/components/RangeInput";
 import { map } from "@/utils/math";
@@ -40,23 +40,20 @@ export default function ArcDrawing() {
 					<p className={s.comment}>
 						{`// Radians: ${((percent / 100) * Math.PI * 2).toFixed(2)}`}
 					</p>
-					<p>const sin = Math.sin(rad)</p>
+					<p>const x1Offset = Math.sin(rad) * w / 2</p>
+					<p>const x1 = x1Start + x1Offset</p>
 					<p className={s.comment}>
-						{`// Sin: ${formatNumber(Math.sin((percent / 100) * Math.PI * 2))}`}
+						{`// x1: ${(50 + Math.cos((percent / 100) * Math.PI * 2) * 30).toFixed(2)}`}
 					</p>
-					<p>const cos = Math.cos(rad)</p>
+					<p>const x2Offset = Math.cos(rad) * w / 2</p>
+					<p>const x2 = x2Start + x2Offset</p>
 					<p className={s.comment}>
-						{`// Cos: ${formatNumber(Math.cos((percent / 100) * Math.PI * 2))}`}
+						{`// x2: ${(50 + Math.cos((percent / 100) * Math.PI * 2) * 30).toFixed(2)}`}
 					</p>
 				</div>
 			</div>
 			<div className={s.canvas} data-elevation="0">
-				<div
-					className={s.wrapper}
-					// onMouseDown={handleMouseDown}
-					// onMouseMove={handleMouseMove}
-					// onClick={handleClick}
-				>
+				<div className={s.wrapper}>
 					<svg viewBox="0 0 100 100">
 						<g>
 							<WaveChart type="sin" progress={percent} />
@@ -113,10 +110,9 @@ function WaveChart({ type = "sin", progress }: { type?: "sin" | "cos"; progress:
 				cy="17"
 				r={r}
 				stroke="var(--elevation-1)"
-				stroke-width="0.5"
-				stroke-linecap="round"
+				strokeWidth="0.5"
+				strokeLinecap="round"
 			/>
-			<circle cx={c1.x} cy={c1.y} r="2" fill="var(--color-primary)" />
 			<line
 				x1={14}
 				y1={17}
@@ -128,11 +124,12 @@ function WaveChart({ type = "sin", progress }: { type?: "sin" | "cos"; progress:
 				strokeDasharray="1 2"
 				opacity={0.5}
 			/>
+			<circle cx={c1.x} cy={c1.y} r="2" fill="var(--color-primary)" />
 			<path
 				d={wavePath}
 				stroke="var(--elevation-1)"
-				stroke-width="0.5"
-				stroke-linecap="round"
+				strokeWidth="0.5"
+				strokeLinecap="round"
 			/>
 			<circle cx={c2.x} cy={c2.y} r="2" fill="var(--color-primary)" />
 			<line
