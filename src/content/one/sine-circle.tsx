@@ -25,21 +25,22 @@ export default function SineCircle() {
 					/>
 				</div>
 				<div className={s.code}>
+					<p>{`const { PI, sin, cos } = Math`}</p>
 					<p>const percent = progress / 100</p>
 					<p className={s.comment}>{`// Percent: ${(percent / 100).toFixed(2)}`}</p>
-					<p>const rad = percent * Math.PI * 2</p>
+					<p>const radians = percent * PI * 2</p>
 					<p className={s.comment}>
 						{`// Radians: ${((percent / 100) * Math.PI * 2).toFixed(2)}`}
 					</p>
 					<p>const x = center +</p>
-					<p className={s.indent_5}>Math.sin(radians) * radius;</p>
+					<p className={s.indent_5}>sin(radians) * radius</p>
 					<p className={s.comment}>
-						{`// x1: ${(50 + Math.sin((percent / 100) * Math.PI * 2) * 30).toFixed(2)}`}
+						{`// x: ${(50 + Math.sin((percent / 100) * Math.PI * 2) * 30).toFixed(2)}`}
 					</p>
 					<p>const y = center +</p>
-					<p className={s.indent_5}>Math.cos(radians) - radius;</p>
+					<p className={s.indent_5}>cos(radians) - radius</p>
 					<p className={s.comment}>
-						{`// x2: ${(50 - Math.cos((percent / 100) * Math.PI * 2) * 30).toFixed(2)}`}
+						{`// y: ${(50 - Math.cos((percent / 100) * Math.PI * 2) * 30).toFixed(2)}`}
 					</p>
 				</div>
 			</div>

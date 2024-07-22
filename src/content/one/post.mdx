@@ -93,14 +93,36 @@ I’ve provided another sandbox below to help you get a handle on these concepts
 
 <ArcDrawing />
 
+To recap, dyamically constructing paths with code really is as straightforward as knowing the points that you need to create a shape, and understanding enough about the various line commands to be able to connect one point to the next. It is, for sure, more abstract than creating SVGs with Figma or Illustrator, but it’s not conceptually all that different. Now, let’s talk about about one more concept we need to understand to be able to put this knowledge to work and generate our pie chart.
+
 ## Sine and Cosine
 
-Pretend that I asked you to visualize a sound wave. You might, in your mind’s eye, see a smooth, geometric waveform oscillating in a regular up-and-down pattern into infinity. That, my friend, is a sine wave.
+Close your eyes and visualize a sound wave. You might, in your mind’s eye, see a smooth, geometric waveform oscillating endlessly in a regular up-and-down pattern. That, my friend, is a sine wave.
 
-There are many, horribly complex ways to describe sine waves, which I fully intend to avoid in this piece (because I do not understand them). Instead, I want to talk about why I, as a visual designer and engineer, love them: they unlock the possibility to convert time into fluid, repeating motion.
+Now imagine a straight line shooting through the vertical center of that wave. Trace the wave as it oscillates up and down around that center line. Consider how you could stop at any point along the wave and calculate it’s distance from that center line—positive if it’s above, negative if it’s below, zero if it intersects with the line. These qualities are the primary source of value that sine waves bring to coding:
 
-- periodic (loops)
-- regular (fluid motion)
+- they are **periodic**: they loop seamlessly and infinitely, starting and ending at the exact same point
+- they are **harmonic**: they have a smooth, fluid rhythm due to the way that they ease into and out of their maximum and minimum points
+- they are **symmetrical**: the distance from any point along the wave to the center line will be between a number and it’s inverse (n and -n)
+
+Now, what if I told you that sine waves have these characteristics because they are derived from circles—that we can use the sine function to translate a percentage into a specific point along the perimeter of a circle?
+
+I want to avoid jargon in this conversation as much as possible. However, we do need to define a few key terms to help us make the jump from sine waves to pie charts:
+
+- The **radius** of a circle is the distance from it’s center to it’s outer edge
+- The **circumference** is the length of the perimeter of a circle, and is equal to it’s radius multiplied by two times pi (2πr). (Crucially, you don’t need to know anyting about pi beyond the fact that you need two of them to draw a full circle.)
+- A **unit circle** is a circle with a radius of 1, meaning it’s circumference is simply equal to 2π.
+- **Radians** are a unit of measurement that describe the angle formed by an arc relative to the radius of a circle. If you find that definition confusing—don’t worry. All you really need to know is that for a unit circle, the angle of an arc in radians will be some fraction of it’s circumfrence (2π).
+
+At its most basic, a sine function calculates the distance from the center line of any point along a sine wave. Because sine functions operate on a unit circle, the distance calculated will always be between -1 and 1. To find this distance, the sine function needs to know the angle, in radians, of the point we want to calculate, which we can find by multiplying the circumference of the unit circle by some percentage. In practice, you might express that like this:
+
+```Javascript
+// for a number (progress) between 0 and 100
+const progress = 35;
+const radians = (progress / 100) * (Math.PI * 2)
+const distance = Math.sin(radians)
+// distance: 0.8090169943749475
+```
 
 <SineCos />
 

@@ -34,19 +34,18 @@ export default function ArcDrawing() {
 					</Switch> */}
 				</div>
 				<div className={s.code}>
+					<p>{`const { PI, sin, cos } = Math`}</p>
 					<p>const percent = progress / 100</p>
 					<p className={s.comment}>{`// Percent: ${(percent / 100).toFixed(2)}`}</p>
-					<p>const rad = percent * Math.PI * 2</p>
+					<p>const radians = percent * PI * 2</p>
 					<p className={s.comment}>
 						{`// Radians: ${((percent / 100) * Math.PI * 2).toFixed(2)}`}
 					</p>
-					<p>const x1Offset = Math.sin(rad) * w / 2</p>
-					<p>const x1 = x1Start + x1Offset</p>
+					<p>const x1 = sin(radians)</p>
 					<p className={s.comment}>
 						{`// x1: ${(50 + Math.sin((percent / 100) * Math.PI * 2) * 30).toFixed(2)}`}
 					</p>
-					<p>const x2Offset = Math.cos(rad) * w / 2</p>
-					<p>const x2 = x2Start + x2Offset</p>
+					<p>const x2 = cos(radians)</p>
 					<p className={s.comment}>
 						{`// x2: ${(50 + Math.cos((percent / 100) * Math.PI * 2) * 30).toFixed(2)}`}
 					</p>
@@ -104,6 +103,12 @@ function WaveChart({ type = "sin", progress }: { type?: "sin" | "cos"; progress:
 		<svg width="100" height="50" viewBox="0 0 100 50" fill="none">
 			<text x="3" y="5" fill="var(--foreground)" fontSize="2.75" fontFamily="monospace">
 				{type}: {formatNumber(Math[type](radians))}
+			</text>
+			<text x="8" y="37.5" fill="var(--foreground)" fontSize="2.75" fontFamily="monospace">
+				-1
+			</text>
+			<text x="88" y="37.5" fill="var(--foreground)" fontSize="2.75" fontFamily="monospace">
+				+1
 			</text>
 			<circle
 				cx="23"
