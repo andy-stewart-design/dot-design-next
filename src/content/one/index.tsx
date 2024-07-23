@@ -28,6 +28,10 @@ export const SineCircle = dynamic(() => import("@/content/one/sine-circle"), {
 	loading: Skeleton,
 });
 
+export const SineAnimation = dynamic(() => import("@/content/one/sine-animation"), {
+	loading: Skeleton,
+});
+
 function Skeleton() {
 	return (
 		<div
