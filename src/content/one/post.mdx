@@ -95,6 +95,10 @@ I’ve provided another sandbox below to help you get a handle on these concepts
 
 To recap, dyamically constructing paths with code really is as straightforward as knowing the points that you need to create a shape, and understanding enough about the various line commands to be able to connect one point to the next. It is, for sure, more abstract than creating SVGs with Figma or Illustrator, but it’s not conceptually all that different. Now, let’s talk about about one more concept we need to understand to be able to put this knowledge to work and generate our pie chart.
 
+```Javascript
+// ADD CODE HERE SHOWING HOW TO DRAW A PIE SHAPED PATH
+```
+
 ## Sine and Cosine
 
 Close your eyes and visualize a sound wave. You might, in your mind’s eye, see a smooth, geometric waveform oscillating endlessly in a regular up-and-down pattern. That, my friend, is a sine wave.
@@ -116,7 +120,7 @@ I want to avoid jargon in this conversation as much as possible. However, we do 
 - A **unit circle** is a circle with a radius of 1, meaning it’s circumference is simply equal to 2π.
 - **Radians** are a unit of measurement that describe the angle formed by an arc relative to the radius of a circle. If you find that definition confusing—don’t worry. All you really need to know is that for a unit circle, the angle of an arc in radians will be some fraction of it’s circumfrence (2π).
 
-At its most basic, a sine function calculates the distance from the center line of any point along a sine wave. Because sine functions operate on a unit circle, the distance calculated will always be between -1 and 1. To find this distance, the sine function needs to know the angle, in radians, of the point we want to calculate, which we can find by multiplying the circumference of the unit circle by some percentage. In practice, you might express that like this:
+At its most basic, a sine function calculates the distance from any point along a sine wave to the center line. Because sine functions generally operate on a unit circle, the distance calculated will always be between -1 and 1. To find this distance, the sine function needs to know the angle, in radians, of the point we want to calculate, which we can find by multiplying the circumference of the unit circle by some percentage. In practice, you might express that like this:
 
 ```Javascript
 // for a number (progress) between 0 and 100
@@ -125,6 +129,8 @@ const radians = (progress / 100) * (Math.PI * 2)
 const distance = Math.sin(radians)
 // distance: 0.8090169943749475
 ```
+
+A cosine function is conceptually the same as a sine function. The only salient difference is that the value returned by cosine is **phase shifted**, which is a fancy way of saying that cosine functions start their calculations at a different point along the wave. In practical terms, the sine of 0 is 0, where the cosine of 0 is 1. It's the same wave, it just starts earlier.
 
 <SineCos />
 

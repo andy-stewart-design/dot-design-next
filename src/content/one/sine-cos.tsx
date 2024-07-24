@@ -43,11 +43,11 @@ export default function ArcDrawing() {
 					</p>
 					<p>const x1 = sin(radians)</p>
 					<p className={s.comment}>
-						{`// x1: ${(50 + Math.sin((percent / 100) * Math.PI * 2) * 30).toFixed(2)}`}
+						{`// x1: ${Math.sin((percent / 100) * Math.PI * 2).toFixed(2)}`}
 					</p>
 					<p>const x2 = cos(radians)</p>
 					<p className={s.comment}>
-						{`// x2: ${(50 + Math.cos((percent / 100) * Math.PI * 2) * 30).toFixed(2)}`}
+						{`// x2: ${Math.cos((percent / 100) * Math.PI * 2).toFixed(2)}`}
 					</p>
 				</div>
 			</div>
