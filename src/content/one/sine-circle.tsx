@@ -1,14 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import Switch from "@/components/Switch";
 import RangeInput from "@/components/RangeInput";
-import { map } from "@/utils/math";
-import cn from "clsx/lite";
 import s from "./shared.module.css";
 
 export default function SineCircle() {
-	const [percent, setPercent] = useState<number>(0.1);
+	const [percent, setPercent] = useState<number>(0);
 
 	return (
 		<div className={s.container} data-elevation="1">
@@ -37,8 +34,8 @@ export default function SineCircle() {
 					<p className={s.comment}>
 						{`// x: ${(50 + Math.sin((percent / 100) * Math.PI * 2) * 30).toFixed(2)}`}
 					</p>
-					<p>const y = center +</p>
-					<p className={s.indent_5}>cos(radians) - radius</p>
+					<p>const y = center -</p>
+					<p className={s.indent_5}>cos(radians) * radius</p>
 					<p className={s.comment}>
 						{`// y: ${(50 - Math.cos((percent / 100) * Math.PI * 2) * 30).toFixed(2)}`}
 					</p>

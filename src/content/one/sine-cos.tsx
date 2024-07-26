@@ -8,7 +8,7 @@ import cn from "clsx/lite";
 import s from "./shared.module.css";
 
 export default function ArcDrawing() {
-	const [percent, setPercent] = useState<number>(0.1);
+	const [percent, setPercent] = useState<number>(0);
 
 	return (
 		<div className={s.container} data-elevation="1">
@@ -149,6 +149,16 @@ function WaveChart({ type = "sin", progress }: { type?: "sin" | "cos"; progress:
 			<circle cx={c1.x} cy={c1.y} r="0.5" fill="var(--foreground)" />
 			<circle cx={c2.x} cy={c2.y} r="0.5" fill="var(--foreground)" />
 			<rect x="14" y="30" width="72" height="12" rx="2" fill="var(--elevation-1)" />
+			<line
+				x1={50}
+				y1={30}
+				x2={50}
+				y2={42}
+				stroke="var(--background)"
+				strokeWidth={0.5}
+				strokeLinecap="round"
+				opacity={0.5}
+			/>
 			<circle cx={c3.x} cy="36" r="4" fill="var(--foreground)" />
 		</svg>
 	);

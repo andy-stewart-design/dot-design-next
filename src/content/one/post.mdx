@@ -77,7 +77,7 @@ Before we move on, check out the demo below. Click anywhere on the SVG to add a 
 
 ## Circling Back to Arcs
 
-Now that we’ve got a feel for the simpler line command, it's time to turn it up a notch. The **Arc To** command consists of the letter `A` followed by 7 numbers. Let's break down the significance of these numbers down one-by-one:
+In contrast to the simpler line commands, the **Arc To** command consists of the letter `A` followed by 7 numbers. (Which if you ask me, is a few too many, but I don’t make the rules.) Let's break down the significance of these numbers down one-by-one:
 
 1. The first two numbers describe the x- and y-radii of the rendered arc. These can be different if you need to draw an ellipse rather than a perfect circle. For our purposes, though, we only ever need to draw circles, so we can simplify things and always set them to the same value.
 2. The third number describes the rotation of the ellipse. This only has an effect if your x- and y-radii are different, so we can safely set this to 0 and move on. (And honestly, I would most likely reach for the [bezier line command](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths#b%C3%A9zier_curves) before I bothered trying to work with this.)
@@ -103,7 +103,7 @@ To recap, dyamically constructing paths with code really is as straightforward a
 
 Close your eyes and visualize a sound wave. You might, in your mind’s eye, see a smooth, geometric waveform oscillating endlessly in a regular up-and-down pattern. That, my friend, is a sine wave.
 
-Now imagine a straight line shooting through the vertical center of that wave. Trace the wave as it oscillates up and down around that center line. Consider how you could stop at any point along the wave and calculate it’s distance from that center line—positive if it’s above, negative if it’s below, zero if it intersects with the line. These qualities are the primary source of value that sine waves bring to coding:
+Now imagine a straight line shooting through the vertical center of that wave. Trace the wave as it oscillates up and down around that center line. Consider how you could stop at any point along the wave and calculate it’s distance from that center line—positive if it’s above, negative if it’s below, zero if it intersects with the line. These are the qualities that make sine waves valueable in coding:
 
 - they are **periodic**: they loop seamlessly and infinitely, starting and ending at the exact same point
 - they are **harmonic**: they have a smooth, fluid rhythm due to the way that they ease into and out of their maximum and minimum points
@@ -130,13 +130,36 @@ const distance = Math.sin(radians)
 // distance: 0.8090169943749475
 ```
 
-A cosine function is conceptually the same as a sine function. The only salient difference is that the value returned by cosine is **phase shifted**, which is a fancy way of saying that cosine functions start their calculations at a different point along the wave. In practical terms, the sine of 0 is 0, where the cosine of 0 is 1. It's the same wave, it just starts earlier.
+Fortunately, the **cosine** function is conceptually the same as the sine function. The only salient difference, at least from a non-technical perspective, is that the value returned by cosine is **phase shifted**—a fancy way of saying that cosine functions begin their calculations at a different point along the wave. Or to put it in more practical terms—the sine of 0 is 0, whereas the cosine of 0 is 1. It's the same wave, it just starts earlier.
+
+So why does all of this matter? Simply put, sine (and cosine) functions allow us to translate progress—whether it be the indefinite march of time or the percent complete of a goal—into a number between -1 and 1. Once we have that number, our options are limited only by our imaginations. A common move it to use that value to animate the position of an element. In the demo below, move the progress slider and watch how we can use these functions to manipulate the x-coordinate of a circle:
 
 <SineCos />
 
-kajenrknrk
+At this point, you may see where this is going. Because sine and cosine are derived from circles, and because cosine is essentially just the sine function rotated 90 degrees, we can use them together to find any point around the circumference of a circle. I like to think of it as the percent-to-point pipeline.
+
+All we need to know is the radius of a circle and the coordinates of its center. From there, finding a specific point is as simple as assigning `radius * sin(progress * 2π) + centerCoord` to one coordinate and `radius * cos(progress * 2π) + centerCoord` to the other, which you can see in demo below:
 
 <SineCircle />
+
+Tying together everything we've discussed so far, here’s the full code used to calculate the pie chart in the above demo. It’s worth noting that questions about which function (sine or cosine) shoulde be applied to which axis (x or y), and whether to add to or subtract from the center coordinates, do not have a definite answers. They will inherently vary based on the point at which you want to begin drawing your pie chart.
+
+```Javascript
+// declare fixed attributes
+const center = { x: 50, y: 50 };
+const radius = 30;
+
+// calculate dynamic attributes
+const radians = (progress / 100) * Math.PI * 2;
+const x = center.x + Math.sin(radians) * radius;
+const y = center.y - Math.cos(radians) * radius;
+const largeArc = radians > Math.PI ? 1 : 0;
+
+// synthesize dynamic path
+const pie = `M ${center} ${center - radius}
+             A ${radius} ${radius} 0 ${largeArc} 1 ${x} ${y}
+             L ${center} ${center} Z`;
+```
 
 ## Masking and Donut Holes
 
