@@ -67,8 +67,8 @@ Because Arc To is by far the most complex command of this bunch, let's look more
 
 **Move To** and **Line To** commands are identical in their structure: they begin with their respective letter (`M` or `L`) followed by two numbers (the x- and y-coordinates of the next point in the path). The only difference between the two is that Line To commands connect the previously defined point to the next point with a visible line. So for example, the following code would draw a straight, 45° line starting at (2, 4) and then moving down 6 units down and to the right 6 units to (8, 10):
 
-```
-<path d="M 2 4 L 8 10" stroke="2" fill="none">
+```html
+<path d="M 2 4 L 8 10" stroke="2" fill="none"></path>
 ```
 
 The **Close Path** command is even simpler—it’s literally just the letter `Z`. By calling this command, you're effectively telling the path "connect the previous point to my shape’s origin point with a straight line." In the previous example, if we added an additional Line To command followed by a Close Path command, we would draw a triangle.
@@ -97,15 +97,15 @@ I’ve provided another sandbox below to help you get a handle on these concepts
 
 In the next section, we’ll look at how to combine these line commands to draw the wedges of our pie chart. Before we move on, though, I want to leave you with one more example: how to draw a perfect circle using Arc To commands. Take note of how we need two points—one at the top of the SVG and one at the bottom—because you cannot connect a point to itself; of how—because each arc is exactly 50% of a circle—the exact way that we set the large arc and sweep flags doesn’t matter as long as both arcs are set consistenly.
 
-```JSX
+```jsx
 const size = 100;
 const radius = size / 2;
 
 return (
-  <svg viewBox=`0 0 ${size} ${size}`>
-    <path d="M ${radius} 0
-             A ${radius} ${radius} 0 0 1 ${radius} ${size}
-             A ${radius} ${radius} 0 0 1 ${radius} 0">
+  <svg viewBox={`0 0 ${size} ${size}`}>
+    <path d={`M ${radius} 0
+              A ${radius} ${radius} 0 0 1 ${radius} ${size}
+              A ${radius} ${radius} 0 0 1 ${radius} 0`}>
   </svg>
 )
 ```
@@ -135,11 +135,11 @@ I want to avoid jargon in this conversation as much as possible. However, we do 
 
 At its most basic, a sine function calculates the distance from any point along a sine wave to the center line. Because sine functions generally operate on a unit circle, the distance calculated will always be between -1 and 1. To find this distance, the sine function needs to know the angle, in radians, of the point we want to calculate, which we can find by multiplying the circumference of the unit circle by some percentage. In practice, you might express that like this:
 
-```Javascript
+```js
 // for a number (progress) between 0 and 100
 const progress = 35;
-const radians = (progress / 100) * (Math.PI * 2)
-const distance = Math.sin(radians)
+const radians = (progress / 100) * (Math.PI * 2);
+const distance = Math.sin(radians);
 // distance: 0.8090169943749475
 ```
 
@@ -157,7 +157,7 @@ All we need to know is the radius of a circle and the coordinates of its center.
 
 Tying together everything we've discussed so far, here’s the full code used to calculate the pie chart wedge in the above demo. It’s worth noting that questions about which function (sine or cosine) shoulde be applied to which axis (x or y), and whether to add to or subtract from the center coordinates, do not have a definite answers. They will inherently vary based on the point at which you want to begin drawing your circle.
 
-```Javascript
+```js
 // declare fixed attributes
 const center = { x: 50, y: 50 };
 const radius = 30;
@@ -186,12 +186,12 @@ With both masks and clipping paths, we can combine multiple, simple shapes toget
 
 For this project, we can achieve our chart’s donut shape by using a mask consisting of a small white circle centered on top of a large black circle:
 
-```Javascript
+```html
 <defs>
-  <mask id="donut">
-    <circle cx="10" cy="10" r="18" fill="black" />
-    <circle cx="10" cy="10" r="6" fill="white" />
-  </mask>
+	<mask id="donut">
+		<circle cx="10" cy="10" r="18" fill="black" />
+		<circle cx="10" cy="10" r="6" fill="white" />
+	</mask>
 </defs>
 ```
 

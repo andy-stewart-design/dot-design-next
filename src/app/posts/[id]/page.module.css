@@ -73,7 +73,7 @@
 			}
 		}
 
-		& > div {
+		& > div:not([data-bright-theme]) {
 			margin-block: 1.5em;
 			grid-column: 1 / 4;
 		}
