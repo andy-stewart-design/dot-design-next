@@ -1,4 +1,7 @@
 .code {
 	font-size: 0.875rem;
 	tab-size: 2ch;
+	border-radius: 1rem;
+	overflow: clip;
+	border: 1px solid #363d4d;
 }

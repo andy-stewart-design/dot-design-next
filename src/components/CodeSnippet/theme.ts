@@ -1,3 +1,5 @@
+const color_elevation_1 = "#1f242f";
+
 const theme = {
 	$schema: "vscode://schemas/color-theme",
 	name: "dracula",
@@ -121,7 +123,7 @@ const theme = {
 		"tab.inactiveBackground": "#21222C",
 		"tab.inactiveForeground": "#6272A4",
 		"editor.foreground": "#F8F8F2",
-		"editor.background": "#09080cff",
+		"editor.background": color_elevation_1,
 		"editorLineNumber.foreground": "#6272A4",
 		"editor.selectionBackground": "#44475A",
 		"editor.selectionHighlightBackground": "#424450",
@@ -286,13 +288,6 @@ const theme = {
 			scope: ["markup.changed"],
 			settings: {
 				foreground: "#FFB86C",
-			},
-		},
-		{
-			scope: ["invalid"],
-			settings: {
-				foreground: "#FF5555",
-				fontStyle: "underline italic",
 			},
 		},
 		{

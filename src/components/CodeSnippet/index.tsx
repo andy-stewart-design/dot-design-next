@@ -5,7 +5,7 @@ import s from "./component.module.css";
 
 function CodeSnippet({ children, ...delegated }: ComponentPropsWithoutRef<typeof Code>) {
 	return (
-		<Code {...delegated} theme="one-dark-pro" className={s.code} lineNumbers>
+		<Code {...delegated} theme={theme} className={s.code} lineNumbers>
 			{children}
 		</Code>
 	);
