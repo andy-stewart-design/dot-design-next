@@ -91,15 +91,14 @@ function ProgressIndicator({
 	innerDiameter: inDia = 24,
 	donut = true,
 }: ProgressIndicatorProps) {
+	const maskURL = useId();
 	const size = outDia + 2;
 	const center = size / 2;
-	const fill = 100 - percent;
-	const largeArc = fill < 50 ? 1 : 0;
 
-	const maskURL = useId();
-	const radians = (fill / 100) * 2 * Math.PI;
-	const x = center - center * Math.sin(radians);
+	const radians = (percent / 100) * 2 * Math.PI;
+	const x = center + center * Math.sin(radians);
 	const y = center - center * Math.cos(radians);
+	const largeArc = radians > Math.PI ? 1 : 0;
 
 	const circlePath = `M ${center} 0
                         A ${center} ${center} 0 ${largeArc} 1 ${center} ${outDia}
@@ -117,7 +116,6 @@ function ProgressIndicator({
 			width={size}
 			height={size}
 			viewBox={`0 0 ${size} ${size}`}
-			fillRule="evenodd"
 			data-filled={percent === 100 ? "" : undefined}
 		>
 			<g mask={`url(#${maskURL})`}>

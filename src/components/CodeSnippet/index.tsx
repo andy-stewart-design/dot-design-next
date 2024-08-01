@@ -5,7 +5,13 @@ import s from "./component.module.css";
 
 function CodeSnippet({ children, ...delegated }: ComponentPropsWithoutRef<typeof Code>) {
 	return (
-		<Code {...delegated} theme={theme} className={s.code} lineNumbers>
+		<Code
+			{...delegated}
+			theme={theme}
+			className={s.code}
+			style={{ borderRadius: "0.5rem" }}
+			lineNumbers
+		>
 			{children}
 		</Code>
 	);

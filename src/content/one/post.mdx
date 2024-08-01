@@ -54,9 +54,9 @@ Before we move on to the specific concepts necessary for drawing charts, take a 
 
 Unfortunately, we can’t rely on built-in SVG elements for everything. When we need to draw something more complex, like the wedges of a pie chart, we have to forgo that convenience in favor of a more flexible primitive: the SVG `path` element.
 
-The thing that makes paths special and infinitely malleable is its `d` parameter, which allows you to define shapes using a small set of commands. These so-called **line commands** provide us with the tools to effectively draw any two dimensinal shape imaginable, one point at a time. Line commands encode two essential bits of information: where are we going next, and how should we get there.
+The thing that makes paths special and infinitely malleable is its `d` parameter, which allows you to define shapes using a relatively small set of commands. These so-called **line commands** provide us with the tools to effectively draw any two dimensional shape imaginable, one point at a time. Line commands encode two essential bits of information: where we are going next, and how we should get there.
 
-These commands may look obtuse and intimidating at first, like some illegible robot hieroglyphics. Spend some time with them, though. You may be surprised how quickly you’re able to pick them up. For this project, we need to talk specifically about 4 of these commands:
+These commands may look terse and intimidating at first, like some illegible robot hieroglyphics. Spend some time with them, though. You may be surprised how quickly you’re able to pick them up. For this project, we need to talk specifically about 4 of these commands:
 
 1. **Move To**, represented by the letter `M`, which allows you to update the origin point of a shape without drawing a visible line. Unless your path is drawn starting at the origin point, it will begin with a MoveTo command.
 2. **Line To**, represented by the letter `L`, which allows you to connect one point to another with a straight line.
@@ -139,8 +139,7 @@ At its most basic, a sine function calculates the distance from any point along 
 // for a number (progress) between 0 and 100
 const progress = 35;
 const radians = (progress / 100) * (Math.PI * 2);
-const distance = Math.sin(radians);
-// distance: 0.8090169943749475
+const distance = Math.sin(radians); // 0.8090169
 ```
 
 Fortunately, the **cosine** function is conceptually the same as the sine function. The only salient difference, at least from a non-technical perspective, is that the value returned by cosine is **phase shifted**—a fancy way of saying that cosine functions begin their calculations at a different point along the wave. Or to put it in more practical terms—the sine of 0 is 0, whereas the cosine of 0 is 1. It's the same wave, it just starts earlier.
@@ -155,7 +154,7 @@ All we need to know is the radius of a circle and the coordinates of its center.
 
 <SineCircle />
 
-Tying together everything we've discussed so far, here’s the full code used to calculate the pie chart wedge in the above demo. It’s worth noting that questions about which function (sine or cosine) shoulde be applied to which axis (x or y), and whether to add to or subtract from the center coordinates, do not have a definite answers. They will inherently vary based on the point at which you want to begin drawing your circle.
+Tying together everything we've discussed so far, here’s the full code used to calculate the pie chart wedge in the above demo. It’s worth noting that questions about which function (sine or cosine) shoulde be applied to which axis (x or y), and whether to add to or subtract from the center coordinates, do not have a definite answers. those decisions are left to your discretion as a designer, based on the point at which you want to begin drawing your circle.
 
 ```js
 // declare fixed attributes
@@ -178,22 +177,11 @@ const pie = `M ${center} ${center - radius}
 
 At this point, you could, in theory, use the techniques we've already discussed to draw your donut chart—hole and all. But as much as I love a good a math problem, that would be unnecessarily complex. Instead, we're going to use a technique called **masking** to greatly simplify the process of defining our chart’s silhouette.
 
-I like to think of masks as custom viewports that allow us to describe which parts of a shape (or group of shapes) should or should not be displayed. Do you remember how shapes that are placed outside of the bounds of an SVG’s `viewBox` are not rendered? Masks serve a similar function, but they can use any 2D shape to define the contours of our drawing—not just basic rectangles.
+I like to think of masks as custom viewports that allow us to describe which parts of a shape (or group of shapes) should or should not be displayed. Do you remember how shapes that are placed outside of the bounds of an SVG’s `viewBox` are not rendered? Masks serve a similar function—defining the contours of our drawing, what should and should not be rendered—but they can use any 2D shape, not just basic rectangles.
 
 Now, there is technically one other tool in the SVG toolbox that we could use to achieve this effect. Like masks, **clipping paths** also allow us to show and hide parts of our drawing. However, masks have a special feature that make them uniquely well-suited to our needs in this instance.
 
 With both masks and clipping paths, we can combine multiple, simple shapes together to create more complex and interesting silhouettes. But with masks, specifically, we can use color to describe how those shapes should be combined—a feature known as **alpha transparency**. Inside of a `mask`, black shapes are added to the composite mask whereas white shapes are subtracted from the mask. If you've ever used Figma’s [Boolean Operations](https://help.figma.com/hc/en-us/articles/360039957534-Boolean-operations) or Illustrator's [Pathfinder](https://helpx.adobe.com/illustrator/using/combining-objects.html#pathfinder_panel_overview), this concept should feel relatively familiar.
-
-For this project, we can achieve our chart’s donut shape by using a mask consisting of a small white circle centered on top of a large black circle:
-
-```html
-<defs>
-	<mask id="donut">
-		<circle cx="10" cy="10" r="18" fill="black" />
-		<circle cx="10" cy="10" r="6" fill="white" />
-	</mask>
-</defs>
-```
 
 Before you explore the demo below, I want to address a few other nuances of SVG masking that you may notice:
 
@@ -202,6 +190,71 @@ Before you explore the demo below, I want to address a few other nuances of SVG 
 - Stacking order does matter, just like in Figma's boolean operations. If you want to knock one shape out of another, for example, that shape must be positioned on top of the other. Below, move the shapes around to see this effect in action.
 
 <SVGMask />
+
+For this project, we can achieve our chart’s donut shape by using a mask consisting of a small black circle centered on top of a large white circle:
+
+```html
+<defs>
+	<mask id="donut">
+		<circle cx="10" cy="10" r="18" fill="white" />
+		<circle cx="10" cy="10" r="6" fill="black" />
+	</mask>
+</defs>
+```
+
+## Closing Thoughts
+
+```jsx
+interface ProgressIndicatorProps {
+	percent: number;
+	outDia?: number;
+	inDia?: number;
+	donut?: boolean;
+}
+
+function ProgressIndicator(props: ProgressIndicatorProps) {
+	const { percent, outDia = 30, inDia = 24, donut = true } = props;
+	const maskURL = useId();
+	const size = outDia + 2;
+	const center = size / 2;
+
+	const radians = (percent / 100) * 2 * Math.PI;
+	const x = center + center * Math.sin(radians);
+	const y = center - center * Math.cos(radians);
+	const largeArc = radians > Math.PI ? 1 : 0;
+
+	const circPath = `M ${center} 0
+                   A ${center} ${center} 0 ${largeArc} 1 ${center} ${outDia}
+                   A ${center} ${center} 0 ${largeArc} 1 ${center} 0`;
+
+	const wedgePath =
+		percent === 100
+			? circPath
+			: `M ${center} 0
+        A ${center} ${center} 0 ${largeArc} 1 ${x} ${y}
+        L ${center} ${center} Z`;
+
+	return (
+		<svg
+			width={size}
+			height={size}
+			viewBox={`0 0 ${size} ${size}`}
+			data-filled={percent === 100 ? "" : undefined}
+		>
+			<g mask={`url(#${maskURL})`}>
+				<circle className={s.background} cx={center} cy={center} r={outDia / 2} />
+				<path className={s.foreground} d={wedgePath} />
+			</g>
+			<defs>
+				<mask id={maskURL}>
+					<circle cx={center} cy={center} r={outDia / 2} fill="white" />
+					{donut && <circle cx={center} cy={center} r={inDia / 2} fill="black" />}
+				</mask>
+			</defs>
+		</svg>
+	);
+}
+```
 
 ## Footnotes
 
