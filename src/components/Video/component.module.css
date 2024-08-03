@@ -1,0 +1,21 @@
+.wrapper {
+	--w: var(--width, 16);
+	--h: var(--height, 9);
+
+	border: var(--border-lt);
+	border-radius: var(--brad-lg);
+	overflow: clip;
+	margin-bottom: 1rem;
+
+	video {
+		display: block;
+		width: 100%;
+		aspect-ratio: var(--w) / var(--h);
+		object-fit: cover;
+	}
+}
+
+.caption {
+	font-size: 0.825em;
+	text-align: center;
+}

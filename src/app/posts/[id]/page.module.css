@@ -73,9 +73,20 @@
 			}
 		}
 
-		& > div:not([data-bright-theme]) {
+		& > div:not([data-bright-theme]),
+		img,
+		p:has(img) {
 			margin-block: 1.5em;
 			grid-column: 1 / 4;
+		}
+
+		/* video {
+			width: 100%;
+			border-radius: var(--brad-lg);
+		} */
+
+		p:has(img) img {
+			margin: 0;
 		}
 	}
 }

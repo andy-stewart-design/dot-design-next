@@ -96,8 +96,8 @@ function ProgressIndicator({
 	const center = size / 2;
 
 	const radians = (percent / 100) * 2 * Math.PI;
-	const x = center + center * Math.sin(radians);
-	const y = center - center * Math.cos(radians);
+	const x = (center + center * Math.sin(radians)).toFixed(10);
+	const y = (center - center * Math.cos(radians)).toFixed(10);
 	const largeArc = radians > Math.PI ? 1 : 0;
 
 	const circlePath = `M ${center} 0
@@ -109,7 +109,7 @@ function ProgressIndicator({
 			? circlePath
 			: `M ${center} 0
                A ${center} ${center} 0 ${largeArc} 1 ${x} ${y} 
-               L ${center} ${center} z`;
+               L ${center} ${center} Z`;
 
 	return (
 		<svg
