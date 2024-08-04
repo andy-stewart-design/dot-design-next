@@ -1,4 +1,4 @@
-import * as SVGPieChartComponents from "@/content/one";
+import * as SVGPieChartComponents from "@/content/drawing-dynamic-svg-pie-charts";
 import CodeSnippet from "../CodeSnippet";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import dynamic from "next/dynamic";
