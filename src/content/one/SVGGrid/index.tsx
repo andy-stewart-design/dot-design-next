@@ -1,10 +1,9 @@
 "use client";
 
 import { useRef, useState, type MouseEvent } from "react";
-import { DemoCanvas, DemoWrapper, DemoContent } from "@/components/BlogDemo";
+import { DemoCanvas, DemoWrapper, DemoContent, DemoCode } from "@/components/BlogDemo";
 import { clamp, map } from "@/utils/math";
 import cn from "clsx";
-import s from "../shared.module.css";
 import c from "./component.module.css";
 
 type ActiveElement = "left" | "right" | "circle" | undefined;
@@ -70,30 +69,33 @@ function SVGGrid() {
 	return (
 		<DemoWrapper>
 			<DemoContent>
-				<div className={s.code}>
+				<DemoCode>
 					<p>{`<svg`}</p>
-					<p className={s.indent_1}>{`viewBox="0 0 32 24"`}</p>
+					<p data-indent="1">{`viewBox="0 0 32 24"`}</p>
 					<p
 						key={width}
-						className={cn(s.indent_1, s.highlight_line)}
+						data-indent="1"
+						data-highlight
 						data-interactive
 					>{`width="${width}"`}</p>
 					<p>{`>`}</p>
-					<p className={s.indent_1}>{`<circle`}</p>
+					<p data-indent="1">{`<circle`}</p>
 					<p
 						key={`{x-${position.x}}`}
-						className={cn(s.indent_2, s.highlight_line)}
+						data-indent="2"
+						data-highlight
 						data-interactive
 					>{`cx="${position.x.toFixed(2)}"`}</p>
 					<p
 						key={`{y-${position.y}}`}
-						className={cn(s.indent_2, s.highlight_line)}
+						data-indent="2"
+						data-highlight
 						data-interactive
 					>{`cy="${position.y.toFixed(2)}"`}</p>
-					<p className={s.indent_2}>{`r="${radius}"`}</p>
-					<p className={s.indent_1}>{`/>`}</p>
+					<p data-indent="2">{`r="${radius}"`}</p>
+					<p data-indent="1">{`/>`}</p>
 					<p>{`</svg>`}</p>
-				</div>
+				</DemoCode>
 			</DemoContent>
 			<DemoCanvas
 				onMouseDown={handleMouseDown}

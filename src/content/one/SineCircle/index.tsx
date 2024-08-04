@@ -2,15 +2,21 @@
 
 import { useState } from "react";
 import RangeInput from "@/components/RangeInput";
-import s from "./shared.module.css";
+import {
+	DemoCanvas,
+	DemoWrapper,
+	DemoContent,
+	DemoControls,
+	DemoCode,
+} from "@/components/BlogDemo";
 
 export default function SineCircle() {
 	const [percent, setPercent] = useState<number>(0);
 
 	return (
-		<div className={s.container} data-elevation="1">
-			<div className={s.content} data-rows="2">
-				<div>
+		<DemoWrapper>
+			<DemoContent>
+				<DemoControls>
 					<RangeInput
 						label="Progress"
 						value={percent}
@@ -20,33 +26,29 @@ export default function SineCircle() {
 						step={0.1}
 						outputRenderProp={(v) => Math.round(v)}
 					/>
-				</div>
-				<div className={s.code}>
+				</DemoControls>
+				<DemoCode>
 					<p>{`const { PI, sin, cos } = Math`}</p>
 					<p>const percent = progress / 100</p>
-					<p className={s.comment}>{`// Percent: ${(percent / 100).toFixed(2)}`}</p>
+					<p data-comment>{`// Percent: ${(percent / 100).toFixed(2)}`}</p>
 					<p>const radians = percent * PI * 2</p>
-					<p className={s.comment}>
-						{`// Radians: ${((percent / 100) * Math.PI * 2).toFixed(2)}`}
-					</p>
+					<p data-comment>{`// Radians: ${((percent / 100) * Math.PI * 2).toFixed(2)}`}</p>
 					<p>const x = center +</p>
-					<p className={s.indent_5}>sin(radians) * radius</p>
-					<p className={s.comment}>
+					<p data-indent="5">sin(radians) * radius</p>
+					<p data-comment>
 						{`// x: ${(50 + Math.sin((percent / 100) * Math.PI * 2) * 30).toFixed(2)}`}
 					</p>
 					<p>const y = center -</p>
-					<p className={s.indent_5}>cos(radians) * radius</p>
-					<p className={s.comment}>
+					<p data-indent="5">cos(radians) * radius</p>
+					<p data-comment>
 						{`// y: ${(50 - Math.cos((percent / 100) * Math.PI * 2) * 30).toFixed(2)}`}
 					</p>
-				</div>
-			</div>
-			<div className={s.canvas} data-elevation="0">
-				<div className={s.wrapper}>
-					<CircleChart progress={percent} />
-				</div>
-			</div>
-		</div>
+				</DemoCode>
+			</DemoContent>
+			<DemoCanvas>
+				<CircleChart progress={percent} />
+			</DemoCanvas>
+		</DemoWrapper>
 	);
 }
 

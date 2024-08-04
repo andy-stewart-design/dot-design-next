@@ -6,6 +6,7 @@
 	flex-direction: column;
 	gap: 0.25em;
 	justify-content: center;
+	overflow-y: scroll;
 
 	font-family: monospace;
 	font-size: 0.825em;

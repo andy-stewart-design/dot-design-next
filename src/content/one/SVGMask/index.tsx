@@ -2,11 +2,17 @@
 
 import { useState, type SVGProps, type MouseEvent } from "react";
 import Switch from "@/components/Switch";
-import { map } from "@/utils/math";
-import { Refresh } from "@/components/Icons/20";
-import cn from "clsx/lite";
-import s from "./shared.module.css";
 import ToggleGroup from "@/components/ToggleGroup";
+import {
+	DemoCanvas,
+	DemoWrapper,
+	DemoContent,
+	DemoControls,
+	DemoCode,
+} from "@/components/BlogDemo";
+import { Refresh } from "@/components/Icons/20";
+import { map } from "@/utils/math";
+import s from "../shared.module.css";
 
 type SVGShape = "circle" | "rect";
 type SVGShapeData = {
@@ -69,9 +75,9 @@ export default function ArcDrawing() {
 	}
 
 	return (
-		<div className={s.container} data-elevation="1">
-			<div className={s.content} data-rows="2">
-				<div>
+		<DemoWrapper>
+			<DemoContent>
+				<DemoControls>
 					<Switch checked={isMasked} onChange={setIsMasked}>
 						Apply Mask
 					</Switch>
@@ -105,52 +111,50 @@ export default function ArcDrawing() {
 							setShapes(updateShapes(shapes, "circle", { fill: value }))
 						}
 					/>
-				</div>
-				<div className={s.code}>
+				</DemoControls>
+				<DemoCode>
 					<CodeBlock shapes={shapes} isMasked={isMasked} />
-				</div>
-			</div>
-			<div className={s.canvas} data-elevation="0">
-				<div
-					className={s.wrapper}
-					onMouseDown={handleMouseDown}
-					onMouseMove={handleMouseMove}
-					onMouseUp={handleMouseUp}
-				>
-					<svg viewBox="0 0 100 100">
-						<image
-							x="10"
-							y="10"
-							width="80"
-							height="80"
-							href="/svg-mask.jpg"
-							mask="url(#mask)"
+				</DemoCode>
+			</DemoContent>
+			<DemoCanvas
+				onMouseDown={handleMouseDown}
+				onMouseMove={handleMouseMove}
+				onMouseUp={handleMouseUp}
+			>
+				<svg viewBox="0 0 100 100">
+					<image
+						x="10"
+						y="10"
+						width="80"
+						height="80"
+						href="/svg-mask.jpg"
+						mask="url(#mask)"
+					/>
+					{shapes.map((shape, i) => (
+						<SVGShape
+							key={i}
+							{...shape}
+							fill={isMasked ? "transparent" : shape.fill}
+							stroke={activeShape === shape.type ? "var(--color-primary)" : "none"}
+							strokeWidth={0.75}
 						/>
-						{shapes.map((shape, i) => (
-							<SVGShape
-								key={i}
-								{...shape}
-								fill={isMasked ? "transparent" : shape.fill}
-								stroke={activeShape === shape.type ? "var(--color-primary)" : "none"}
-								strokeWidth={0.75}
-							/>
-						))}
-						{isMasked && (
-							<defs>
-								<mask id="mask">
-									{shapes.map((shape, i) => (
-										<SVGShape key={i} {...shape} />
-									))}
-								</mask>
-							</defs>
-						)}
-					</svg>
-				</div>
+					))}
+					{isMasked && (
+						<defs>
+							<mask id="mask">
+								{shapes.map((shape, i) => (
+									<SVGShape key={i} {...shape} />
+								))}
+							</mask>
+						</defs>
+					)}
+				</svg>
+
 				<button className={s.btn} onClick={reset}>
 					<Refresh />
 				</button>
-			</div>
-		</div>
+			</DemoCanvas>
+		</DemoWrapper>
 	);
 }
 
@@ -175,7 +179,7 @@ function CodeBlock({ shapes, isMasked }: CodeBlockProps) {
 	return (
 		<>
 			<p>{`<svg viewBox="0 0 100 100">`}</p>
-			<p className={s.indent_1}>
+			<p data-indent="1">
 				{`<image ${isMasked ? `mask="url(#mask)"` : ""} 
                   x="10" y="10" width="80" height="80" href="...">`}
 			</p>
@@ -185,13 +189,13 @@ function CodeBlock({ shapes, isMasked }: CodeBlockProps) {
 				})
 			) : (
 				<>
-					<p className={s.indent_1}>{`<defs>`}</p>
-					<p className={s.indent_2}>{`<mask id="mask">`}</p>
-					{shapes.map((shape, i) => {
+					<p data-indent="1">{`<defs>`}</p>
+					<p data-indent="2">{`<mask id="mask">`}</p>
+					{shapes.map((shape) => {
 						return <SVGShapeCode key={shape.type} {...shape} indent={3} />;
 					})}
-					<p className={s.indent_2}>{`</mask>`}</p>
-					<p className={s.indent_1}>{`</defs>`}</p>
+					<p data-indent="2">{`</mask>`}</p>
+					<p data-indent="1">{`</defs>`}</p>
 				</>
 			)}
 			<p>{`</svg>`}</p>
@@ -208,7 +212,8 @@ function SVGShapeCode({ type, x, y, r, fill, indent = 1 }: SVGShapeCodeProps) {
 		return (
 			<p
 				key={JSON.stringify([x, y, r, fill])}
-				className={cn(s[`indent_${indent}`], s.highlight_line)}
+				data-indent={indent}
+				data-highlight
 				data-interactive
 			>
 				{`<circle fill="${fill}" cx="${(x + r / 2).toFixed(1)}" 
@@ -219,7 +224,8 @@ function SVGShapeCode({ type, x, y, r, fill, indent = 1 }: SVGShapeCodeProps) {
 		return (
 			<p
 				key={JSON.stringify([x, y, r, fill])}
-				className={cn(s[`indent_${indent}`], s.highlight_line)}
+				data-indent={indent}
+				data-highlight
 				data-interactive
 			>
 				{`<rect fill="${fill}" x="${x.toFixed(1)}" y="${y.toFixed(1)}" 

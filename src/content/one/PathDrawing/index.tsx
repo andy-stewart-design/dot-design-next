@@ -61,6 +61,7 @@ function PathDrawing() {
 	function reset(e: MouseEvent<HTMLButtonElement>) {
 		e.stopPropagation();
 
+		setActiveIndex(null);
 		setPoints([
 			{ x: 20, y: 30 },
 			{ x: 60, y: 80 },

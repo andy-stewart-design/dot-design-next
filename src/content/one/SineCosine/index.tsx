@@ -1,19 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import Switch from "@/components/Switch";
 import RangeInput from "@/components/RangeInput";
+import {
+	DemoCanvas,
+	DemoWrapper,
+	DemoContent,
+	DemoControls,
+	DemoCode,
+} from "@/components/BlogDemo";
 import { map } from "@/utils/math";
-import cn from "clsx/lite";
-import s from "./shared.module.css";
 
 export default function ArcDrawing() {
 	const [percent, setPercent] = useState<number>(0);
 
 	return (
-		<div className={s.container} data-elevation="1">
-			<div className={s.content} data-rows="2">
-				<div>
+		<DemoWrapper>
+			<DemoContent>
+				<DemoControls>
 					<RangeInput
 						label="Progress"
 						value={percent}
@@ -23,55 +27,42 @@ export default function ArcDrawing() {
 						step={0.1}
 						outputRenderProp={(v) => Math.round(v)}
 					/>
-					{/* <Switch
-						checked={isLarge}
-						onChange={(v) => {
-							setIsLarge(v);
-							if (!interactiveIndices.includes(1)) setInteractiveIndices((c) => [...c, 1]);
-						}}
-					>
-						Large Arc
-					</Switch> */}
-				</div>
-				<div className={s.code}>
+				</DemoControls>
+				<DemoCode>
 					<p>{`const { PI, sin, cos } = Math`}</p>
 					<p>const percent = progress / 100</p>
-					<p className={s.comment}>{`// Percent: ${(percent / 100).toFixed(2)}`}</p>
+					<p data-comment>{`// Percent: ${(percent / 100).toFixed(2)}`}</p>
 					<p>const radians = percent * PI * 2</p>
-					<p className={s.comment}>
-						{`// Radians: ${((percent / 100) * Math.PI * 2).toFixed(2)}`}
-					</p>
+					<p data-comment>{`// Radians: ${((percent / 100) * Math.PI * 2).toFixed(2)}`}</p>
 					<p>const x1 = sin(radians)</p>
-					<p className={s.comment}>
+					<p data-comment>
 						{`// x1: ${Math.sin((percent / 100) * Math.PI * 2).toFixed(2)}`}
 					</p>
 					<p>const x2 = cos(radians)</p>
-					<p className={s.comment}>
+					<p data-comment>
 						{`// x2: ${Math.cos((percent / 100) * Math.PI * 2).toFixed(2)}`}
 					</p>
-				</div>
-			</div>
-			<div className={s.canvas} data-elevation="0">
-				<div className={s.wrapper}>
-					<svg viewBox="0 0 100 100">
-						<g>
-							<WaveChart type="sin" progress={percent} />
-						</g>
-						<line
-							x1={0}
-							y1={50}
-							x2={100}
-							y2={50}
-							stroke="var(--elevation-1)"
-							strokeWidth={0.25}
-						/>
-						<g transform="translate(0, 50)">
-							<WaveChart type="cos" progress={percent} />
-						</g>
-					</svg>
-				</div>
-			</div>
-		</div>
+				</DemoCode>
+			</DemoContent>
+			<DemoCanvas>
+				<svg viewBox="0 0 100 100">
+					<g>
+						<WaveChart type="sin" progress={percent} />
+					</g>
+					<line
+						x1={0}
+						y1={50}
+						x2={100}
+						y2={50}
+						stroke="var(--elevation-1)"
+						strokeWidth={0.25}
+					/>
+					<g transform="translate(0, 50)">
+						<WaveChart type="cos" progress={percent} />
+					</g>
+				</svg>
+			</DemoCanvas>
+		</DemoWrapper>
 	);
 }
 

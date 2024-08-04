@@ -16,19 +16,19 @@ export const ArcDrawing = dynamic(() => import("@/content/one/ArcDrawing"), {
 	loading: Skeleton,
 });
 
-export const SVGMask = dynamic(() => import("@/content/one/svg-mask"), {
+export const SVGMask = dynamic(() => import("@/content/one/SVGMask"), {
 	loading: Skeleton,
 });
 
-export const SineCos = dynamic(() => import("@/content/one/sine-cos"), {
+export const SineCos = dynamic(() => import("@/content/one/SineCosine"), {
 	loading: Skeleton,
 });
 
-export const SineCircle = dynamic(() => import("@/content/one/sine-circle"), {
+export const SineCircle = dynamic(() => import("@/content/one/SineCircle"), {
 	loading: Skeleton,
 });
 
-export const SineAnimation = dynamic(() => import("@/content/one/sine-animation"), {
+export const SineAnimation = dynamic(() => import("@/content/one/SineAnimation"), {
 	loading: Skeleton,
 });
 

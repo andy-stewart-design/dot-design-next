@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { DemoWrapper } from "@/components/BlogDemo";
 import { Refresh } from "@/components/Icons/20";
-import s from "./shared.module.css";
+import s from "../shared.module.css";
 
 export default function SineAnimation() {
 	const svgRef = useRef<SVGSVGElement>(null);
@@ -25,7 +26,7 @@ export default function SineAnimation() {
 	}, [isPlaying]);
 
 	return (
-		<div className={s.container} data-elevation="1">
+		<DemoWrapper>
 			<svg ref={svgRef} viewBox="0 0 1920 1080" fill="none">
 				<line
 					x1="400"
@@ -211,6 +212,6 @@ export default function SineAnimation() {
 			<button className={s.btn} onClick={() => setIsPlaying(!isPlaying)}>
 				<Refresh />
 			</button>
-		</div>
+		</DemoWrapper>
 	);
 }
