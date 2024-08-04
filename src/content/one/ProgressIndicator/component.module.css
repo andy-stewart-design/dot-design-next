@@ -1,0 +1,10 @@
+.tabs {
+	padding-inline: 0.5rem;
+	padding-block-end: 2rem;
+}
+
+.sliders {
+	display: grid;
+	gap: 1rem;
+	padding-inline: 0.5rem;
+}

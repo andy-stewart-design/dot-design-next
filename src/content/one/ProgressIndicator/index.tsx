@@ -3,7 +3,8 @@
 import { useCallback, useId, useState } from "react";
 import RangeInput from "@/components/RangeInput";
 import ToggleGroup from "@/components/ToggleGroup";
-import s from "./shared.module.css";
+import { DemoCanvas, DemoWrapper, DemoContent } from "@/components/BlogDemo";
+import c from "./component.module.css";
 
 export default function ProgressIndicatorSandbox() {
 	const [chartStyle, setChartStyle] = useState<"donut" | "pie">("donut");
@@ -24,9 +25,9 @@ export default function ProgressIndicatorSandbox() {
 	}, [outerDiameter, innerOffset]);
 
 	return (
-		<div className={s.container} data-elevation="1">
-			<div className={s.content} data-reset>
-				<div className={s.controls}>
+		<DemoWrapper>
+			<DemoContent>
+				<div className={c.tabs}>
 					<ToggleGroup
 						name="chart-style"
 						items={[
@@ -38,7 +39,7 @@ export default function ProgressIndicatorSandbox() {
 						elevation={1}
 					/>
 				</div>
-				<div className={s.controls}>
+				<div className={c.sliders}>
 					<RangeInput
 						label="Progress"
 						value={percent}
@@ -68,18 +69,16 @@ export default function ProgressIndicatorSandbox() {
 						disabled={chartStyle === "pie"}
 					/>
 				</div>
-			</div>
-			<div className={s.canvas} data-elevation="0">
-				<div className={s.wrapper}>
-					<ProgressIndicator
-						percent={percent}
-						outerDiameter={outerDiameter}
-						innerDiameter={outerDiameter * innerOffset}
-						donut={chartStyle === "donut"}
-					/>
-				</div>
-			</div>
-		</div>
+			</DemoContent>
+			<DemoCanvas>
+				<ProgressIndicator
+					percent={percent}
+					outerDiameter={outerDiameter}
+					innerDiameter={outerDiameter * innerOffset}
+					donut={chartStyle === "donut"}
+				/>
+			</DemoCanvas>
+		</DemoWrapper>
 	);
 }
 

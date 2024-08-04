@@ -1,14 +1,16 @@
 "use client";
 
 import { useRef, useState, type MouseEvent } from "react";
+import { DemoCanvas, DemoWrapper, DemoContent } from "@/components/BlogDemo";
 import { clamp, map } from "@/utils/math";
 import cn from "clsx";
-import s from "./shared.module.css";
+import s from "../shared.module.css";
+import c from "./component.module.css";
 
 type ActiveElement = "left" | "right" | "circle" | undefined;
 const radius = 4;
 
-export default function SVGGrid() {
+function SVGGrid() {
 	const [width, setWidth] = useState(240);
 	const [position, setPosition] = useState({ x: 12, y: 12 });
 	const [activeElement, setActiveElement] = useState<ActiveElement | undefined>(undefined);
@@ -66,8 +68,8 @@ export default function SVGGrid() {
 	}
 
 	return (
-		<div className={s.container} data-elevation="1">
-			<div className={s.content} data-reset>
+		<DemoWrapper>
+			<DemoContent>
 				<div className={s.code}>
 					<p>{`<svg`}</p>
 					<p className={s.indent_1}>{`viewBox="0 0 32 24"`}</p>
@@ -92,35 +94,32 @@ export default function SVGGrid() {
 					<p className={s.indent_1}>{`/>`}</p>
 					<p>{`</svg>`}</p>
 				</div>
-			</div>
-			<div className={s.canvas} data-elevation="0">
-				<div
-					className={s.wrapper}
-					onMouseDown={handleMouseDown}
-					onMouseMove={handleMouseMove}
-					onClick={handleClick}
-				>
-					<div className={s.gridWrapper} data-active-edge={activeElement}>
-						<svg
-							viewBox="0 0 32 24"
-							width={width}
-							style={{ background: "var(--elevation-1)" }}
-						>
-							<circle
-								cx={position.x}
-								cy={position.y}
-								r={radius}
-								fill="var(--color-primary)"
-								stroke="var(--foreground)"
-								strokeWidth={0.5}
-							/>
-						</svg>
-						<div className={cn(s.edge, s.edgeRight)} />
-						<div className={cn(s.edge, s.edgeLeft)} />
-					</div>
+			</DemoContent>
+			<DemoCanvas
+				onMouseDown={handleMouseDown}
+				onMouseMove={handleMouseMove}
+				onClick={handleClick}
+			>
+				<div className={c.gridWrapper} data-active-edge={activeElement}>
+					<svg
+						viewBox="0 0 32 24"
+						width={width}
+						style={{ background: "var(--elevation-1)" }}
+					>
+						<circle
+							cx={position.x}
+							cy={position.y}
+							r={radius}
+							fill="var(--color-primary)"
+							stroke="var(--foreground)"
+							strokeWidth={0.5}
+						/>
+					</svg>
+					<div className={cn(c.edge, c.edgeRight)} />
+					<div className={cn(c.edge, c.edgeLeft)} />
 				</div>
-			</div>
-		</div>
+			</DemoCanvas>
+		</DemoWrapper>
 	);
 }
 
@@ -149,3 +148,5 @@ function detectHoverY(e: MouseEvent<Element>) {
 	if (mouseY > svg.top - div.top && mouseY < svg.bottom - div.top) return true;
 	else return false;
 }
+
+export default SVGGrid;

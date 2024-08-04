@@ -1,10 +1,10 @@
 import dynamic from "next/dynamic";
 
-export const ProgressIndicator = dynamic(() => import("@/content/one/progress-indicator"), {
+export const ProgressIndicator = dynamic(() => import("@/content/one/ProgressIndicator"), {
 	loading: Skeleton,
 });
 
-export const SVGGrid = dynamic(() => import("@/content/one/svg-grid"), {
+export const SVGGrid = dynamic(() => import("@/content/one/SVGGrid"), {
 	loading: Skeleton,
 });
 

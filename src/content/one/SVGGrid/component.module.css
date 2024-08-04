@@ -1,0 +1,49 @@
+.gridWrapper {
+	position: relative;
+
+	.edge {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		width: 0.75rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		&::before {
+			content: "";
+			width: 0.25rem;
+			height: 2.5rem;
+			background: var(--foreground);
+			border-radius: 100vmax;
+			opacity: 0;
+			transition: opacity 50ms ease-out;
+		}
+
+		&:hover {
+			cursor: col-resize;
+
+			&::before {
+				opacity: 1;
+			}
+		}
+	}
+
+	.edgeRight {
+		right: 0;
+		translate: 50%;
+
+		[data-active-edge="right"] &::before {
+			opacity: 1;
+		}
+	}
+
+	.edgeLeft {
+		left: 0;
+		translate: -50%;
+
+		[data-active-edge="left"] &::before {
+			opacity: 1;
+		}
+	}
+}
