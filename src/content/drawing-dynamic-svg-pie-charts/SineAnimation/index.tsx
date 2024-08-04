@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { DemoWrapper } from "@/components/BlogDemo";
-import { Refresh } from "@/components/Icons/20";
+import { Play, Pause } from "@/components/Icons/20";
 import s from "../shared.module.css";
 
 export default function SineAnimation() {
@@ -210,7 +210,7 @@ export default function SineAnimation() {
 				</defs>
 			</svg>
 			<button className={s.btn} onClick={() => setIsPlaying(!isPlaying)}>
-				<Refresh />
+				{isPlaying ? <Pause /> : <Play />}
 			</button>
 		</DemoWrapper>
 	);
