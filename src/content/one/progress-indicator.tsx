@@ -2,8 +2,8 @@
 
 import { useCallback, useId, useState } from "react";
 import RangeInput from "@/components/RangeInput";
-import s from "./progress-indicator.module.css";
 import ToggleGroup from "@/components/ToggleGroup";
+import s from "./shared.module.css";
 
 export default function ProgressIndicatorSandbox() {
 	const [chartStyle, setChartStyle] = useState<"donut" | "pie">("donut");
@@ -25,18 +25,20 @@ export default function ProgressIndicatorSandbox() {
 
 	return (
 		<div className={s.container} data-elevation="1">
-			<div className={s.controls}>
-				<ToggleGroup
-					name="chart-style"
-					items={[
-						{ value: "donut", label: "Donut" },
-						{ value: "pie", label: "Pie" },
-					]}
-					value={chartStyle}
-					onValueChange={(e: "donut" | "pie") => setChartStyle(e)}
-					elevation={1}
-				/>
-				<div className={s.inputs}>
+			<div className={s.content} data-reset>
+				<div className={s.controls}>
+					<ToggleGroup
+						name="chart-style"
+						items={[
+							{ value: "donut", label: "Donut" },
+							{ value: "pie", label: "Pie" },
+						]}
+						value={chartStyle}
+						onValueChange={(e: "donut" | "pie") => setChartStyle(e)}
+						elevation={1}
+					/>
+				</div>
+				<div className={s.controls}>
 					<RangeInput
 						label="Progress"
 						value={percent}
@@ -63,16 +65,19 @@ export default function ProgressIndicatorSandbox() {
 						max={0.9}
 						step={0.001}
 						outputRenderProp={formatInnerDiameter}
+						disabled={chartStyle === "pie"}
 					/>
 				</div>
 			</div>
 			<div className={s.canvas} data-elevation="0">
-				<ProgressIndicator
-					percent={percent}
-					outerDiameter={outerDiameter}
-					innerDiameter={outerDiameter * innerOffset}
-					donut={chartStyle === "donut"}
-				/>
+				<div className={s.wrapper}>
+					<ProgressIndicator
+						percent={percent}
+						outerDiameter={outerDiameter}
+						innerDiameter={outerDiameter * innerOffset}
+						donut={chartStyle === "donut"}
+					/>
+				</div>
 			</div>
 		</div>
 	);
@@ -119,8 +124,8 @@ function ProgressIndicator({
 			data-filled={percent === 100 ? "" : undefined}
 		>
 			<g mask={`url(#${maskURL})`}>
-				<circle className={s.background} cx={center} cy={center} r={outDia / 2} />
-				<path className={s.foreground} d={wedgePath} />
+				<circle cx={center} cy={center} r={outDia / 2} fill="var(--elevation-1)" />
+				<path d={wedgePath} fill="var(--color-primary)" />
 			</g>
 			<defs>
 				<mask id={maskURL}>

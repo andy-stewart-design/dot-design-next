@@ -17,6 +17,7 @@ interface Props {
 	label?: string;
 	value?: number;
 	onChange?: (value: number) => void;
+	disabled?: boolean;
 	min?: number;
 	max?: number;
 	step?: number;
@@ -29,6 +30,7 @@ export function RangeInput({
 	max = 100,
 	onChange,
 	name: _name,
+	disabled,
 	label,
 	step = 1,
 	outputRenderProp,
@@ -51,6 +53,7 @@ export function RangeInput({
 			onChange={onChange}
 			minValue={min}
 			maxValue={max}
+			isDisabled={disabled}
 			step={step}
 		>
 			{label && (

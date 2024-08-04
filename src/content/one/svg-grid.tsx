@@ -3,7 +3,7 @@
 import { useRef, useState, type MouseEvent } from "react";
 import { clamp, map } from "@/utils/math";
 import cn from "clsx";
-import s from "./svg-grid.module.css";
+import s from "./shared.module.css";
 
 type ActiveElement = "left" | "right" | "circle" | undefined;
 const radius = 4;
@@ -67,47 +67,53 @@ export default function SVGGrid() {
 
 	return (
 		<div className={s.container} data-elevation="1">
-			<div className={s.content}>
-				{/* <div className={s.controls}>
-					<Switch checked={isClosed} onChange={(e) => setIsClosed(e.target.checked)}>
-						Close path (Z)
-					</Switch>
-				</div>
-				 */}
+			<div className={s.content} data-reset>
 				<div className={s.code}>
 					<p>{`<svg`}</p>
-					<p className={s.tab1}>{`viewBox="0 0 32 24"`}</p>
+					<p className={s.indent_1}>{`viewBox="0 0 32 24"`}</p>
 					<p
-						className={cn(s.tab1, s.highlight)}
-						data-active={
-							activeElement === "left" || activeElement === "right" ? "" : undefined
-						}
+						key={width}
+						className={cn(s.indent_1, s.highlight_line)}
+						data-interactive
 					>{`width="${width}"`}</p>
 					<p>{`>`}</p>
-					<p className={s.tab1}>{`<circle`}</p>
+					<p className={s.indent_1}>{`<circle`}</p>
 					<p
-						className={cn(s.tab2, s.highlight)}
-						data-active={activeElement === "circle" ? "" : undefined}
+						key={`{x-${position.x}}`}
+						className={cn(s.indent_2, s.highlight_line)}
+						data-interactive
 					>{`cx="${position.x.toFixed(2)}"`}</p>
 					<p
-						className={cn(s.tab2, s.highlight)}
-						data-active={activeElement === "circle" ? "" : undefined}
+						key={`{y-${position.y}}`}
+						className={cn(s.indent_2, s.highlight_line)}
+						data-interactive
 					>{`cy="${position.y.toFixed(2)}"`}</p>
-					<p className={s.tab2}>{`r="${radius}"`}</p>
-					<p className={s.tab1}>{`/>`}</p>
+					<p className={s.indent_2}>{`r="${radius}"`}</p>
+					<p className={s.indent_1}>{`/>`}</p>
 					<p>{`</svg>`}</p>
 				</div>
 			</div>
 			<div className={s.canvas} data-elevation="0">
 				<div
-					className={s.target}
+					className={s.wrapper}
 					onMouseDown={handleMouseDown}
 					onMouseMove={handleMouseMove}
 					onClick={handleClick}
 				>
-					<div className={s.wrapper} data-active-edge={activeElement}>
-						<svg className={s.svg} viewBox="0 0 32 24" width={width}>
-							<circle cx={position.x} cy={position.y} r={radius} />
+					<div className={s.gridWrapper} data-active-edge={activeElement}>
+						<svg
+							viewBox="0 0 32 24"
+							width={width}
+							style={{ background: "var(--elevation-1)" }}
+						>
+							<circle
+								cx={position.x}
+								cy={position.y}
+								r={radius}
+								fill="var(--color-primary)"
+								stroke="var(--foreground)"
+								strokeWidth={0.5}
+							/>
 						</svg>
 						<div className={cn(s.edge, s.edgeRight)} />
 						<div className={cn(s.edge, s.edgeLeft)} />

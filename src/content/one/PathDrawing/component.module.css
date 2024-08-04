@@ -1,0 +1,17 @@
+.controls {
+	padding-block-end: 1rem;
+	border-bottom: var(--border-lt);
+}
+
+.code {
+	flex-grow: 1;
+
+	.point {
+		background: oklch(62% 0.15 var(--hue));
+		color: var(--foreground-inverted);
+		font-weight: 600;
+		padding: 0.0625rem 0.1875rem;
+		border-radius: 0.125rem;
+		white-space: nowrap;
+	}
+}

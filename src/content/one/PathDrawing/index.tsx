@@ -1,15 +1,15 @@
 "use client";
 
 import { type MouseEvent, useState } from "react";
-import { map } from "@/utils/math";
 import Switch from "@/components/Switch";
+import { DemoCanvas, DemoWrapper, DemoContent } from "@/components/BlogDemo";
 import { Refresh } from "@/components/Icons/20";
-import s from "./path-drawing.module.css";
-import c from "./shared.module.css";
-import { DemoCanvas, DemoWrapper } from "@/components/BlogDemo";
-import DemoContent from "@/components/BlogDemo/DemoContent";
+import { map } from "@/utils/math";
+import clsx from "clsx";
+import s from "./component.module.css";
+import c from "../shared.module.css";
 
-export default function PathDrawing() {
+function PathDrawing() {
 	const [activeIndex, setActiveIndex] = useState<number | null>(null);
 	const [points, setPoints] = useState([
 		{ x: 20, y: 30 },
@@ -53,11 +53,14 @@ export default function PathDrawing() {
 		setPoints(nextPoints);
 	}
 
-	function reset() {
+	function reset(e: MouseEvent<HTMLButtonElement>) {
+		e.stopPropagation();
+
 		setPoints([
 			{ x: 20, y: 30 },
 			{ x: 60, y: 80 },
 		]);
+		setIsClosed(false);
 	}
 
 	return (
@@ -68,11 +71,11 @@ export default function PathDrawing() {
 						Close path (Z)
 					</Switch>
 				</div>
-				<div className={s.code}>
+				<div className={clsx(c.code, s.code)}>
 					<p>{`<svg viewBox="0 0 100 100">`}</p>
-					<p className={s["indent-1"]}>{`<path`}</p>
+					<p className={c.indent_1}>{`<path`}</p>
 					<div dangerouslySetInnerHTML={{ __html: html }} />
-					<p className={s["indent-1"]}>{`></path>`}</p>
+					<p className={c.indent_1}>{`></path>`}</p>
 					<p>{`</svg>`}</p>
 				</div>
 			</DemoContent>
@@ -124,9 +127,9 @@ function formatHTML(points: string[], isClosed: boolean) {
 		(p, i) => `<span class="${s.point}" style="--hue: ${i * 30}">${p}</span>`
 	);
 
-	const html = `<p class="${s["indent-2"]}">d="${spans.join(" ")}${
-		isClosed ? " Z" : ""
-	}"</p>`;
+	const html = `<p class="${c.indent_2}">d="${spans.join(" ")}${isClosed ? " Z" : ""}"</p>`;
 
 	return html;
 }
+
+export default PathDrawing;

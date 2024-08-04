@@ -8,7 +8,7 @@ export const SVGGrid = dynamic(() => import("@/content/one/svg-grid"), {
 	loading: Skeleton,
 });
 
-export const PathDrawing = dynamic(() => import("@/content/one/path-drawing"), {
+export const PathDrawing = dynamic(() => import("@/content/one/PathDrawing"), {
 	loading: Skeleton,
 });
 
@@ -37,7 +37,6 @@ function Skeleton() {
 		<div
 			style={{
 				aspectRatio: "16 / 9 ",
-				maxWidth: "640px",
 				backgroundColor: "var(--color-background-1)",
 			}}
 		/>
