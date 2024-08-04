@@ -2,10 +2,15 @@
 
 import { type MouseEvent, useState } from "react";
 import Switch from "@/components/Switch";
-import { DemoCanvas, DemoWrapper, DemoContent } from "@/components/BlogDemo";
+import {
+	DemoCanvas,
+	DemoWrapper,
+	DemoContent,
+	DemoControls,
+	DemoCode,
+} from "@/components/BlogDemo";
 import { Refresh } from "@/components/Icons/20";
 import { map } from "@/utils/math";
-import clsx from "clsx";
 import s from "./component.module.css";
 import c from "../shared.module.css";
 
@@ -66,18 +71,18 @@ function PathDrawing() {
 	return (
 		<DemoWrapper>
 			<DemoContent>
-				<div className={s.controls}>
+				<DemoControls>
 					<Switch checked={isClosed} onChange={setIsClosed}>
 						Close path (Z)
 					</Switch>
-				</div>
-				<div className={clsx(c.code, s.code)}>
+				</DemoControls>
+				<DemoCode>
 					<p>{`<svg viewBox="0 0 100 100">`}</p>
-					<p className={c.indent_1}>{`<path`}</p>
+					<p data-indent="1">{`<path`}</p>
 					<div dangerouslySetInnerHTML={{ __html: html }} />
-					<p className={c.indent_1}>{`></path>`}</p>
+					<p data-indent="1">{`></path>`}</p>
 					<p>{`</svg>`}</p>
-				</div>
+				</DemoCode>
 			</DemoContent>
 			<DemoCanvas
 				onMouseDown={handleMouseDown}
@@ -127,7 +132,7 @@ function formatHTML(points: string[], isClosed: boolean) {
 		(p, i) => `<span class="${s.point}" style="--hue: ${i * 30}">${p}</span>`
 	);
 
-	const html = `<p class="${c.indent_2}">d="${spans.join(" ")}${isClosed ? " Z" : ""}"</p>`;
+	const html = `<p data-indent="2">d="${spans.join(" ")}${isClosed ? " Z" : ""}"</p>`;
 
 	return html;
 }

@@ -27,9 +27,9 @@ My options were even more limited than I realized, though. I first attempted to 
 	caption="Codepen : Figma : : Expectation : Reality"
 />
 
-To my surpise, Figma’s implementation of SVG is non-standard. The `stroke-dasharray` property does not render the same in Figma as it does in browsers, and so the most simple solution turned out to be a nonstarter.
+To my surpise, Figma’s implementation of SVG is non-standard. The `stroke-dasharray` property does not render the same in Figma as it does in browsers, so what appeared to be an elegantly simple solution turned out to be a nonstarter.
 
-I ended up with a solution that—while technically more complex—is considerably more flexible than rendering the charts using strokes alone, and also happens to be a good case study for some of the fundamental concepts of working with SVG in code. In this article, I’ll break down the concepts you need to know to execute something like this in your own project, starting with a brief overview of SVG layouts, and then diving into:
+In the end, I found a solution that—while technically more complex—is considerably more flexible than using strokes alone, and also happens to be a good case study for some of the fundamental concepts of working with SVG in code. In this article, I’ll break down the concepts you need to know to execute the following demo in your own project, starting with a brief overview of SVG layouts, and then diving into:
 
 1. Programatically drawing paths based on a dynamic set of inputs
 2. Using sine and cosine functions to draw a circle

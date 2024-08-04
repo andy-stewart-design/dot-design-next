@@ -3,10 +3,16 @@
 import { type MouseEvent, useState } from "react";
 import Switch from "@/components/Switch";
 import RangeInput from "@/components/RangeInput";
+import {
+	DemoCanvas,
+	DemoWrapper,
+	DemoContent,
+	DemoControls,
+	DemoCode,
+} from "@/components/BlogDemo";
 import { map } from "@/utils/math";
 import { Refresh } from "@/components/Icons/20";
-import cn from "clsx/lite";
-import s from "./shared.module.css";
+import s from "../shared.module.css";
 
 const size = 100;
 const frameCenter = size / 2;
@@ -70,7 +76,9 @@ export default function ArcDrawing() {
 		if (!interactiveIndices.includes(1)) setInteractiveIndices((c) => [...c, 1]);
 	}
 
-	function reset() {
+	function reset(e: MouseEvent<HTMLButtonElement>) {
+		e.stopPropagation();
+		setActiveIndex(null);
 		setPoints(defaultPoints);
 		setRadius(initDiameter);
 		setIsLarge(true);
@@ -79,9 +87,9 @@ export default function ArcDrawing() {
 	}
 
 	return (
-		<div className={s.container} data-elevation="1">
-			<div className={s.content} data-rows="2">
-				<div>
+		<DemoWrapper>
+			<DemoContent>
+				<DemoControls>
 					<RangeInput
 						label="Arc Radius"
 						value={radius}
@@ -109,56 +117,55 @@ export default function ArcDrawing() {
 					>
 						Sweep Direction
 					</Switch>
-				</div>
-				<div className={s.code}>
+				</DemoControls>
+				<DemoCode>
 					<p>{`<svg viewBox="0 0 100 100">`}</p>
-					<p className={s.indent_1}>{`<path`}</p>
+					<p data-indent="1">{`<path`}</p>
 					<p
 						key={JSON.stringify([points[0]])}
-						className={cn(s.indent_2, s.highlight_line)}
+						data-indent="2"
+						data-highlight
 						data-interactive={interactiveIndices.includes(0) ? "" : undefined}
 					>{`d="M ${points[0].x} ${points[0].y}`}</p>
 					<p
 						key={JSON.stringify([radius, points[1], isLarge, isClockwise])}
-						className={cn(s.indent_3_5, s.highlight_line)}
+						data-indent="3.5"
+						data-highlight
 						data-interactive={interactiveIndices.includes(1) ? "" : undefined}
 					>{`A ${Math.round(radius)} ${Math.round(
 						radius
 					)} 0 ${largeArc} ${sweep} ${x} ${y}"`}</p>
-					<p className={s.indent_1}>{`></path>`}</p>
+					<p data-indent="1">{`></path>`}</p>
 					<p>{`</svg>`}</p>
-				</div>
-			</div>
-			<div className={s.canvas} data-elevation="0">
-				<div
-					className={s.wrapper}
-					onMouseDown={handleMouseDown}
-					onMouseMove={handleMouseMove}
-					onClick={handleClick}
-				>
-					<svg viewBox="0 0 100 100">
-						<path
-							d={wedgePath}
-							fill="none"
-							stroke="var(--foreground)"
-							strokeLinecap="round"
+				</DemoCode>
+			</DemoContent>
+			<DemoCanvas
+				onMouseDown={handleMouseDown}
+				onMouseMove={handleMouseMove}
+				onClick={handleClick}
+			>
+				<svg viewBox="0 0 100 100">
+					<path
+						d={wedgePath}
+						fill="none"
+						stroke="var(--foreground)"
+						strokeLinecap="round"
+					/>
+					{points.map((point, index) => (
+						<circle
+							key={index}
+							cx={point.x}
+							cy={point.y}
+							r={2}
+							fill="var(--color-primary)"
 						/>
-						{points.map((point, index) => (
-							<circle
-								key={index}
-								cx={point.x}
-								cy={point.y}
-								r={2}
-								fill="var(--color-primary)"
-							/>
-						))}
-					</svg>
-				</div>
+					))}
+				</svg>
 				<button className={s.btn} onClick={reset}>
 					<Refresh />
 				</button>
-			</div>
-		</div>
+			</DemoCanvas>
+		</DemoWrapper>
 	);
 }
 

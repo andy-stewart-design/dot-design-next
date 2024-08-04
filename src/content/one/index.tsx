@@ -12,7 +12,7 @@ export const PathDrawing = dynamic(() => import("@/content/one/PathDrawing"), {
 	loading: Skeleton,
 });
 
-export const ArcDrawing = dynamic(() => import("@/content/one/arc-drawing"), {
+export const ArcDrawing = dynamic(() => import("@/content/one/ArcDrawing"), {
 	loading: Skeleton,
 });
 
