@@ -13,6 +13,7 @@ import {
 import { Refresh } from "@/components/Icons/20";
 import { map } from "@/utils/math";
 import s from "../shared.module.css";
+import Button from "@/components/Button";
 
 type SVGShape = "circle" | "rect";
 type SVGShapeData = {
@@ -150,9 +151,9 @@ export default function ArcDrawing() {
 					)}
 				</svg>
 
-				<button className={s.btn} onClick={reset}>
+				<Button className={s.btn} onClick={reset} label="Reset demo">
 					<Refresh />
-				</button>
+				</Button>
 			</DemoCanvas>
 		</DemoWrapper>
 	);

@@ -13,6 +13,7 @@ import {
 import { map } from "@/utils/math";
 import { Refresh } from "@/components/Icons/20";
 import s from "../shared.module.css";
+import Button from "@/components/Button";
 
 const size = 100;
 const frameCenter = size / 2;
@@ -161,9 +162,9 @@ export default function ArcDrawing() {
 						/>
 					))}
 				</svg>
-				<button className={s.btn} onClick={reset}>
+				<Button className={s.btn} onClick={reset} label="Reset demo">
 					<Refresh />
-				</button>
+				</Button>
 			</DemoCanvas>
 		</DemoWrapper>
 	);

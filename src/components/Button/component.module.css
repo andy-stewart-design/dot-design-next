@@ -1,0 +1,18 @@
+.btn {
+	color: var(--foreground);
+	background: var(--background);
+	border: var(--border-lt);
+	border-radius: 100vmax;
+	padding: 0.75rem;
+	transition: opacity 150ms ease-out, background 150ms ease-out;
+
+	&:disabled {
+		opacity: 0.5;
+	}
+
+	@media (hover: hover) {
+		&:not(:disabled):hover {
+			background: var(--elevation-1);
+		}
+	}
+}

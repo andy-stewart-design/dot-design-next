@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { DemoWrapper } from "@/components/BlogDemo";
 import { Play, Pause } from "@/components/Icons/20";
 import s from "../shared.module.css";
+import Button from "@/components/Button";
 
 export default function SineAnimation() {
 	const svgRef = useRef<SVGSVGElement>(null);
@@ -209,9 +210,13 @@ export default function SineAnimation() {
 					</clipPath>
 				</defs>
 			</svg>
-			<button className={s.btn} onClick={() => setIsPlaying(!isPlaying)}>
+			<Button
+				className={s.btn}
+				onClick={() => setIsPlaying(!isPlaying)}
+				label={isPlaying ? "Pause" : "Play"}
+			>
 				{isPlaying ? <Pause /> : <Play />}
-			</button>
+			</Button>
 		</DemoWrapper>
 	);
 }

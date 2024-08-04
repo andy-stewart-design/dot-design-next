@@ -11,8 +11,9 @@ import {
 } from "@/components/BlogDemo";
 import { Refresh } from "@/components/Icons/20";
 import { map } from "@/utils/math";
-import s from "./component.module.css";
-import c from "../shared.module.css";
+import c from "./component.module.css";
+import s from "../shared.module.css";
+import Button from "@/components/Button";
 
 function PathDrawing() {
 	const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -101,9 +102,14 @@ function PathDrawing() {
 						<circle key={i} cx={x} cy={y} r={radius} fill={`oklch(62% 0.15 ${i * 30})`} />
 					))}
 				</svg>
-				<button className={c.btn} onClick={reset} disabled={points.length <= 2}>
+				<Button
+					className={s.btn}
+					onClick={reset}
+					label="Reset demo"
+					disabled={points.length <= 2}
+				>
 					<Refresh />
-				</button>
+				</Button>
 			</DemoCanvas>
 		</DemoWrapper>
 	);
@@ -130,7 +136,7 @@ function formatPoints(points: { x: number; y: number }[]) {
 
 function formatHTML(points: string[], isClosed: boolean) {
 	const spans = points.map(
-		(p, i) => `<span class="${s.point}" style="--hue: ${i * 30}">${p}</span>`
+		(p, i) => `<span class="${c.point}" style="--hue: ${i * 30}">${p}</span>`
 	);
 
 	const html = `<p data-indent="2">d="${spans.join(" ")}${isClosed ? " Z" : ""}"</p>`;
