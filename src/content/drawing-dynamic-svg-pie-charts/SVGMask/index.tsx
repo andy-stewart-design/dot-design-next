@@ -12,8 +12,8 @@ import {
 } from "@/components/BlogDemo";
 import { Refresh } from "@/components/Icons/20";
 import { map } from "@/utils/math";
-import s from "../shared.module.css";
 import Button from "@/components/Button";
+import s from "../shared.module.css";
 
 type SVGShape = "circle" | "rect";
 type SVGShapeData = {
@@ -128,7 +128,7 @@ export default function ArcDrawing() {
 						y="10"
 						width="80"
 						height="80"
-						href="/svg-mask.jpg"
+						href="/svg-mask.webp"
 						mask="url(#mask)"
 					/>
 					{shapes.map((shape, i) => (

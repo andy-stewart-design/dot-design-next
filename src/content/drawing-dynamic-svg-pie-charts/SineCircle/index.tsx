@@ -33,12 +33,12 @@ export default function SineCircle() {
 					<p data-comment>{`// Percent: ${(percent / 100).toFixed(2)}`}</p>
 					<p>const radians = percent * PI * 2</p>
 					<p data-comment>{`// Radians: ${((percent / 100) * Math.PI * 2).toFixed(2)}`}</p>
-					<p>const x = center +</p>
+					<p>const x = centerCoordinate +</p>
 					<p data-indent="5">sin(radians) * radius</p>
 					<p data-comment>
 						{`// x: ${(50 + Math.sin((percent / 100) * Math.PI * 2) * 30).toFixed(2)}`}
 					</p>
-					<p>const y = center -</p>
+					<p>const y = centerCoordinate -</p>
 					<p data-indent="5">cos(radians) * radius</p>
 					<p data-comment>
 						{`// y: ${(50 - Math.cos((percent / 100) * Math.PI * 2) * 30).toFixed(2)}`}
