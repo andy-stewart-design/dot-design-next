@@ -164,7 +164,7 @@ All we need to know is the radius of a circle and the coordinates of its center.
 
 <SineCircle />
 
-Tying together everything we've discussed so far, here’s the full code used to calculate the pie chart wedge in the above demo. It’s worth noting that questions about which function (sine or cosine) shoulde be applied to which axis (x or y), and whether to add to or subtract from the center coordinates, do not have a definite answers. those decisions are left to your discretion as a designer, based on the point at which you want to begin drawing your circle.
+Tying together everything we've discussed so far, here’s the full code used to calculate the pie chart wedge in the above demo. It’s worth noting that questions about which function (sine or cosine) shoulde be applied to which axis (x or y), and whether to add to or subtract from the center coordinates, do not have definite answers. Those decisions are left to your discretion as a designer, based on the point at which you want to begin drawing your circle.
 
 ```js
 // declare fixed attributes
@@ -185,13 +185,13 @@ const pie = `M ${center} ${center - radius}
 
 ## Masking and Donut Holes
 
-At this point, you could, in theory, use the techniques we've already discussed to draw your donut chart—hole and all. But as much as I love a good a math problem, that would be unnecessarily complex. Instead, we're going to use a technique called **masking** to greatly simplify the process of defining our chart’s silhouette.
+At this point, you could, in theory, use the techniques we’ve already discussed to draw your donut chart—hole and all. But as much as I love a good a math problem, that would be unnecessarily complex. Instead, we’re going to use a technique called **masking** to greatly simplify the process of defining our chart’s silhouette.
 
-I like to think of masks as custom viewports that allow us to describe which parts of a shape (or group of shapes) should or should not be displayed. Do you remember how shapes that are placed outside of the bounds of an SVG’s `viewBox` are not rendered? Masks serve a similar function—defining the contours of our drawing, what should and should not be rendered—but they can use any 2D shape, not just basic rectangles.
+I like to think of masks as custom viewports that allow us to describe which parts of a shape (or group of shapes) should and should not be displayed. Do you remember how shapes that are placed outside of the bounds of an SVG’s `viewBox` are not rendered? Masks serve a similar function—defining the contours of what is rendered—but they can use any 2D shape, not just basic rectangles.
 
 Now, there is technically one other tool in the SVG toolbox that we could use to achieve this effect. Like masks, **clipping paths** also allow us to show and hide parts of our drawing. However, masks have a special feature that make them uniquely well-suited to our needs in this instance.
 
-With both masks and clipping paths, we can combine multiple, simple shapes together to create more complex and interesting silhouettes. But with masks, specifically, we can use color to describe how those shapes should be combined—a feature known as **alpha transparency**. Inside of a `mask`, black shapes are added to the composite mask whereas white shapes are subtracted from the mask. If you've ever used Figma’s [Boolean Operations](https://help.figma.com/hc/en-us/articles/360039957534-Boolean-operations) or Illustrator's [Pathfinder](https://helpx.adobe.com/illustrator/using/combining-objects.html#pathfinder_panel_overview), this concept should feel relatively familiar.
+With both masks and clipping paths, we can combine multiple, simple shapes together to create more complex and interesting silhouettes. But with masks, specifically, we can use color to describe how those shapes should be combined—a feature known as **alpha transparency**. Inside of a `mask`, black shapes are added to, and white shapes are subtracted from, the composite mask. If you've ever used Figma’s [Boolean Operations](https://help.figma.com/hc/en-us/articles/360039957534-Boolean-operations) or Illustrator's [Pathfinder](https://helpx.adobe.com/illustrator/using/combining-objects.html#pathfinder_panel_overview), this concept should feel relatively familiar.
 
 Before you explore the demo below, I want to address a few other nuances of SVG masking that you may notice:
 
