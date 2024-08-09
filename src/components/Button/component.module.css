@@ -5,6 +5,7 @@
 	border-radius: 100vmax;
 	padding: 0.75rem;
 	transition: opacity 150ms ease-out, background 150ms ease-out;
+	inline-size: max-content;
 
 	&:disabled {
 		opacity: 0.5;
