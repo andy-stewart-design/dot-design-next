@@ -63,6 +63,8 @@ Unfortunately, we can’t rely on built-in SVG elements for everything. When we 
 
 The thing that makes paths special and infinitely malleable is their `d` parameter, which allows you to define shapes using a relatively small set of commands. These so-called **line commands** provide us with the tools to effectively draw any two dimensional shape imaginable, one point at a time. Line commands encode two essential bits of information: where we are going next, and how we should get there.
 
+<LineCommandAnimation />
+
 These commands may look terse and intimidating at first, like some illegible robot hieroglyphics. Spend some time with them, though. You may be surprised how quickly you’re able to pick them up. For this project, we need to talk specifically about 4 of these commands:
 
 1. **Move To**, represented by the letter `M`, which allows you to update the origin point of a shape without drawing a visible line. Unless your path is drawn starting at the origin point of the SVG, it will begin with a MoveTo command.
@@ -84,17 +86,25 @@ Check out the demo below. Click anywhere on the SVG to add a new point, or move 
 
 <PathDrawing />
 
-## Circling Back to Arcs
+## Two Points, Four Lines
 
-In contrast to the simpler line commands, the **Arc To** command consists of the letter `A` followed by 7 numbers. (Which if you ask me is a few too many, but I don’t make the rules.) Let's break down the significance of these numbers down one-by-one:
+In contrast to the simpler line commands, the **Arc To** command consists of the letter `A` followed by 7 numbers. This feels intuitively like an excessive amount of variables to keep in mind, if I’m being honest. So, before we ask what each of these numbers do, let’s first look at why we need so many data points just to draw a line.
 
-1. The first two numbers describe the x- and y-radii of the rendered arc. These can be different if you need to draw an ellipse rather than a perfect circle. For our purposes, though, we only ever need to draw circles, so we can simplify things and always set them to the same value.
-2. The third number describes the rotation of the ellipse. This only has an effect if your x- and y-radii are different, so we can safely set this to 0 and move on. (And honestly, I would most likely reach for the [bezier line command](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths#b%C3%A9zier_curves) before I bothered trying to work with this.)
-3. The fourth number, the `large-arc` flag, can be set to either `0` or `1` and determines whether the rendered line should take the longer or shorter route around the circle to get to the next point. `0` draws the shorter arc while `1` draws the longer.
-4. The fifth number, the `sweep` flag, is also a binary. This one is wonkier to describe, but the way that I like to understand it is that this flag determines the direction (clockwise or counterclockwise) that the arc is drawn **relative to the position of the two points**. So, if your next point is directly below your previous point, `0` draws the arc in a counterclockwise direction while `1` draws it clockwise. That direction will rotate, however, as you move one point relative to the other.
+If I want to connect two points via a straight line—like with a line to command—I only have one option for what that line could be. If I want to connect two points with an arc, however, the answer for how that should look is less straightforward.
+
+When we invoke the arc to command, we’re essentially saying that we want to connect two points together using a segment of one of the ellipses that intersect those points. Because there are two possible ellipses that that could be drawn (clockwise or counterclockwise), and each ellipse has two possible segments (shorter or longer), we have four possible routes we could take to connect one point to another.
+
+<ArcToAnimation />
+
+With that context in mind, here are what each of those numbers represent:
+
+1. The first two numbers describe the x- and y-radii of the underlying ellipse. These can be different if you need to draw something other than a perfect circle. For our purposes, though, we only ever need to draw circles, so we can simplify things and always set them to the same value.
+2. The third number describes the rotation of the underlying ellipse. This only has an effect if your x- and y-radii are different, so we can safely set this to 0 and move on. (And honestly, I would most likely reach for the [bezier line command](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths#b%C3%A9zier_curves) before I bothered trying to work with this.)
+3. The fourth number, the `large-arc` flag, can be set to either `0` or `1`. It determines whether the rendered line should take the longer or shorter route around the ellipse to get to the next point. `0` draws the shorter arc while `1` draws the longer.
+4. The fifth number, the `sweep` flag, is also a binary and defines the directionality of the line. Importantly, that directionality (clockwise or counterclockwise) is **relative to the position of the two points**. So, if your next point is directly below your previous point, `0` draws the arc in a counterclockwise direction while `1` draws it clockwise. That direction will rotate, however, as you move one point relative to the other.
 5. And finally, the last two numbers simply define the x- and y- coordinates of the next point in the path—just like the previous commands we've discussed.
 
-I’ve provided another sandbox below to help you get a handle on these concepts. But first, I’d like to share a few observations that I made while building this demo:
+I’ve provided another sandbox below to help you get your arms around these (admittedly obtuse) concepts. But first, I’d like to share a few observations that I made while building this demo:
 
 - If you toggle the `large arc` and `sweep direction` flags back and forth in tandem, you'll see two sections that, together, form a complete circle (or ellipse).
 - The minimum diameter for an arc is equal to the distance between the two points (derived by the [Pythagorean Theorem](https://en.wikipedia.org/wiki/Pythagorean_theorem)). In other words, setting the diameter to a value less than that distance is effectively the same as setting it to that distance. That's why the radius input in the demo updates dynamically based on the position of the points.
@@ -102,7 +112,7 @@ I’ve provided another sandbox below to help you get a handle on these concepts
 
 <ArcDrawing />
 
-In the next section, we’ll look at how to combine these line commands to draw the wedges of our pie chart. Before we move on, though, I want to leave you with one more example: how to draw a perfect circle using Arc To commands. Take note of how we need two points—one at the top of the SVG and one at the bottom—because you cannot connect a point to itself; and how—because each arc is exactly 50% of a circle—the exact way that we set the large arc and sweep flags doesn’t matter as long as both flags are set consistently on both arcs.
+In the next section, we’ll look at how to combine these line commands to draw the wedges of our pie chart. Before we move on, though, I want to leave you with one more example: how to draw a perfect circle using Arc To commands. Take note of how we need two points—one at the top of the SVG and one at the bottom—and two arcs, because you cannot connect a point to itself; and how—because each arc is exactly 50% of a circle—the exact way that we set the large arc and sweep flags doesn’t matter as long as both flags are set consistently on both arcs.
 
 ```jsx
 const size = 100;
@@ -117,7 +127,7 @@ return (
 )
 ```
 
-If you take one idea away from the previous two sections, let it be this: dyamically constructing paths with code means knowing the points required to create a shape and understanding how to wield the various line commands to connect one point to the next. It is, for sure, more abstract than crafting SVGs with Figma or Illustrator but, honestly, it’s not conceptually all that different. Now, let’s talk about about one more concept we need to understand to be able to generate the wedges of our pie chart.
+If you take one idea away from the previous two sections, let it be this: dyamically constructing paths with code means knowing the points required to create a shape and understanding how to wield the various line commands to connect one point to the next. It is, for sure, more abstract than crafting SVGs with Figma or Illustrator, but it’s not conceptually all that different. Now, let’s talk about about one more concept we need to understand to be able to generate the wedges of our pie chart.
 
 ## Sine and Cosine
 
@@ -191,17 +201,9 @@ I like to think of masks as custom viewports that allow us to describe which par
 
 Now, there is technically one other tool in the SVG toolbox that we could use to achieve this effect. Like masks, **clipping paths** also allow us to show and hide parts of our drawing. However, masks have a special feature that make them uniquely well-suited to our needs in this instance.
 
-With both masks and clipping paths, we can combine multiple, simple shapes together to create more complex and interesting silhouettes. But with masks, specifically, we can use color to describe how those shapes should be combined—a feature known as **alpha transparency**. Inside of a `mask`, black shapes are added to, and white shapes are subtracted from, the composite mask. If you've ever used Figma’s [Boolean Operations](https://help.figma.com/hc/en-us/articles/360039957534-Boolean-operations) or Illustrator's [Pathfinder](https://helpx.adobe.com/illustrator/using/combining-objects.html#pathfinder_panel_overview), this concept should feel relatively familiar.
+With both masks and clipping paths, we can combine multiple, simple shapes together to create more complex and interesting silhouettes. But with masks, specifically, we can use color to describe how those shapes should interact—a feature known as **alpha transparency**. Inside of a `mask`, black shapes are added to, and white shapes are subtracted from, the composite mask. If you've ever used Figma’s [Boolean Operations](https://help.figma.com/hc/en-us/articles/360039957534-Boolean-operations) or Illustrator's [Pathfinder](https://helpx.adobe.com/illustrator/using/combining-objects.html#pathfinder_panel_overview), this concept of merging shapes should feel relatively familiar.
 
-Before you explore the demo below, I want to address a few other nuances of SVG masking that you may notice:
-
-- Masks must be wrapped in a `defs` element, which allows us to store anything that we need to reference in our SVG, but that we do not want to render directly. This is also where we would define other "invisible" elements like clipping paths and [gradients](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Gradients).
-- Elements inside of a mask can be any color, not just black or white. When you set a mask element to another color, like medium gray, that element will be added to the mask with a transparency equal to the color's lightness—which is where the name "alpha transparency" comes from.
-- Stacking order does matter, just like in Figma's boolean operations. If you want to knock one shape out of another, for example, that shape must be positioned on top of the other. Below, move the shapes around to see this effect in action.
-
-<SVGMask />
-
-For this project, we can achieve our chart’s donut shape by using a mask consisting of a small black circle centered on top of a large white circle:
+The upshot of this is that we can achieve a donut-shaped chart by using a mask with a smaller black circle on top of a larger white circle. And as we discussed earlier, these shapes are readily available via the SVG `circle` element.
 
 ```html
 <defs>
@@ -211,6 +213,14 @@ For this project, we can achieve our chart’s donut shape by using a mask consi
 	</mask>
 </defs>
 ```
+
+I’ve got one more demo for you to help ground some of these ideas, but first I want to address a few other nuances of SVG masking that you may notice:
+
+- Masks must be wrapped in a `defs` element, which allows us to store anything that we need to reference in our SVG, but that we do not want to render directly. This is also where we would define other "invisible" elements like clipping paths and [gradients](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Gradients).
+- Elements inside of a mask can be any color, not just black or white. When you set a mask element to another color, like medium gray, that element will be added to the mask with a transparency equal to the color's lightness—which is where the name "alpha transparency" comes from.
+- Stacking order does matter, just like in Figma's boolean operations. If you want to knock one shape out of another, for example, that shape must be positioned on top of the other. Below, move the shapes around to see this effect in action.
+
+<SVGMask />
 
 ## Putting It All Together
 

@@ -14,8 +14,22 @@ export const SVGGrid = dynamic(
 	}
 );
 
+export const LineCommandAnimation = dynamic(
+	() => import("@/content/drawing-dynamic-svg-pie-charts/LineCommandAnimation"),
+	{
+		loading: Skeleton,
+	}
+);
+
 export const PathDrawing = dynamic(
 	() => import("@/content/drawing-dynamic-svg-pie-charts/PathDrawing"),
+	{
+		loading: Skeleton,
+	}
+);
+
+export const ArcToAnimation = dynamic(
+	() => import("@/content/drawing-dynamic-svg-pie-charts/ArcToAnimation"),
 	{
 		loading: Skeleton,
 	}
