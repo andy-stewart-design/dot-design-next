@@ -20,7 +20,7 @@ export default function ArcToAnimation() {
 	}, []);
 
 	return (
-		<DemoWrapper aspectRatio="auto">
+		<DemoWrapper aspectRatio="auto" grid={false}>
 			<div className={s.grid} style={{ "--play-state": isPlaying ? "running" : "paused" }}>
 				<div className={s.move}>
 					<svg viewBox="0 0 568 568" fill="none">

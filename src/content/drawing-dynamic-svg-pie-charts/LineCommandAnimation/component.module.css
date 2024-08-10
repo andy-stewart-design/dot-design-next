@@ -2,12 +2,20 @@
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	gap: 1rem;
-	padding-block-end: 2rem;
 
 	p {
 		text-align: center;
 		font-size: 0.875rem;
 		font-weight: 500;
+	}
+}
+
+:is(.move, .line, .arc) {
+	margin-block: 0.5rem;
+	padding-block-end: 2rem;
+
+	&:not(.arc) {
+		border-right: 1px solid var(--border-color-lt);
 	}
 }
 

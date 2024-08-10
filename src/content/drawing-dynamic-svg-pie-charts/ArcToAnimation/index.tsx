@@ -18,7 +18,7 @@ export default function ArcToAnimation() {
 	}, [isPlaying]);
 
 	return (
-		<DemoWrapper>
+		<DemoWrapper grid={false}>
 			<svg ref={svgRef} viewBox="0 0 160 90" fill="none">
 				<path
 					d="M 80 22 A 37 37 0 1 0 80 68"

@@ -3,13 +3,14 @@
 	--border-radius-outer: calc(var(--brad-lg) + var(--border-radius-inner));
 
 	position: relative;
-	display: grid;
-	aspect-ratio: var(--aspect-ratio);
 	border-radius: var(--border-radius-outer);
-
 	padding: 0.5rem;
 
-	@media screen and (min-width: 640px) {
-		grid-template-columns: 1fr max-content;
+	&[data-grid="true"] {
+		display: grid;
+		/* aspect-ratio: var(--aspect-ratio); */
+		@media screen and (min-width: 640px) {
+			grid-template-columns: 7fr 9fr;
+		}
 	}
 }

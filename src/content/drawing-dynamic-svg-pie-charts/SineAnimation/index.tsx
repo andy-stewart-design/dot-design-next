@@ -27,7 +27,7 @@ export default function SineAnimation() {
 	}, [isPlaying]);
 
 	return (
-		<DemoWrapper>
+		<DemoWrapper grid={false}>
 			<svg ref={svgRef} viewBox="0 0 1920 1080" fill="none">
 				<line
 					x1="400"
@@ -133,7 +133,7 @@ export default function SineAnimation() {
 							values="0 0; 0 480; 0 0"
 							dur="3000ms"
 							calcMode="spline"
-							keySplines="0.37 0 0.63 1;0.37 0 0.63 1;"
+							keySplines="0.37 0 0.63 1;0.37 0 0.63 1"
 							repeatCount="indefinite"
 							additive="sum"
 						/>
@@ -158,7 +158,7 @@ export default function SineAnimation() {
 						values="0 0; 0 480; 0 0"
 						dur="3000ms"
 						calcMode="spline"
-						keySplines="0.37 0 0.63 1;0.37 0 0.63 1;"
+						keySplines="0.37 0 0.63 1;0.37 0 0.63 1"
 						repeatCount="indefinite"
 					/>
 				</g>
@@ -176,7 +176,7 @@ export default function SineAnimation() {
 						values="300;780;300"
 						dur="3000ms"
 						calcMode="spline"
-						keySplines="0.37 0 0.63 1;0.37 0 0.63 1;"
+						keySplines="0.37 0 0.63 1;0.37 0 0.63 1"
 						repeatCount="indefinite"
 					/>
 				</line>
