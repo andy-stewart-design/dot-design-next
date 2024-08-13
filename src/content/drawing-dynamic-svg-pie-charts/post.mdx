@@ -8,7 +8,7 @@ published: "2023-07-11T12:00:00-0400"
 
 Not all SVGs are created equal.
 
-Or, to be more precise, not all SVG renderers are created equal. [SVG](https://www.w3.org/TR/SVG2/), like many of the technologies we use, is a specification—a standardized set of principles, which were written out and agreed upon, and then interpretted and executed by a variety of parties over time. This process is inherently a good faith agreement. No one is there to check homework, so any individual implementation may or may not be feature-complete and standard-compliant.
+Or, to be more precise, not all SVG renderers are created equal. [SVG](https://www.w3.org/TR/SVG2/), like many web technologies, is a specification—a standardized set of principles, written out and agreed upon, and then interpretted and executed by a variety of parties over time. This process relies on good faith. No one is checking homework, and any individual implementation may or may not be feature-complete and standard-compliant.
 
 In a time with [such a large emphasis on parity](https://web.dev/blog/interop-2024), it’s a truth that can be easy to forget. That is, until it isn’t.
 
@@ -27,7 +27,7 @@ My options were even more limited than I realized, though. I first attempted to 
 	caption="Codepen : Figma : : Expectation : Reality"
 />
 
-To my surpise, Figma’s implementation of SVG is non-standard. The `stroke-dasharray` property does not render the same in Figma as it does in browsers, so what appeared to be an elegantly simple solution turned out to be a nonstarter.
+To my surpise, Figma’s implementation of SVG is non-standard. The `stroke-dasharray` property does not render the same in Figma as it does in browsers, so what appeared to be a simple solution turned out to be a nonstarter.
 
 In the end, I found a solution that—while technically more complex—is considerably more flexible than using strokes alone. It also happens to be a good case study for some of the fundamental concepts of working with SVG in code, which is why I have brought you here today. In this article, I’ll break down the concepts you need to know to execute the following demo in your own project, starting with a brief overview of SVG layouts, and then diving into:
 
@@ -49,23 +49,23 @@ For all practical purposes, the viewBox’s first two numbers will always be 0, 
 <svg viewBox="0 0 32 24"></svg>
 ```
 
-The code above renders an SVG spanning 32 steps along its x-axis and 24 steps along its y-axis. Keep in mind, though, that because an SVG’s `viewBox` is defined by fixed units while it’s width can be fluid, everything defined inside the SVG will scale linearly with its `width`. For example, if you add a circle with a `stroke-width` of 2 to the above SVG and then rendered it at 96px wide (3x the `viewBox`), that stroke will look roughly equivalent to a 6px line outside of the SVG.
+The code above renders an SVG spanning 32 steps along its x-axis and 24 steps along its y-axis. Keep in mind, though, that because an SVG’s `viewBox` is defined by fixed steps while it’s rendered width is fluid, everything defined inside the SVG will scale linearly with its `width`. For example, if you add a circle with a `stroke-width` of 2 to the above SVG and then rendered it at 96px wide (3x the `viewBox`), that stroke will look roughly equivalent to a 6px line outside of the SVG.
 
-And speaking of circles—have you ever delved into the guts of an SVG file? If so, you may be aware that a small set of [basic shapes](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Basic_Shapes) exist: circles, rectangles, and polygons, among others, can all be easily drawn using native SVG elements. If your composition can be executed using only geometric shapes, these elements can make your life much simpler. Put a pin in these for now—we’ll be putting them to use a bit later.
-
-Before we move on to the specific concepts necessary for drawing charts, take a moment to play around with the sandbox below. Move the circle around, resize the SVG, and generally start to get a feel for how the allocation of space works inside of an SVG.
+To see this dynamic in action, take a moment to play around with the sandbox below. Move the circle around, resize the SVG, and generally start to get a feel for how space and layout works inside of an SVG.
 
 <SVGGrid />
+
+One last general point of note before we move on to more specific concepts. Have you ever delved into the guts of an SVG file? If so, you may be aware that a small set of [basic shapes](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Basic_Shapes) exist: circles, rectangles, and polygons, among others, can all be easily drawn using native SVG elements. If your composition can be executed using only geometric shapes, these elements can make your life much simpler. We need to talk about another technique first, but put a pin in these—they’ll come in handy later on.
 
 ## Drawing Dynamic Paths
 
 Unfortunately, we can’t rely on built-in SVG elements for everything. When we need to draw something more complex, like the wedges of a pie chart, we have to forgo their convenience in favor of a more flexible primitive: the SVG `path` element.
 
-The thing that makes paths special and infinitely malleable is their `d` parameter, which allows you to define shapes using a relatively small set of commands. These so-called **line commands** provide us with the tools to effectively draw any two dimensional shape imaginable, one point at a time. Line commands encode two essential bits of information: where we are going next, and how we should get there.
+The thing that makes paths special and infinitely malleable is their `d` parameter, which allows you to define shapes using a relatively small set of commands. These so-called **line commands** provide us with the tools to effectively draw any two dimensional shape imaginable, one point at a time.
 
 <LineCommandAnimation />
 
-These commands may look terse and intimidating at first, like some illegible robot hieroglyphics. Spend some time with them, though. You may be surprised how quickly you’re able to pick them up. For this project, we need to talk specifically about 4 of these commands:
+Line commands encode two essential bits of information: where we are going next, and how we should get there. Although they may look terse and intimidating at first, like some illegible robot hieroglyphics, you may be surprised how quickly you’re able to pick them up. For this project, we need to talk specifically about 4 of these commands:
 
 1. **Move To**, represented by the letter `M`, which allows you to update the origin point of a shape without drawing a visible line. Unless your path is drawn starting at the origin point of the SVG, it will begin with a MoveTo command.
 2. **Line To**, represented by the letter `L`, which allows you to connect one point to another with a straight line.
@@ -99,7 +99,7 @@ When we invoke the arc to command, we’re essentially saying that we want to co
 With that context in mind, here are what each of those numbers represent:
 
 1. The first two numbers describe the x- and y-radii of the underlying ellipse. These can be different if you need to draw something other than a perfect circle. For our purposes, though, we only ever need to draw circles, so we can simplify things and always set them to the same value.
-2. The third number describes the rotation of the underlying ellipse. This only has an effect if your x- and y-radii are different, so we can safely set this to 0 and move on. (And honestly, I would most likely reach for the [bezier line command](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths#b%C3%A9zier_curves) before I bothered trying to work with this.)
+2. The third number describes the rotation of the underlying ellipse. This only has an effect if your x- and y-radii are different, so we can safely set this to 0 and move on.
 3. The fourth number, the `large-arc` flag, can be set to either `0` or `1`. It determines whether the rendered line should take the longer or shorter route around the ellipse to get to the next point. `0` draws the shorter arc while `1` draws the longer.
 4. The fifth number, the `sweep` flag, is also a binary and defines the directionality of the line. Importantly, that directionality (clockwise or counterclockwise) is **relative to the position of the two points**. So, if your next point is directly below your previous point, `0` draws the arc in a counterclockwise direction while `1` draws it clockwise. That direction will rotate, however, as you move one point relative to the other.
 5. And finally, the last two numbers simply define the x- and y- coordinates of the next point in the path—just like the previous commands we've discussed.
@@ -108,7 +108,7 @@ I’ve provided another sandbox below to help you get your arms around these (ad
 
 - If you toggle the `large arc` and `sweep direction` flags back and forth in tandem, you'll see two sections that, together, form a complete circle (or ellipse).
 - The minimum diameter for an arc is equal to the distance between the two points (derived by the [Pythagorean Theorem](https://en.wikipedia.org/wiki/Pythagorean_theorem)). In other words, setting the diameter to a value less than that distance is effectively the same as setting it to that distance. That's why the radius input in the demo updates dynamically based on the position of the points.
-- If the next point specified in the Arc To command is in the same position as the previous point, the arc will not be drawn. This makes sense, of course—you also can’t draw a straight line between these two points—but we’ll need to account for this quirk when drawing the wedges of our chart.
+- If the next point specified in the Arc To command is in the same position as the previous point, no arc will be drawn. This makes sense, of course—you also can’t draw a straight line between these two points—but we’ll need to account for this quirk when drawing the wedges of our chart.
 
 <ArcDrawing />
 

@@ -5,7 +5,7 @@
 		row-gap: 1rem;
 		max-width: 80ch;
 		margin: 0 auto;
-		padding: 4rem 0;
+		padding: 4rem 0.5rem;
 		font-size: 17px;
 
 		& > * {
@@ -31,7 +31,7 @@
 
 		:is(ol, ul) {
 			display: grid;
-			gap: 0.25em;
+			gap: 0.5em;
 			margin: 0;
 			padding-inline-start: 1.25em;
 			list-style-position: inside;

@@ -7,9 +7,12 @@
 	padding: 0.5rem;
 
 	&[data-grid="true"] {
-		display: grid;
+		display: flex;
+		flex-direction: column-reverse;
 		/* aspect-ratio: var(--aspect-ratio); */
+
 		@media screen and (min-width: 640px) {
+			display: grid;
 			grid-template-columns: 7fr 9fr;
 		}
 	}
