@@ -9,6 +9,7 @@ interface Frontmatter {
 	title: string;
 	abstract: string;
 	published: string;
+	draft: boolean;
 }
 
 interface Post extends Frontmatter {
@@ -30,7 +31,7 @@ export async function getPostBySlug(slug: string) {
 export async function getPosts() {
 	const paths = await glob(path.join(process.cwd(), "src", "content", "**", "*.mdx"));
 
-	const posts = (await Promise.all(
+	const AllPosts = (await Promise.all(
 		paths.map(async (p) => {
 			const id = crypto.randomUUID();
 			const slug = path.basename(path.dirname(p));
@@ -41,7 +42,9 @@ export async function getPosts() {
 		})
 	)) as Array<Frontmatter>;
 
-	return posts.sort((a, b) => {
-		return new Date(a.published).valueOf() - new Date(b.published).valueOf();
+	const publishedPosts = AllPosts.filter((post) => !post.draft);
+
+	return publishedPosts.sort((a, b) => {
+		return new Date(b.published).valueOf() - new Date(a.published).valueOf();
 	}) as Array<Frontmatter>;
 }

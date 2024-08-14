@@ -1,0 +1,98 @@
+.main {
+	--max-width: min(62ch, 100%);
+
+	display: grid;
+	gap: 3rem;
+
+	max-width: var(--max-width);
+	margin-inline: auto;
+	padding: 5rem 1rem;
+}
+
+.header {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+
+	img {
+		border: var(--border-lt);
+		border-radius: 10vmax;
+		width: 3rem;
+		height: auto;
+	}
+
+	& > div {
+		flex-grow: 1;
+		display: grid;
+		gap: 0.25rem;
+	}
+
+	h1 {
+		font-size: 1.25rem;
+		font-weight: 500;
+	}
+
+	h2 {
+		font-size: 1rem;
+		font-weight: 350;
+		color: var(--foreground-md);
+	}
+}
+
+.bio {
+	display: grid;
+	gap: 1rem;
+
+	font-weight: 350;
+	color: var(--foreground-md);
+
+	strong {
+		font-weight: 500;
+		color: var(--foreground);
+	}
+}
+
+.links {
+	ul {
+		display: flex;
+		gap: 0rem 1rem;
+		flex-wrap: wrap;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	a {
+		text-decoration: none;
+
+		.arrow {
+			color: var(--foreground-md);
+		}
+	}
+}
+
+.hr {
+	border-top: var(--border-lt);
+}
+
+.posts {
+	display: grid;
+	gap: 1rem;
+
+	h3 {
+		font-size: 0.875rem;
+		font-weight: 400;
+		color: var(--foreground-md);
+	}
+}
+
+.post {
+	padding: 1.5rem;
+	text-decoration: none;
+
+	h3 {
+		font-size: 1rem;
+		font-weight: 500;
+		color: var(--foreground);
+	}
+}
