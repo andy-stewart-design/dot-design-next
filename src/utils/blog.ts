@@ -9,7 +9,7 @@ interface Frontmatter {
 	title: string;
 	abstract: string;
 	published: string;
-	draft: boolean;
+	draft: boolean | string;
 }
 
 interface Post extends Frontmatter {
@@ -42,7 +42,10 @@ export async function getPosts() {
 		})
 	)) as Array<Frontmatter>;
 
-	const publishedPosts = AllPosts.filter((post) => !post.draft);
+	const publishedPosts = AllPosts.filter((post) => {
+		const isDraft = typeof post.draft === "boolean" ? post.draft : JSON.parse(post.draft);
+		return !isDraft;
+	});
 
 	return publishedPosts.sort((a, b) => {
 		return new Date(b.published).valueOf() - new Date(a.published).valueOf();

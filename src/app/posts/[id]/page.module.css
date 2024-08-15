@@ -5,7 +5,7 @@
 		row-gap: 1rem;
 		max-width: 80ch;
 		margin: 0 auto;
-		padding: 4rem 0.5rem;
+		padding: 5rem 0.5rem;
 		font-size: 17px;
 
 		& > * {
@@ -15,6 +15,7 @@
 		h1 {
 			font-size: 1.75em;
 			font-weight: 500;
+			margin-bottom: 1rem;
 		}
 
 		h2 {
@@ -32,7 +33,7 @@
 		:is(ol, ul) {
 			display: grid;
 			gap: 0.5em;
-			margin: 0;
+			margin: 0.375em 0 0.5em;
 			padding-inline-start: 1.25em;
 			list-style-position: inside;
 			list-style: none;
@@ -61,7 +62,7 @@
 		}
 
 		:is(p, li) {
-			line-height: 1.6;
+			line-height: 1.625;
 			font-weight: 325;
 			color: var(--foreground-md);
 
