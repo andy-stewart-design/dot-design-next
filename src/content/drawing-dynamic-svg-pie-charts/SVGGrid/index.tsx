@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type MouseEvent } from "react";
+import { useRef, useState, type MouseEvent, type TouchEvent } from "react";
 import { DemoCanvas, DemoWrapper, DemoContent, DemoCode } from "@/components/BlogDemo";
 import { clamp, map } from "@/utils/math";
 import cn from "clsx";
@@ -16,12 +16,13 @@ function SVGGrid() {
 	const posOffset = useRef({ x: 0, y: 0 });
 	const prevMousePos = useRef({ x: 0, y: 0 });
 
-	function handleClick() {
+	function onPressEnd() {
 		setActiveElement(undefined);
 	}
 
-	function handleMouseDown(e: MouseEvent<HTMLDivElement>) {
-		const clickPos = getClickPosition(e);
+	function onPressStart(e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) {
+		const [clientX] = getEventCoords(e);
+		const clickPos = getRelativeEventCoords(e);
 
 		const distance = Math.sqrt(
 			(clickPos.x - position.x) ** 2 + (clickPos.y - position.y) ** 2
@@ -34,12 +35,12 @@ function SVGGrid() {
 			const offY = clickPos.y - nextPos.y;
 			posOffset.current = { x: offX, y: offY };
 			setActiveElement("circle");
-		} else if (detectHoverY(e)) {
+		} else if ("clientX" in e && detectHoverY(e)) {
 			// If you have clicked on one of the edges
 			const div = e.currentTarget.getBoundingClientRect();
 			const edgeRight = div.width / 2 + width / 2;
 			const edgeLeft = div.width / 2 - width / 2;
-			const mouseX = e.clientX - div.left;
+			const mouseX = clientX - div.left;
 			if (mouseX > edgeRight - 10 && mouseX < edgeRight + 10) {
 				setActiveElement("right");
 			} else if (mouseX > edgeLeft - 10 && mouseX < edgeLeft + 10) {
@@ -48,22 +49,23 @@ function SVGGrid() {
 		}
 	}
 
-	function handleMouseMove(e: MouseEvent<HTMLDivElement>) {
-		const mousePos = getClickPosition(e);
+	function onMoveEvent(e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) {
+		const [clientX, clientY] = getEventCoords(e);
+		const mousePos = getRelativeEventCoords(e);
 
 		if (activeElement === "circle") {
 			const nextX = mousePos.x - posOffset.current.x;
 			const nextY = mousePos.y - posOffset.current.y;
 			setPosition({ x: nextX, y: nextY });
 		} else if (activeElement === "right") {
-			const dx = e.clientX - prevMousePos.current.x;
+			const dx = clientX - prevMousePos.current.x;
 			setWidth(clamp(64, width + dx * 2, 360));
 		} else if (activeElement === "left") {
-			const dx = e.clientX - prevMousePos.current.x;
+			const dx = clientX - prevMousePos.current.x;
 			setWidth(clamp(64, width - dx * 2, 360));
 		}
 
-		prevMousePos.current = { x: e.clientX, y: e.clientY };
+		prevMousePos.current = { x: clientX, y: clientY };
 	}
 
 	return (
@@ -98,9 +100,12 @@ function SVGGrid() {
 				</DemoCode>
 			</DemoContent>
 			<DemoCanvas
-				onMouseDown={handleMouseDown}
-				onMouseMove={handleMouseMove}
-				onClick={handleClick}
+				onMouseDown={onPressStart}
+				onMouseMove={onMoveEvent}
+				onTouchStart={onPressStart}
+				onTouchMove={onMoveEvent}
+				onClick={onPressEnd}
+				onTouchEnd={onPressEnd}
 			>
 				<div className={c.gridWrapper} data-active-edge={activeElement}>
 					<svg
@@ -128,16 +133,24 @@ function SVGGrid() {
 // ------------------------------------------------
 // HELPER FUNCTIONS
 // ------------------------------------------------
-function getClickPosition(e: MouseEvent<Element>) {
+function getRelativeEventCoords(e: MouseEvent<Element> | TouchEvent<Element>) {
 	const svg = e.currentTarget.querySelector("svg")?.getBoundingClientRect();
-
+	const [clientX, clientY] = getEventCoords(e);
 	if (!svg) return { x: 0, y: 0 };
 
-	const xPos = e.clientX - svg.left;
-	const yPos = e.clientY - svg.top;
+	const xPos = clientX - svg.left;
+	const yPos = clientY - svg.top;
 	const x = map(xPos, 0, svg.width, 0, 32);
 	const y = map(yPos, 0, svg.height, 0, 24);
 	return { x, y };
+}
+
+function getEventCoords(e: MouseEvent<Element> | TouchEvent<Element>) {
+	if ("clientX" in e) {
+		return [e.clientX, e.clientY];
+	} else {
+		return [e.touches[0].clientX, e.touches[0].clientY];
+	}
 }
 
 function detectHoverY(e: MouseEvent<Element>) {
