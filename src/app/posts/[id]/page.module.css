@@ -8,6 +8,10 @@
 		padding: 5rem 0.5rem;
 		font-size: 17px;
 
+		@media screen and (min-width: 960px) {
+			padding: 5rem 0;
+		}
+
 		& > * {
 			grid-column: 2;
 		}

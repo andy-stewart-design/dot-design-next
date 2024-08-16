@@ -1,6 +1,6 @@
 "use client";
 
-import { type MouseEvent, useState } from "react";
+import { useState, type MouseEvent, type TouchEvent } from "react";
 import Switch from "@/components/Switch";
 import {
 	DemoCanvas,
@@ -27,17 +27,17 @@ function PathDrawing() {
 	const pathArray = formatPoints(points);
 	const html = formatHTML(pathArray, isClosed);
 
-	function handleClick(e: MouseEvent<HTMLDivElement>) {
-		if (activeIndex === null) {
-			const clickPos = getClickPosition(e);
+	function onPressEnd(e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) {
+		if (activeIndex === null && "clientX" in e) {
+			const clickPos = getRelativeEventCoords(e);
 			setPoints([...points, { x: Math.floor(clickPos.x), y: Math.floor(clickPos.y) }]);
 		} else {
 			setActiveIndex(null);
 		}
 	}
 
-	function handleMouseDown(e: MouseEvent<HTMLDivElement>) {
-		const clickPos = getClickPosition(e);
+	function onPressStart(e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) {
+		const clickPos = getRelativeEventCoords(e);
 
 		const clickedPoint = points.filter((p) => {
 			const distance = Math.sqrt((clickPos.x - p.x) ** 2 + (clickPos.y - p.y) ** 2);
@@ -50,10 +50,10 @@ function PathDrawing() {
 		}
 	}
 
-	function handleMouseMove(e: MouseEvent<HTMLDivElement>) {
+	function onMoveEvent(e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) {
 		if (activeIndex === null) return;
 
-		const clickPos = getClickPosition(e);
+		const clickPos = getRelativeEventCoords(e);
 		const nextPoints = [...points];
 		nextPoints[activeIndex] = { x: Math.floor(clickPos.x), y: Math.floor(clickPos.y) };
 		setPoints(nextPoints);
@@ -87,9 +87,12 @@ function PathDrawing() {
 				</DemoCode>
 			</DemoContent>
 			<DemoCanvas
-				onMouseDown={handleMouseDown}
-				onMouseMove={handleMouseMove}
-				onClick={handleClick}
+				onMouseDown={onPressStart}
+				onTouchStart={onPressStart}
+				onMouseMove={onMoveEvent}
+				onTouchMove={onMoveEvent}
+				onClick={onPressEnd}
+				onTouchEnd={onPressEnd}
 			>
 				<svg viewBox="0 0 100 100">
 					<path
@@ -118,13 +121,23 @@ function PathDrawing() {
 // ------------------------------------------------
 // HELPER FUNCTIONS
 // ------------------------------------------------
-function getClickPosition(e: MouseEvent<Element>) {
+function getRelativeEventCoords(e: MouseEvent<Element> | TouchEvent<Element>) {
 	const div = e.currentTarget.getBoundingClientRect();
-	const xPos = e.clientX - div.left;
-	const yPos = e.clientY - div.top;
+	const [clientX, clientY] = getEventCoords(e);
+
+	const xPos = clientX - div.left;
+	const yPos = clientY - div.top;
 	const x = map(xPos, 0, div.width, 0, 100);
 	const y = map(yPos, 0, div.height, 0, 100);
 	return { x, y };
+}
+
+function getEventCoords(e: MouseEvent<Element> | TouchEvent<Element>) {
+	if ("clientX" in e) {
+		return [e.clientX, e.clientY];
+	} else {
+		return [e.touches[0].clientX, e.touches[0].clientY];
+	}
 }
 
 function formatPoints(points: { x: number; y: number }[]) {
