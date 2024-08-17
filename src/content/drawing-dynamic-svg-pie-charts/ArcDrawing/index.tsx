@@ -1,6 +1,6 @@
 "use client";
 
-import { type MouseEvent, useState } from "react";
+import { useState, type MouseEvent, type TouchEvent } from "react";
 import Switch from "@/components/Switch";
 import RangeInput from "@/components/RangeInput";
 import {
@@ -46,8 +46,8 @@ export default function ArcDrawing() {
 		setActiveIndex(null);
 	}
 
-	function handleMouseDown(e: MouseEvent<HTMLDivElement>) {
-		const clickPos = getClickPosition(e);
+	function HandlePressStart(e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) {
+		const clickPos = getRelativeEventCoords(e);
 
 		const clickedPoint = points.filter((p) => {
 			const dist = distance(clickPos, p);
@@ -63,10 +63,10 @@ export default function ArcDrawing() {
 		}
 	}
 
-	function handleMouseMove(e: MouseEvent<HTMLDivElement>) {
+	function handlePressMove(e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) {
 		if (activeIndex === null) return;
 
-		const clickPos = getClickPosition(e);
+		const clickPos = getRelativeEventCoords(e);
 		const nextPoints = [...points];
 		nextPoints[activeIndex] = { x: Math.floor(clickPos.x), y: Math.floor(clickPos.y) };
 		setPoints(nextPoints);
@@ -141,8 +141,10 @@ export default function ArcDrawing() {
 				</DemoCode>
 			</DemoContent>
 			<DemoCanvas
-				onMouseDown={handleMouseDown}
-				onMouseMove={handleMouseMove}
+				onMouseDown={HandlePressStart}
+				onMouseMove={handlePressMove}
+				onTouchStart={HandlePressStart}
+				onTouchMove={handlePressMove}
 				onClick={handleClick}
 			>
 				<svg viewBox="0 0 100 100">
@@ -173,13 +175,23 @@ export default function ArcDrawing() {
 // ------------------------------------------------
 // HELPER FUNCTIONS
 // ------------------------------------------------
-function getClickPosition(e: MouseEvent<Element>) {
+function getRelativeEventCoords(e: MouseEvent<Element> | TouchEvent<Element>) {
 	const div = e.currentTarget.getBoundingClientRect();
-	const xPos = e.clientX - div.left;
-	const yPos = e.clientY - div.top;
+	const [clientX, clientY] = getEventCoords(e);
+
+	const xPos = clientX - div.left;
+	const yPos = clientY - div.top;
 	const x = map(xPos, 0, div.width, 0, 100);
 	const y = map(yPos, 0, div.height, 0, 100);
 	return { x, y };
+}
+
+function getEventCoords(e: MouseEvent<Element> | TouchEvent<Element>) {
+	if ("clientX" in e) {
+		return [e.clientX, e.clientY];
+	} else {
+		return [e.touches[0].clientX, e.touches[0].clientY];
+	}
 }
 
 function distance(p1: { x: number; y: number }, p2: { x: number; y: number }) {

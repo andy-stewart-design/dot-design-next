@@ -27,7 +27,7 @@ function PathDrawing() {
 	const pathArray = formatPoints(points);
 	const html = formatHTML(pathArray, isClosed);
 
-	function onPressEnd(e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) {
+	function handlePressEnd(e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) {
 		if (activeIndex === null && "clientX" in e) {
 			const clickPos = getRelativeEventCoords(e);
 			setPoints([...points, { x: Math.floor(clickPos.x), y: Math.floor(clickPos.y) }]);
@@ -36,7 +36,7 @@ function PathDrawing() {
 		}
 	}
 
-	function onPressStart(e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) {
+	function handlePressStart(e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) {
 		const clickPos = getRelativeEventCoords(e);
 
 		const clickedPoint = points.filter((p) => {
@@ -50,7 +50,7 @@ function PathDrawing() {
 		}
 	}
 
-	function onMoveEvent(e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) {
+	function handlePressMove(e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) {
 		if (activeIndex === null) return;
 
 		const clickPos = getRelativeEventCoords(e);
@@ -87,12 +87,12 @@ function PathDrawing() {
 				</DemoCode>
 			</DemoContent>
 			<DemoCanvas
-				onMouseDown={onPressStart}
-				onTouchStart={onPressStart}
-				onMouseMove={onMoveEvent}
-				onTouchMove={onMoveEvent}
-				onClick={onPressEnd}
-				onTouchEnd={onPressEnd}
+				onMouseDown={handlePressStart}
+				onTouchStart={handlePressStart}
+				onMouseMove={handlePressMove}
+				onTouchMove={handlePressMove}
+				onClick={handlePressEnd}
+				onTouchEnd={handlePressEnd}
 			>
 				<svg viewBox="0 0 100 100">
 					<path

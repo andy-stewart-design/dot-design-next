@@ -20,7 +20,7 @@ function SVGGrid() {
 		setActiveElement(undefined);
 	}
 
-	function onPressStart(e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) {
+	function handlePressStart(e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) {
 		const [clientX] = getEventCoords(e);
 		const clickPos = getRelativeEventCoords(e);
 
@@ -49,7 +49,7 @@ function SVGGrid() {
 		}
 	}
 
-	function onMoveEvent(e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) {
+	function handlePressMove(e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) {
 		const [clientX, clientY] = getEventCoords(e);
 		const mousePos = getRelativeEventCoords(e);
 
@@ -100,10 +100,10 @@ function SVGGrid() {
 				</DemoCode>
 			</DemoContent>
 			<DemoCanvas
-				onMouseDown={onPressStart}
-				onMouseMove={onMoveEvent}
-				onTouchStart={onPressStart}
-				onTouchMove={onMoveEvent}
+				onMouseDown={handlePressStart}
+				onMouseMove={handlePressMove}
+				onTouchStart={handlePressStart}
+				onTouchMove={handlePressMove}
 				onClick={onPressEnd}
 				onTouchEnd={onPressEnd}
 			>

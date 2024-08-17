@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type SVGProps, type MouseEvent } from "react";
+import { useState, type SVGProps, type MouseEvent, type TouchEvent } from "react";
 import Switch from "@/components/Switch";
 import ToggleGroup from "@/components/ToggleGroup";
 import {
@@ -38,13 +38,13 @@ export default function ArcDrawing() {
 	const [activeShape, setActiveShape] = useState<SVGShape | null>(null);
 	const [activeOffset, setActiveOffset] = useState<Vec2>(defaultOffset);
 
-	function handleMouseDown(e: MouseEvent<HTMLDivElement>) {
+	function handlePressStart(e: MouseEvent<Element> | TouchEvent<Element>) {
 		if (!isElement(e.target)) return;
 
 		if (e.target.tagName === "rect" || e.target.tagName === "circle") {
 			const nextActiveShape = shapes.find((s) => s.type === element(e.target)?.tagName);
 			if (!nextActiveShape) return;
-			const clickPos = getClickPosition(e);
+			const clickPos = getRelativeEventCoords(e);
 			const posOffsetX = clickPos.x - nextActiveShape.x;
 			const posOffsetY = clickPos.y - nextActiveShape.y;
 			setActiveShape(e.target.tagName);
@@ -53,9 +53,10 @@ export default function ArcDrawing() {
 		}
 	}
 
-	function handleMouseMove(e: MouseEvent<HTMLDivElement>) {
+	function handlePressMove(e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) {
 		if (activeShape === null) return;
-		const clickPos = getClickPosition(e);
+		const clickPos = getRelativeEventCoords(e);
+
 		setShapes(
 			updateShapes(shapes, activeShape, {
 				x: clickPos.x - activeOffset.x,
@@ -64,7 +65,7 @@ export default function ArcDrawing() {
 		);
 	}
 
-	function handleMouseUp() {
+	function handlePressEnd() {
 		setActiveShape(null);
 		setActiveOffset(defaultOffset);
 	}
@@ -118,9 +119,12 @@ export default function ArcDrawing() {
 				</DemoCode>
 			</DemoContent>
 			<DemoCanvas
-				onMouseDown={handleMouseDown}
-				onMouseMove={handleMouseMove}
-				onMouseUp={handleMouseUp}
+				onMouseDown={handlePressStart}
+				onMouseMove={handlePressMove}
+				onMouseUp={handlePressEnd}
+				onTouchStart={handlePressStart}
+				onTouchMove={handlePressMove}
+				onTouchEnd={handlePressEnd}
 			>
 				<svg viewBox="0 0 100 100">
 					<image
@@ -239,13 +243,23 @@ function SVGShapeCode({ type, x, y, r, fill, indent = 1 }: SVGShapeCodeProps) {
 // ------------------------------------------------
 // HELPER FUNCTIONS
 // ------------------------------------------------
-function getClickPosition(e: MouseEvent<Element>) {
+function getRelativeEventCoords(e: MouseEvent<Element> | TouchEvent<Element>) {
 	const div = e.currentTarget.getBoundingClientRect();
-	const xPos = e.clientX - div.left;
-	const yPos = e.clientY - div.top;
+	const [clientX, clientY] = getEventCoords(e);
+
+	const xPos = clientX - div.left;
+	const yPos = clientY - div.top;
 	const x = map(xPos, 0, div.width, 0, 100);
 	const y = map(yPos, 0, div.height, 0, 100);
 	return { x, y };
+}
+
+function getEventCoords(e: MouseEvent<Element> | TouchEvent<Element>) {
+	if ("clientX" in e) {
+		return [e.clientX, e.clientY];
+	} else {
+		return [e.touches[0].clientX, e.touches[0].clientY];
+	}
 }
 
 function isElement(target: EventTarget): target is SVGElement {
