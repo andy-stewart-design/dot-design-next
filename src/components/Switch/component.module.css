@@ -1,7 +1,8 @@
-.switch {
+.switchGroup {
 	--thumb-size: 18px;
 	--thumb-color: white;
-	--track-size: calc(var(--thumb-size) * 1.75 + var(--track-padding) * 2);
+	--track-inline-size: calc(var(--thumb-size) * 1.75 + var(--track-padding) * 2);
+	--track-block-size: calc(var(--thumb-size) + var(--track-padding) * 2);
 	--track-padding: 4px;
 	--transition-timing: 150ms;
 	--transition-ease: ease-out;
@@ -23,7 +24,8 @@
 
 		appearance: none;
 		padding: var(--track-padding);
-		inline-size: var(--track-size);
+		inline-size: var(--track-inline-size);
+		block-size: var(--track-block-size);
 		background-color: var(--background-color);
 		border-radius: var(--thumb-size);
 
@@ -57,7 +59,7 @@
 
 		&:checked {
 			--thumb-position: calc(
-				var(--track-size) - var(--thumb-size) - var(--track-padding) * 2
+				var(--track-inline-size) - var(--thumb-size) - var(--track-padding) * 2
 			);
 			--background-color: var(--color-primary);
 		}

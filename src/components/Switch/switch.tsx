@@ -23,7 +23,7 @@ export default function Switch({
 	}
 
 	return (
-		<div className={s.switch} data-switch-position={switchPosition}>
+		<div className={s.switchGroup} data-switch-position={switchPosition}>
 			<Label htmlFor={id}>{children}</Label>
 			<input {...delegated} id={id} type="checkbox" role="switch" onChange={handleChange} />
 		</div>
