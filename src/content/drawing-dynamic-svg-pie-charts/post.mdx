@@ -22,9 +22,9 @@ Given that widgets have to live amongst all your other, common components, Figma
 My options were even more limited than I realized, though. I first attempted to draw a donut chart using the `stroke-dasharray` and `stroke-dashoffset` properties, as [outlined in a great article](https://heyoka.medium.com/scratch-made-svg-donut-pie-charts-in-html5-2c587e935d72) by Mark Caron.
 
 <Video
-	src="/svg-copypasta-min.mp4"
+	src="/svg-copypasta.mp4"
 	autoPlay
-	alt="Someone who is trying to copy an SVG from a website and paste it into Figma realizes that Figma’s SVG implementation is not standard."
+	alt="A visual explanation of vector masking, showing how a mask can be used to hide parts of other shapes in the composition."
 	caption="Codepen : Figma : : Expectation : Reality"
 />
 
@@ -206,6 +206,12 @@ At this point, you could, in theory, use the techniques we’ve already discusse
 
 I like to think of masks as custom viewports that allow us to describe which parts of a shape (or group of shapes) should and should not be displayed. Do you remember how shapes that are placed outside of the bounds of an SVG’s `viewBox` are not rendered? Masks serve a similar function—defining the contours of what is rendered—but they can use any 2D shape, not just a basic rectangle.
 
+<Video
+	src="/mask-animation.mp4"
+	autoPlay
+	alt="A visual explanation of vector masking, showing how a mask can be used to hide parts of other shapes in the composition."
+/>
+
 Now, there is technically one other tool in the SVG toolbox that we could use to achieve this effect. Like masks, **clipping paths** also allow us to show and hide parts of our drawing. However, masks have a special feature that make them uniquely well-suited to our needs in this instance.
 
 With both masks and clipping paths, we can combine multiple, simple shapes together to create more complex and interesting silhouettes. But with masks, specifically, we can use color to describe how those shapes should interact—a feature known as **alpha transparency**. Inside of a `mask`, black shapes are added to, and white shapes are subtracted from, the composite mask. If you've ever used Figma’s [Boolean Operations](https://help.figma.com/hc/en-us/articles/360039957534-Boolean-operations) or Illustrator's [Pathfinder](https://helpx.adobe.com/illustrator/using/combining-objects.html#pathfinder_panel_overview), this concept of merging shapes should feel relatively familiar.
@@ -238,6 +244,8 @@ But more practically, we’ve learned the steps necessary to draw SVG pie charts
 No big deal, right?
 
 If you made it this far: I’m sorry, or you’re welcome. For your troubles, below you’ll find a composable React component—the same one you played with at the beginning of this article—that pulls together everything we’ve talked about into a tidy little package.
+
+But seriously, I know we’ve covered a lot of ground here. Feel free to <a href="mailto:andy.stewart1170@gmail.com" target="_blank">reach out</a> with any thoughts or questions you may have. [Happy drawing](https://www.youtube.com/watch?v=NqmrQKUGrH4)!
 
 ```jsx
 interface ProgressIndicatorProps {
