@@ -34,7 +34,7 @@ In the end, I landed on a solution that—while technically more complex—is co
 
 1. Programatically drawing paths based on a dynamic set of inputs
 2. Using sine and cosine functions to draw arcs and circles
-3. Using clipping masks to define our chart’s silhouette
+3. Using clipping masks to define a graphic’s silhouette
 
 Here’s a preview of what we’ll be building:
 
@@ -42,7 +42,7 @@ Here’s a preview of what we’ll be building:
 
 ## Getting On the Grid
 
-An SVG is a world unto itself. Especially when it comes to layout, it cares little about what’s happening outside of its own four corners. The contents of an SVG is arranged along a two dimensional grid with its origin in the top left corner (much like a [2D HTML canvas](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)). The bounds of that grid are defined by an SVG’s `viewBox`—a string of 4 space-separated numbers corresponding to the `x` and `y` coordinates of the top-left and bottom-right corners of the SVG, respectively.
+An SVG is a world unto itself. Especially when it comes to layout, it cares little about what’s happening outside of its own four corners. Its contents is arranged along a two dimensional grid with its origin in the top left corner (much like a [2D HTML canvas](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)). The bounds of that grid are defined by an SVG’s `viewBox`—a string of 4 space-separated numbers corresponding to the `x` and `y` coordinates of the top-left and bottom-right corners of the SVG, respectively.
 
 ```html
 <svg viewBox="0 0 32 24"></svg>
@@ -50,7 +50,7 @@ An SVG is a world unto itself. Especially when it comes to layout, it cares litt
 
 The code above renders an SVG spanning 32 steps along its x-axis and 24 steps along its y-axis. For all practical purposes, the viewBox’s first two numbers will always be 0, and the last two are often the same as the SVG’s `width` and `height` properties.
 
-However, it’s worth noting that the viewBox is entirely independent of the SVG’s rendered size. No matter how large or small the SVG is displayed on screen, the viewBox—and coordinates of the grid that it defines—never changes.
+However, it’s worth emphasizing that the viewBox is entirely independent of the SVG’s rendered size and does not have to match its width and height. That means that no matter how large or small the SVG is displayed on screen, the viewBox—and coordinates of the grid that it defines—never changes.
 
 This fact—that the viewBox is defined by fixed steps while it’s size is fluid—is one of the most important concepts to keep in mind when working with SVG. In practice, it means that everything defined inside an SVG scales linearly with its width. For example, if you add a circle with a `stroke-width` of 2 to the above SVG and then render it at 96px wide (3x the `viewBox`), that stroke will look roughly equivalent to a 6px line outside of the SVG. This is also true of animations and transitions—the style and position of elements within an SVG are always relative to it’s viewBox, not it’s rendered width.
 
