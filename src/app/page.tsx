@@ -1,7 +1,7 @@
 import Link from "next/link";
+import Image from "next/image";
 import { getPosts } from "@/utils/blog";
 import s from "./page.module.css";
-import Image from "next/image";
 
 // app/page.js
 export default async function Home() {
