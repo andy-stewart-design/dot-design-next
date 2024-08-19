@@ -22,7 +22,7 @@ Given that widgets have to live amongst all your other, common components, Figma
 My options were even more limited than I realized, though. I first attempted to draw a donut chart using the `stroke-dasharray` and `stroke-dashoffset` properties, as [outlined in a great article](https://heyoka.medium.com/scratch-made-svg-donut-pie-charts-in-html5-2c587e935d72) by Mark Caron.
 
 <Video
-	src="/svg-copypasta.mp4"
+	src="/blog/drawing-dynamic-svg-pie-charts/svg-copypasta.mp4"
 	autoPlay
 	alt="A visual explanation of vector masking, showing how a mask can be used to hide parts of other shapes in the composition."
 	caption="Codepen : Figma : : Expectation : Reality"
@@ -207,7 +207,7 @@ At this point, you could, in theory, use the techniques we’ve already discusse
 I like to think of masks as custom viewports that allow us to describe which parts of a shape (or group of shapes) should and should not be displayed. Do you remember how shapes that are placed outside of the bounds of an SVG’s `viewBox` are not rendered? Masks serve a similar function—defining the contours of what is rendered—but they can use any 2D shape, not just a basic rectangle.
 
 <Video
-	src="/mask-animation.mp4"
+	src="/blog/drawing-dynamic-svg-pie-charts/mask-animation.mp4"
 	autoPlay
 	alt="A visual explanation of vector masking, showing how a mask can be used to hide parts of other shapes in the composition."
 />

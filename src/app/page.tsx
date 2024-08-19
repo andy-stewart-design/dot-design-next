@@ -14,7 +14,7 @@ export default async function Home() {
 					<h1>Andy Stewart</h1>
 					<h2>Design Engineer</h2>
 				</div>
-				<Image src="/andy-crop.jpeg" width={100} height={100} alt="" />
+				<Image src="/home/andy-crop.jpeg" width={100} height={100} alt="" />
 			</header>
 			<div className={s.hr} />
 			<section className={s.content}>

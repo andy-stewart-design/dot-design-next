@@ -132,7 +132,7 @@ export default function ArcDrawing() {
 						y="10"
 						width="80"
 						height="80"
-						href="/svg-mask.webp"
+						href="/blog/drawing-dynamic-svg-pie-charts/svg-mask.webp"
 						mask="url(#mask)"
 					/>
 					{shapes.map((shape, i) => (
