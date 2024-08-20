@@ -1,12 +1,52 @@
 ---
-title: Second Post, Mother F*cker!
-abstract: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-published: "2024-07-11T12:00:00-0400"
-draft: true
+title: AllStock 2.0 for Figma
+abstract: Refelections and highlights from building the new version of my image search plugin.
+published: "2024-01-31T12:00:00-0400"
+draft: false
 ---
 
-# Hello World
+# AllStock 2.0 for Figma
 
-This is from Server Components!
+A little Figma plugin I released last year recently passed 4K users. Not bad for a project that I published and then promptly never mentioned publicly.
 
-<SecondCounter />
+It’s called [AllStock](https://www.figma.com/community/plugin/1235675201027690011/allstock), and it’s a one-stop shop for finding and using high-quality images directly inside of Figma. It allows users to browse popular free photo libraries like Unsplash, Pexels, and Pixabay all at the same time without needing to leave their design file.
+
+![AllStock promo image](/blog/allstock-announcement/AllStock-Cover-5x3.jpg)
+
+The project started as a learning exercise to explore Figma’s plugin API. Unexpectedly, a nontrivial number of people have found it useful, so over the holiday break I decided to dive back in and rebuild it into a more proper product.
+
+In the end, I overhauled every part of the codebase from scratch, from the interface to the APIs. Here are some of my favorite details from the project:
+
+<Video
+	src="https://res.cloudinary.com/andystewartdesign/video/upload/v1707428210/work/figma/allstock-demo-4x3.mp4"
+	autoPlay
+	alt="A visual explanation of vector masking, showing how a mask can be used to hide parts of other shapes in the composition."
+/>
+
+## Easier Access
+
+You can now launch the plugin directly from Figma’s quick actions menu (Figma’s native launcher—think spotlight or Raycast). In your Figma design file, simply type `command + /` on Mac to access the quick actions menu, and then enter "allstock" and your search query to get started. I’m also now keeping the plugin open after you import an image, based on user feedback, in case you want to import multiple images in a single session (you’re welcome, Kyle).
+
+![The Figma quick actions menu being used to search a plugin called AllStock for images of rainbows](/blog/allstock-announcement/allstock-quickactions.jpg)
+
+## More Secure
+
+Figma plugins are strictly frontend, client side applications, meaning there’s no straightforward way to protect secret keys. In the original build, I did my best to obfuscate all requisite API keys, but it was admittedly a bit hacky. This time around, I’m proxying all requests through hand-rolled Vercel edge functions (using the web framework Hono JS), meaning the API keys never have to touch the client side code. (And don’t worry—I got new keys, too.)
+
+![A visualization showing data being sent from an image service through Vercel to Figma in order to protect the API keys needed to access the data](/blog/allstock-announcement/allstock-performance.jpg)
+
+## More Performant
+
+In the first version of the plugin, I imported images directly from the relevant image service. It was efficient to build, but the size of the raw images ended up being a liability, slowing down—and occasionally even crashing—the plugin. Now, I’m using ImageKit under the hood to optimize images before importing them into the file. As a side effect, this also affords users more control over the output size and quality of photos.
+
+![Detail view of the AllStock filter menu showing the export image quality and size inputs](/blog/allstock-announcement/allstock-imagequality.jpg)
+
+## Streamlined Interface
+
+If I’m honest, a lot of the "back end" work described above is in service of my desire to design front end interfaces. The new interface simplifies the search process by getting lesser-used options out of the way and putting the search input and service select boxes front and center. Additional filters can be accessed in an offscreen dialog as needed. Other quality of life features, such as previewing larger versions of images before importing them, and browsing results in a custom masonry-style layout, help make the experience feel more polished and complete.
+
+![Detail view of the AllStock search bar. The value of search input is "portrait," and the the user is hovering over a button with the Unsplash logo](/blog/allstock-announcement/allstock-interface.jpg)
+
+I love side projects like this, where a seemingly small and straightforward idea ends up leading you in several unexpected directions. Looking back, I already had about 75-80% of the knowledge that I would need to accomplish my goal—meaning I had enough new concepts to explore to keep things interesting, but not so many that I got lost or overwhelmed.
+
+If you want to try it out for yourself, the plugin is available now [wherever you get your plugins](https://www.figma.com/community/plugin/1235675201027690011) (i.e. the Figma community).
