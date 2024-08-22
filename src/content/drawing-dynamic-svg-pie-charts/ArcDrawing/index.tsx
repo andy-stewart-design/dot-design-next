@@ -9,7 +9,7 @@ import {
 	DemoContent,
 	DemoControls,
 	DemoCode,
-} from "@/components/BlogDemo";
+} from "@/components/Blog";
 import { map } from "@/utils/math";
 import { Refresh } from "@/components/Icons/20";
 import s from "../shared.module.css";

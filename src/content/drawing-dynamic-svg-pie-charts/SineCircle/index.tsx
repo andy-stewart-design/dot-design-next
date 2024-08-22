@@ -8,7 +8,7 @@ import {
 	DemoContent,
 	DemoControls,
 	DemoCode,
-} from "@/components/BlogDemo";
+} from "@/components/Blog";
 
 export default function SineCircle() {
 	const [percent, setPercent] = useState<number>(0);

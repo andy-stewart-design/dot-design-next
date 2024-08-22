@@ -5,7 +5,7 @@
 	border: var(--border-lt);
 	border-radius: var(--brad-lg);
 	overflow: clip;
-	margin-bottom: 1rem;
+	/* margin-bottom: 1rem; */
 
 	video {
 		display: block;

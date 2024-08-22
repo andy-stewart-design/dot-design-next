@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, type MouseEvent, type TouchEvent } from "react";
-import { DemoCanvas, DemoWrapper, DemoContent, DemoCode } from "@/components/BlogDemo";
+import { DemoCanvas, DemoWrapper, DemoContent, DemoCode } from "@/components/Blog";
 import { clamp, map } from "@/utils/math";
 import cn from "clsx";
 import c from "./component.module.css";

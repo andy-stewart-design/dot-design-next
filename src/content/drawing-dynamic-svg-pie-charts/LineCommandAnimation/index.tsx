@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { DemoWrapper } from "@/components/BlogDemo";
+import { DemoWrapper } from "@/components/Blog";
 import { Play, Pause } from "@/components/Icons/20";
 import Button from "@/components/Button";
 import s from "./component.module.css";

@@ -8,7 +8,7 @@ import {
 	DemoContent,
 	DemoControls,
 	DemoCode,
-} from "@/components/BlogDemo";
+} from "@/components/Blog";
 import { Refresh } from "@/components/Icons/20";
 import { map } from "@/utils/math";
 import c from "./component.module.css";

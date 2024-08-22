@@ -3,7 +3,7 @@
 import { useCallback, useId, useState } from "react";
 import RangeInput from "@/components/RangeInput";
 import ToggleGroup from "@/components/ToggleGroup";
-import { DemoCanvas, DemoWrapper, DemoContent } from "@/components/BlogDemo";
+import { DemoCanvas, DemoWrapper, DemoContent } from "@/components/Blog";
 import c from "./component.module.css";
 
 export default function ProgressIndicatorSandbox() {

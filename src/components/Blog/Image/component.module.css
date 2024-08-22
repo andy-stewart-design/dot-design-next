@@ -1,0 +1,8 @@
+.img {
+	width: 100%;
+	height: auto;
+
+	border: var(--border-lt);
+	border-radius: var(--brad-lg);
+	/* margin-bottom: 1rem; */
+}

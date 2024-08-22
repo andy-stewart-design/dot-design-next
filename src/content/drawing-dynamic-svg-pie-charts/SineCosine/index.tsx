@@ -8,7 +8,7 @@ import {
 	DemoContent,
 	DemoControls,
 	DemoCode,
-} from "@/components/BlogDemo";
+} from "@/components/Blog";
 import { map } from "@/utils/math";
 
 export default function ArcDrawing() {
