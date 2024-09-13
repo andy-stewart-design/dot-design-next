@@ -1,0 +1,52 @@
+---
+title: "Animating Height: Auto with CSS Grid"
+abstract: How (and how not) to animate an elements height using CSS grid.
+published: "2024-09-31T12:00:00-0400"
+draft: true
+---
+
+# Animating Height: Auto with CSS Grid
+
+I'm writing these words with full knowledge that they will, within the foreseeable future, mostly be rendered obsolete.
+
+Browsers have [thrown support behind a spec](https://m.youtube.com/shorts/NY0t9a7aP6A) for animating to and from `height: auto`. In some cases, browsers have already [implemented this new feature behind a flag](https://groups.google.com/a/chromium.org/g/blink-dev/c/FjyMSSaSPEg/m/yzlLscFKBQAJ?pli=1). We will, finally, be able to do the thing that everyone assumes is possible when they first learn about CSS animations. And when that day arrives, and I can dump this post in this trash, I’ll be the first to celebrate.
+
+That this future is foreseeable, though, does not mean that it is imminent. So in the meantime, we have CSS Grid track animations.
+
+## Why is This Useful?
+
+A couple of days ago, I got nerd sniped by Sam Selikoff. He posted to Twitter a detailed breakdown of a fancy, animated todo list demo he’s been building.
+
+His approach uses Framer Motion—along with some fairly complex choreography—to animate the todo items’ heights. I love Framer Motion, but I also believe in the rule of least power. I had recently helped a coworker implement an animated accordion using CSS grid, and I wanted to see if I could recreate Sam’s technique without relying on javascript to coordinate the animation.
+
+Here’s my solution:
+
+[VIDEO OF TODO LIST]
+
+Most often, people seem to use height-based animations to build nicer accordions. But as this demo shows, they’re useful for so much more than that!
+
+Unfortunately, almost all of the [blog](https://www.stefanjudis.com/snippets/how-to-animate-height-with-css-grid/) [posts](https://css-tricks.com/css-grid-can-do-auto-height-transitions/) I’ve seen on this topic offer bad information about how to implement this technique. I want to correct the record so that you can more effectively wield this type of animation in your next project—even if it is just another accordion.
+
+## My Div Overflows
+
+To understand this technique, you need to first understand that CSS grid introduced a new unit of measurement to the language: the `fr` or "fractional" unit.
+
+the `fr` unit is conceptually similar to the `percentage` unit—they both define the size of something relative to its container—but `fr` is specific to CSS grid. If you want a grid with three equally-sized columns, you could say `grid-template-columns: 1fr 1fr 1fr`. Or, to define a grid where one column takes up 2/3 of the grid and the other takes up 1/3 of the grid, you could say `grid-template-columns: 2fr 1fr`.
+
+[FR UNIT DEMO]
+
+As you may have noticed in the above demo, you can also declare that a grid column (or row) should be `0fr`. This is effectively the same as setting that element’s width (or height) to zero.
+
+## Trashcan
+
+Implementation takes time. Getting users to update their browsers takes time. And even though this feature—along with other recently-added features like view transitions and scroll-driven animations—is a perfect candidate for progressive enhancement, I’m guessing it will be a while before it’s ready for production.
+
+---
+
+Way back when I first learned about CSS transitions, I remember almost immediately trying to animate an element to `height: auto`. It’s a technique that I think almost everyone implicitly agrees should work.
+
+It emphatically does not. For a long time, we had some [very hacky](https://css-tricks.com/using-css-transitions-auto-dimensions/) ways to compensate for this inability. Now, with CSS grid, we have a solution that is—and I mean this sincerely—meaningfully less hacky.
+
+To be sure, this isn’t the first article to be written about this topic. But, I felt compelled to write it because, as I was attempting to implement this type of animation recently on a project, I ran into [some explanations](https://www.stefanjudis.com/snippets/how-to-animate-height-with-css-grid/) that were...suboptimal.
+
+To explain the concept, let’s look at the example of a simple accordion element. What we want is to have a section of that accordion that can be animated from `height: 0` to `height: auto`. To accomplish that, we need a CSS grid element with a single child that can be manipulated when the accordion’s open state is toggeled.
