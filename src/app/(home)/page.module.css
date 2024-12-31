@@ -1,4 +1,61 @@
 .main {
+	position: relative;
+	background: #060709;
+	min-height: 100vh;
+
+	section {
+		position: relative;
+		height: 100%;
+		padding: 0.75rem 1rem;
+
+		@media (width > 880px) {
+			padding: 1.5rem 2rem;
+		}
+	}
+}
+
+.headline {
+	display: grid;
+	gap: 0.75em;
+	line-height: 1.4;
+	font-weight: 250;
+	font-size: 1.5rem;
+	max-width: 47ch;
+	color: #9da7ba;
+	text-wrap: pretty;
+	margin-bottom: 1em;
+
+	.highlight {
+		font-weight: 500;
+		color: #fff;
+	}
+
+	@media (width > 640px) {
+		font-size: 1.875rem;
+	}
+
+	@media (width > 880px) {
+		font-size: 2.25rem;
+	}
+}
+
+.links {
+	display: flex;
+	gap: 1.5rem;
+	padding: 0;
+
+	li {
+		list-style: none;
+	}
+
+	a {
+		display: flex;
+		gap: 0.5rem;
+		text-decoration: none;
+	}
+}
+
+/* .main {
 	--max-width: min(62ch, 100%);
 
 	display: grid;
@@ -108,4 +165,4 @@
 		color: var(--foreground-md);
 		line-height: 1.625;
 	}
-}
+} */
