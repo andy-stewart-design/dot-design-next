@@ -25,45 +25,55 @@ function Canvas() {
 		}
 
 		const noise = createNoise3D();
+		let prevTimestamp = performance.now();
+		let timeOffset = 0;
 
 		function draw(timestamp = 0) {
 			if (!ctx || !canvas) return;
+
+			const deltaTime = timestamp - prevTimestamp;
+			prevTimestamp = timestamp;
 
 			const midX = canvas.width / 2;
 			const midY = canvas.height / 2;
 			const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
 			ctx.fillRect(0, 0, canvas.width, canvas.height);
-			ctx.save();
-			gradient.addColorStop(0, "#a139f5");
-			gradient.addColorStop(1, "#36e1ff");
-			ctx.strokeStyle = gradient;
-			ctx.lineWidth = 2;
 
-			const anchorPoints = generateAnchorPoints(
-				noise,
-				10,
-				Math.max(canvas.width * 1.25, canvas.height * 1.25),
-				timestamp / 10000
-			);
-			const bezierPoints = generateBezierPoints(anchorPoints);
+			for (let i = 0; i <= 8; i++) {
+				ctx.save();
+				gradient.addColorStop(0, "#a139f5");
+				gradient.addColorStop(1, "#36e1ff");
+				ctx.strokeStyle = gradient;
+				ctx.lineWidth = 2;
+				ctx.globalAlpha = 1 - 0.1 * (8 - i);
 
-			ctx.beginPath();
-			ctx.moveTo(anchorPoints[1].x + midX, anchorPoints[1].y + midY);
-
-			bezierPoints.forEach((point) => {
-				ctx.bezierCurveTo(
-					point.cp1.x + midX,
-					point.cp1.y + midY,
-					point.cp2.x + midX,
-					point.cp2.y + midY,
-					point.a.x + midX,
-					point.a.y + midY
+				const anchorPoints = generateAnchorPoints(
+					noise,
+					10,
+					Math.max(canvas.width * 1.25, canvas.height * 1.25),
+					timeOffset + i * 0.005
 				);
-			});
+				const bezierPoints = generateBezierPoints(anchorPoints);
 
-			ctx.closePath();
-			ctx.stroke();
-			ctx.restore();
+				ctx.beginPath();
+				ctx.moveTo(anchorPoints[1].x + midX, anchorPoints[1].y + midY);
+
+				bezierPoints.forEach((point) => {
+					ctx.bezierCurveTo(
+						point.cp1.x + midX,
+						point.cp1.y + midY,
+						point.cp2.x + midX,
+						point.cp2.y + midY,
+						point.a.x + midX,
+						point.a.y + midY
+					);
+				});
+				ctx.closePath();
+				ctx.stroke();
+				ctx.restore();
+			}
+
+			timeOffset += deltaTime * 0.0001;
 
 			requestAnimationFrame(draw);
 		}
@@ -97,8 +107,8 @@ function generateAnchorPoints(
 ) {
 	const points = Array.from({ length: numPoints }).map((_, i) => {
 		const a = START_POINT + (i * TWO_PI) / numPoints;
-		const xOff = map(Math.cos(a), -1, 1, 0, 2);
-		const yOff = map(Math.sin(a), -1, 1, 0, 2);
+		const xOff = map(Math.cos(a), -1, 1, 0, 100);
+		const yOff = map(Math.sin(a), -1, 1, 0, 100);
 		let r = map(noise(xOff, yOff, zOff), -1, 1, -radius, radius);
 		const x = Math.cos(a) * r;
 		const y = Math.sin(a) * r;
