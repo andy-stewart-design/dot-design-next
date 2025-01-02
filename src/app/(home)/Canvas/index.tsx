@@ -6,6 +6,7 @@ import s from "./style.module.css";
 
 const TWO_PI = Math.PI * 2;
 const START_POINT = TWO_PI * 0.75;
+const noise = createNoise3D();
 
 function Canvas() {
 	const [loaded, setLoaded] = useState(false);
@@ -24,7 +25,6 @@ function Canvas() {
 			canvas.height = window.innerHeight;
 		}
 
-		const noise = createNoise3D();
 		let prevTimestamp = performance.now();
 		let timeOffset = 0;
 
@@ -48,7 +48,6 @@ function Canvas() {
 				ctx.globalAlpha = 1 - 0.1 * (8 - i);
 
 				const anchorPoints = generateAnchorPoints(
-					noise,
 					10,
 					Math.max(canvas.width * 1.25, canvas.height * 1.25),
 					timeOffset + i * 0.005
@@ -99,12 +98,7 @@ function map(value: number, inMin: number, inMax: number, outMin: number, outMax
 	return outMin + ((value - inMin) * (outMax - outMin)) / (inMax - inMin);
 }
 
-function generateAnchorPoints(
-	noise: ReturnType<typeof createNoise3D>,
-	numPoints = 6,
-	radius = 100,
-	zOff = 0
-) {
+function generateAnchorPoints(numPoints = 6, radius = 100, zOff = 0) {
 	const points = Array.from({ length: numPoints }).map((_, i) => {
 		const a = START_POINT + (i * TWO_PI) / numPoints;
 		const xOff = map(Math.cos(a), -1, 1, 0, 100);
