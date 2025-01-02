@@ -1,12 +1,12 @@
 .main {
 	display: grid;
-	grid-template-areas: "stack";
 	position: relative;
 	background: #060709;
 	min-height: 100vh;
 
 	& > * {
-		grid-area: stack;
+		grid-column: -1 / 1;
+		grid-row: -1 / 1;
 	}
 
 	section {
