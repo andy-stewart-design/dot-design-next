@@ -10,3 +10,7 @@
 		opacity: 0;
 	}
 }
+
+.canvas {
+	display: block;
+}
