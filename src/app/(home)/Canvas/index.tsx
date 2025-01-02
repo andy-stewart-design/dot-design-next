@@ -13,43 +13,54 @@ function Canvas() {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 
 	useEffect(() => {
+		const dpr = Math.min(window.devicePixelRatio, 2);
 		const canvas = canvasRef.current;
 		if (!canvas) return;
 
 		const ctx = canvas.getContext("2d");
 		if (!ctx) return;
 
+		let width = canvas.parentElement?.clientWidth ?? window.innerWidth;
+		let height = canvas.parentElement?.clientHeight ?? window.innerHeight;
+
 		function updateCanvasSize() {
-			if (!canvas) return;
-			canvas.width = window.innerWidth;
-			canvas.height = window.innerHeight;
+			if (!canvas || !ctx) return;
+
+			width = canvas.parentElement?.clientWidth ?? window.innerWidth;
+			height = canvas.parentElement?.clientHeight ?? window.innerHeight;
+			canvas.width = width * dpr;
+			canvas.height = height * dpr;
+			canvas.style.width = `100%`;
+			canvas.style.height = `100%`;
+			ctx.scale(dpr, dpr);
 		}
 
 		let prevTimestamp = performance.now();
 		let timeOffset = 0;
+		let colorOffset = Math.random() * 360;
+		let framerate = 0;
 
 		function draw(timestamp = 0) {
 			if (!ctx || !canvas) return;
 
 			const deltaTime = timestamp - prevTimestamp;
-			prevTimestamp = timestamp;
 
-			const midX = canvas.width / 2;
-			const midY = canvas.height / 2;
-			const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-			ctx.fillRect(0, 0, canvas.width, canvas.height);
+			const midX = width / 2;
+			const midY = height / 2;
+			const gradient = ctx.createLinearGradient(0, 0, width, height);
+			ctx.fillRect(0, 0, width, height);
 
 			for (let i = 0; i <= 8; i++) {
 				ctx.save();
-				gradient.addColorStop(0, "#a139f5");
-				gradient.addColorStop(1, "#36e1ff");
+				gradient.addColorStop(0, `hsl(${colorOffset}, 100%, 50%)`);
+				gradient.addColorStop(1, `hsl(${colorOffset + 60}, 100%, 50%)`);
 				ctx.strokeStyle = gradient;
 				ctx.lineWidth = 2;
 				ctx.globalAlpha = 1 - 0.1 * (8 - i);
 
 				const anchorPoints = generateAnchorPoints(
 					10,
-					Math.max(canvas.width * 1.25, canvas.height * 1.25),
+					Math.max(width * 1.5, height * 1.5),
 					timeOffset + i * 0.005
 				);
 				const bezierPoints = generateBezierPoints(anchorPoints);
@@ -72,7 +83,21 @@ function Canvas() {
 				ctx.restore();
 			}
 
+			const prevDec = (prevTimestamp / 1000).toString().split(".")[1] ?? 0;
+			const currDec = (timestamp / 1000).toString().split(".")[1] ?? 0;
+			if (currDec < prevDec) {
+				framerate = 1000 / deltaTime > 0 ? Math.floor(1000 / deltaTime) : 0;
+			}
+
+			ctx.save();
+			ctx.font = "12px monospace";
+			ctx.fillStyle = "white";
+			framerate && ctx.fillText(`Framerate: ${framerate}`, 32, height - 24);
+			ctx.restore();
+
+			prevTimestamp = timestamp;
 			timeOffset += deltaTime * 0.0001;
+			colorOffset += deltaTime * 0.01;
 
 			requestAnimationFrame(draw);
 		}

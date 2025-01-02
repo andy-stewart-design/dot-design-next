@@ -1,15 +1,21 @@
 .main {
+	display: grid;
+	grid-template-areas: "stack";
 	position: relative;
 	background: #060709;
 	min-height: 100vh;
 
+	& > * {
+		grid-area: stack;
+	}
+
 	section {
 		position: relative;
-		height: 100%;
-		padding: 0.75rem 1rem;
+		min-height: 100%;
+		padding: 0.75rem 1rem 4rem;
 
 		@media (width > 880px) {
-			padding: 1.5rem 2rem;
+			padding: 1.5rem 2rem 4rem;
 		}
 	}
 }
@@ -21,13 +27,13 @@
 	font-weight: 250;
 	font-size: 1.5rem;
 	max-width: 47ch;
-	color: #9da7ba;
+	color: rgb(255 255 255 / 0.7);
 	text-wrap: pretty;
 	margin-bottom: 1em;
 
 	.highlight {
 		font-weight: 500;
-		color: #fff;
+		color: rgb(255 255 255 / 1);
 	}
 
 	@media (width > 640px) {
@@ -37,12 +43,18 @@
 	@media (width > 880px) {
 		font-size: 2.25rem;
 	}
+
+	span::selection {
+		background-color: rgb(255 255 255 / 0.9);
+		color: #000;
+	}
 }
 
 .links {
 	display: flex;
 	gap: 1.5rem;
 	padding: 0;
+	user-select: none;
 
 	li {
 		list-style: none;
