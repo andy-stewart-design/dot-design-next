@@ -92,7 +92,8 @@ function Canvas() {
 			ctx.save();
 			ctx.font = "12px monospace";
 			ctx.fillStyle = "white";
-			framerate && ctx.fillText(`Framerate: ${framerate}`, 32, height - 24);
+			const padInline = window.innerWidth > 880 ? 32 : 16;
+			framerate && ctx.fillText(`Framerate: ${framerate}`, padInline, height - 24);
 			ctx.restore();
 
 			prevTimestamp = timestamp;

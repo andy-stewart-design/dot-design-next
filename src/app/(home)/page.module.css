@@ -12,7 +12,7 @@
 	section {
 		position: relative;
 		min-height: 100%;
-		padding: 0.75rem 1rem 4rem;
+		padding: 1.5rem 1rem 4rem;
 
 		@media (width > 880px) {
 			padding: 1.5rem 2rem 4rem;
@@ -25,7 +25,7 @@
 	gap: 0.75em;
 	line-height: 1.4;
 	font-weight: 250;
-	font-size: 1.5rem;
+	font-size: 1.275rem;
 	max-width: 47ch;
 	color: rgb(255 255 255 / 0.7);
 	text-wrap: pretty;
@@ -34,6 +34,10 @@
 	.highlight {
 		font-weight: 500;
 		color: rgb(255 255 255 / 1);
+	}
+
+	@media (width > 480px) {
+		font-size: 1.5rem;
 	}
 
 	@media (width > 640px) {
