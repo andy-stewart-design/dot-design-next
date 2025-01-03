@@ -37,7 +37,7 @@ function Canvas() {
 
 		let prevTimestamp = performance.now();
 		let timeOffset = 0;
-		let colorOffset = Math.random() * 360;
+		let colorOffset = 280;
 		let framerate = 0;
 
 		function draw(timestamp = 0) {
@@ -97,8 +97,8 @@ function Canvas() {
 			ctx.restore();
 
 			prevTimestamp = timestamp;
-			timeOffset += deltaTime * 0.0001;
-			colorOffset += deltaTime * 0.01;
+			timeOffset += deltaTime * 0.00005;
+			colorOffset = 280 + Math.sin(timeOffset * 2) * 60;
 
 			requestAnimationFrame(draw);
 		}

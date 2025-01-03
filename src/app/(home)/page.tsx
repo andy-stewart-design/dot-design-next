@@ -19,7 +19,7 @@ export default async function Home() {
 						and clear interfaces.
 					</span>
 					<span>
-						Currently, I work as a{" "}
+						I currently work as a{" "}
 						<span className={s.highlight}>Staff Design Technologist at ebay</span> and live
 						in Brooklyn.
 					</span>
