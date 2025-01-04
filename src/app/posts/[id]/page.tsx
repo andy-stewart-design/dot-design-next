@@ -5,7 +5,9 @@ import s from "./page.module.css";
 export const dynamic = "force-static";
 
 export default async function Post({ params }: { params: { id: string } }) {
-	const { id } = params;
+	console.log(typeof params);
+
+	const { id } = await params;
 	const post = await getPostBySlug(id);
 
 	return (
