@@ -36,7 +36,7 @@ export function useInView<T extends HTMLElement>({
 	margin,
 	amount,
 	once = false,
-}: UseInViewOptions = {}): [boolean, RefObject<T>] {
+}: UseInViewOptions = {}): [boolean, RefObject<T | null>] {
 	const element = useRef<T>(null);
 	const [isInView, setInView] = useState(false);
 
@@ -56,7 +56,7 @@ export function useInView<T extends HTMLElement>({
 		};
 
 		return inView(element.current, onEnter, options);
-	}, [root, margin, once, amount]);
+	}, [root, margin, once, amount, isInView]);
 
 	return [isInView, element];
 }

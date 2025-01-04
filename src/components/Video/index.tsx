@@ -28,7 +28,7 @@ export default function Video({
 
 		if (isInView) inViewRef.current?.play();
 		else inViewRef.current?.pause();
-	}, [isInView]);
+	}, [isInView, autoPlay, inViewRef]);
 
 	const _muted = autoPlay === true ? autoPlay : muted;
 	const _loop = loop ?? autoPlay;

@@ -15,7 +15,7 @@ export default function SineAnimation() {
 	useEffect(() => {
 		const pathRef = wavePathRef.current;
 		if (!pathRef) return;
-		setPathLength(wavePathRef.current.getTotalLength());
+		setPathLength(pathRef.getTotalLength());
 		// parentRef.pauseAnimations();
 	}, []);
 

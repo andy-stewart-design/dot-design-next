@@ -77,7 +77,7 @@ interface TrackProps {
 
 function Track({ children, min, max }: TrackProps) {
 	let state = useContext(SliderStateContext);
-	const value = state.values.at(0) ?? 0;
+	const value = state?.values.at(0) ?? 0;
 	const progress = ((value - min) / (max - min)) * 100;
 	return (
 		<SliderTrack
